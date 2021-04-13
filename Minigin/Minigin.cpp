@@ -12,7 +12,7 @@
 #include "ManagerMap.h"
 #include "InitInfo.h"
 
-#pragma warning(push)
+// #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm/vec2.hpp>
 #include "TextureComponent.h"
@@ -23,7 +23,7 @@
 #include "ImGuiDemoComponent.h"
 #include "QbertComponent.h"
 #include "LivesCounterComponent.h"
-#pragma warning(pop)
+// #pragma warning(pop)
 
 using namespace std;
 using namespace std::chrono;

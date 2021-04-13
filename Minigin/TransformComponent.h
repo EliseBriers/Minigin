@@ -1,9 +1,9 @@
 #pragma once
 #include "IComponent.h"
-#pragma warning(push)
+// #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm/vec3.hpp>
-#pragma warning(pop)
+// #pragma warning(pop)
 
 namespace dae
 {
