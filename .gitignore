@@ -1,4 +1,6 @@
 # Build and .vs
 .vs
-x64
-x86
+Minigin/x64
+Minigin/x84
+/x64
+/x86
