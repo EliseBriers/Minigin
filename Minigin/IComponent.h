@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
-
 namespace dae
 {
 	class InitInfo;
+	class UpdateInfo;
 	class Renderer;
 
 	class IComponent
@@ -12,8 +12,8 @@ namespace dae
 	public:
 		IComponent( GameObject& gameObject );
 
-		virtual void FixedUpdate( float );
-		virtual void Update( float );
+		virtual void FixedUpdate(const UpdateInfo&);
+		virtual void Update( const UpdateInfo& );
 		virtual void Draw( Renderer& );
 		virtual void Init( const InitInfo& );
 

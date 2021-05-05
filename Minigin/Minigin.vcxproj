@@ -205,6 +205,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="..\3rdParty\imgui-1.82\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui-1.82\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.82\imstb_truetype.h" />
+    <ClInclude Include="ISoundSystem.h" />
     <ClInclude Include="KillQbertCommand.h" />
     <ClInclude Include="DynamicTextComponent.h" />
     <ClInclude Include="Font.h" />
@@ -225,11 +226,14 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SDLSoundSystem.h" />
     <ClInclude Include="SetVarCommand.h" />
     <ClInclude Include="StaticTextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="ThreadWrapper.h" />
     <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="UpdateInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.cpp">
@@ -297,10 +301,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SDLSoundSystem.cpp" />
     <ClCompile Include="StaticTextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
+    <ClCompile Include="ThreadWrapper.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="UpdateInfo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

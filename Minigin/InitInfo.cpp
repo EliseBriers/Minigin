@@ -3,12 +3,14 @@
 #include "ResourceManager.h"
 #include "InputManager.h"
 #include "Scene.h"
+#include "ISoundSystem.h"
 
-dae::InitInfo::InitInfo( ResourceManager& resourceManager, Renderer& renderer, InputManager& inputManager, Scene& scene )
+dae::InitInfo::InitInfo( ResourceManager& resourceManager, Renderer& renderer, InputManager& inputManager, Scene& scene, ISoundSystem& soundSystem )
 	: m_ResourceManager{ resourceManager }
 	, m_Renderer{ renderer }
 	, m_InputManager{ inputManager }
 	, m_Scene{ scene }
+	, m_SoundSystem{ soundSystem }
 {
 }
 
@@ -35,6 +37,11 @@ void dae::InitInfo::Input_AddKeyboardCommand( ButtonState buttonState, SDL_Keyco
 void dae::InitInfo::Input_AddSDLEventCommand( Uint32 event, std::unique_ptr<ICommand> command ) const
 {
 	m_InputManager.AddSDLEventCommand( event, std::move( command ) );
+}
+
+uint16_t dae::InitInfo::GetSound( const std::string& fileName ) const
+{
+	return m_SoundSystem.GetSound( fileName );
 }
 
 dae::GameObject* dae::InitInfo::Scene_GetGameObject( const std::string& name ) const

@@ -10,7 +10,7 @@ namespace dae
 	public:
 		FpsCounterComponent( GameObject& gameObject );
 
-		virtual void Update( float dt ) override;
+		virtual void Update(const UpdateInfo& updateInfo) override;
 		virtual void Init( const InitInfo& ) override;
 
 		virtual ~FpsCounterComponent( ) override = default;

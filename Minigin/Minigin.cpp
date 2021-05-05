@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "ManagerMap.h"
 #include "InitInfo.h"
+#include "UpdateInfo.h"
 
 // #pragma warning(push)
 #pragma warning (disable:4201)
@@ -23,6 +24,11 @@
 #include "ImGuiDemoComponent.h"
 #include "QbertComponent.h"
 #include "LivesCounterComponent.h"
+
+#include <SDL_mixer.h>
+#include "ISoundSystem.h"
+#include "SDLSoundSystem.h"
+#include "ThreadWrapper.h"
 // #pragma warning(pop)
 
 using namespace std;
@@ -49,11 +55,15 @@ void dae::Minigin::Initialize( )
 	}
 
 	m_Renderer.Init( m_Window, true );
+
+	m_pSoundSystem = std::make_unique<SDLSoundSystem>( );
+	m_pSoundSystem->Init( );
 }
 
 dae::Minigin::Minigin( )
 	: m_Window{ nullptr }
 	, m_GameActive{ true }
+	, m_pSoundSystem{ nullptr }
 {
 }
 /**
@@ -62,7 +72,7 @@ dae::Minigin::Minigin( )
 void dae::Minigin::LoadGame( )
 {
 	auto& scene = m_SceneManager.CreateScene( "Demo" );
-	InitInfo io{ m_ResourceManager, m_Renderer, m_InputManager, scene };
+	InitInfo io{ m_ResourceManager, m_Renderer, m_InputManager, scene, *m_pSoundSystem };
 
 
 	{
@@ -133,6 +143,11 @@ void dae::Minigin::LoadGame( )
 	//	go->Init( io );
 	//	scene.Add( std::move( go ) );
 	//}
+
+	//{
+	//	const uint16_t id{ m_pSoundSystem->GetSound( "../Data/bell.wav" ) };
+	//	m_pSoundSystem->PushSound( id, 30.f );
+	//}
 }
 
 void dae::Minigin::Cleanup( )
@@ -150,8 +165,15 @@ void dae::Minigin::Run( )
 	m_ResourceManager.Init( "../Data/" );
 
 	LoadGame( );
-
 	{
+		ThreadWrapper audioThread{
+			[this]( )
+			{
+				while( m_GameActive )
+					m_pSoundSystem->ProcessSounds( );
+			}
+		};
+
 		float timeSinceUpdate{ };
 		auto lastUpdate = high_resolution_clock::now( );
 		while( m_GameActive )
@@ -164,12 +186,20 @@ void dae::Minigin::Run( )
 
 			// Update
 			m_InputManager.ProcessInput( );
-			while( timeSinceUpdate >= FixedDeltaTime )
 			{
-				m_SceneManager.FixedUpdate( FixedDeltaTime );
-				timeSinceUpdate -= FixedDeltaTime;
+				const UpdateInfo updateInfo{ FixedDeltaTime, *m_pSoundSystem };
+				while( timeSinceUpdate >= FixedDeltaTime )
+				{
+					m_SceneManager.FixedUpdate( updateInfo );
+					timeSinceUpdate -= FixedDeltaTime;
+				}
 			}
-			m_SceneManager.Update( elapsedSec );
+
+
+			{
+				const UpdateInfo updateInfo{ elapsedSec, *m_pSoundSystem };
+				m_SceneManager.Update( updateInfo );
+			}
 
 			// Render
 			m_Renderer.Render( m_SceneManager );
@@ -182,3 +212,5 @@ void dae::Minigin::Run( )
 
 	Cleanup( );
 }
+
+dae::Minigin::~Minigin( ) = default;

@@ -2,19 +2,19 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void dae::SceneManager::FixedUpdate( float dt )
+void dae::SceneManager::FixedUpdate(const UpdateInfo& updateInfo)
 {
 	for( auto& scene : m_Scenes )
 	{
-		scene->FixedUpdate( dt );
+		scene->FixedUpdate( updateInfo );
 	}
 }
 
-void dae::SceneManager::Update( float dt )
+void dae::SceneManager::Update(const UpdateInfo& updateInfo)
 {
 	for( auto& scene : m_Scenes )
 	{
-		scene->Update( dt );
+		scene->Update( updateInfo );
 	}
 }
 

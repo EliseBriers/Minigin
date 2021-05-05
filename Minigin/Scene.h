@@ -20,8 +20,8 @@ namespace dae
 
 		void Add( std::unique_ptr<GameObject> object, InitInfo& initInfo );
 
-		void FixedUpdate( float dt );
-		void Update( float dt );
+		void FixedUpdate( const UpdateInfo& updateInfo );
+		void Update( const UpdateInfo& updateInfo );
 		void Render( Renderer& renderer ) const;
 
 		GameObject* GetGameObject( const std::string& name ) const;

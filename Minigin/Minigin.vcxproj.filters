@@ -52,6 +52,12 @@
     <Filter Include="Header Files\Observers">
       <UniqueIdentifier>{d8ddee98-32f6-4c43-8a7f-1cce87514393}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sound">
+      <UniqueIdentifier>{9ef8fbbf-9c61-4610-a34d-c1bb4739ac1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{e739035d-51e0-40ba-a224-4b5844363ddc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceManager.h">
@@ -153,6 +159,18 @@
     <ClInclude Include="LivesCounterComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ISoundSystem.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSoundSystem.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateInfo.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadWrapper.h">
+      <Filter>Header Files\RAII Wrappers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -238,6 +256,15 @@
     </ClCompile>
     <ClCompile Include="LivesCounterComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSoundSystem.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateInfo.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadWrapper.cpp">
+      <Filter>Source Files\RAII Wrappers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

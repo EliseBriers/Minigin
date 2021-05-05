@@ -6,15 +6,15 @@ dae::IComponent::IComponent( GameObject& gameObject )
 {
 }
 
-void dae::IComponent::FixedUpdate( float )
+void dae::IComponent::FixedUpdate( const UpdateInfo& )
 {
 }
 
-void dae::IComponent::Update( float )
+void dae::IComponent::Update( const UpdateInfo& )
 {
 }
 
-void dae::IComponent::Draw(Renderer& )
+void dae::IComponent::Draw( Renderer& )
 {
 }
 

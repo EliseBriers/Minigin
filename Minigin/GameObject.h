@@ -2,6 +2,7 @@
 
 namespace dae
 {
+	class UpdateInfo;
 	class InitInfo;
 	class IComponent;
 
@@ -17,8 +18,8 @@ namespace dae
 		void AddComponent( std::unique_ptr<IComponent> pComponent );
 
 		void Draw( Renderer& renderer );
-		void FixedUpdate( float dt );
-		void Update( float dt );
+		void FixedUpdate( const UpdateInfo& updateInfo );
+		void Update( const UpdateInfo& updateInfo );
 		void Init( InitInfo& initInfo );
 
 		template <typename T>

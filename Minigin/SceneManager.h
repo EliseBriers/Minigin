@@ -2,6 +2,7 @@
 
 namespace dae
 {
+	class UpdateInfo;
 	class Renderer;
 	class Scene;
 
@@ -11,8 +12,8 @@ namespace dae
 		SceneManager( ) = default;
 		Scene& CreateScene( const std::string& name );
 
-		void FixedUpdate( float dt );
-		void Update( float dt );
+		void FixedUpdate( const UpdateInfo& updateInfo );
+		void Update( const UpdateInfo& updateInfo );
 		void Render( Renderer& renderer );
 
 		~SceneManager( );

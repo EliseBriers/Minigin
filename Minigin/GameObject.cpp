@@ -26,19 +26,19 @@ void dae::GameObject::Draw( Renderer& renderer )
 	}
 }
 
-void dae::GameObject::FixedUpdate( float dt )
+void dae::GameObject::FixedUpdate( const UpdateInfo& updateInfo )
 {
 	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
 	{
-		pComponent->FixedUpdate( dt );
+		pComponent->FixedUpdate( updateInfo );
 	}
 }
 
-void dae::GameObject::Update( float dt )
+void dae::GameObject::Update( const UpdateInfo& updateInfo )
 {
 	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
 	{
-		pComponent->Update( dt );
+		pComponent->Update( updateInfo );
 	}
 }
 

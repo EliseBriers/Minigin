@@ -19,19 +19,19 @@ void Scene::Add( std::unique_ptr<GameObject> object, InitInfo& initInfo )
 	m_Objects.emplace_back( std::move( object ) );
 }
 
-void Scene::FixedUpdate( float dt )
+void Scene::FixedUpdate( const UpdateInfo& updateInfo )
 {
 	for( auto& object : m_Objects )
 	{
-		object->FixedUpdate( dt );
+		object->FixedUpdate( updateInfo );
 	}
 }
 
-void Scene::Update( float dt )
+void Scene::Update(const UpdateInfo& updateInfo)
 {
 	for( auto& object : m_Objects )
 	{
-		object->Update( dt );
+		object->Update( updateInfo );
 	}
 }
 

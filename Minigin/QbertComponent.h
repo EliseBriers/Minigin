@@ -9,6 +9,7 @@ namespace dae
 	public:
 		QbertComponent( GameObject& gameObject );
 		void Init( const InitInfo& initInfo ) override;
+		void Update( const UpdateInfo& ) override;
 		void Die( ) const;
 		void AddObserver( const std::function<void( )>& observer );
 
@@ -19,5 +20,7 @@ namespace dae
 		QbertComponent& operator=( QbertComponent&& other ) noexcept = delete;
 	private:
 		Observable m_PlayerDied;
+		uint16_t m_TestSound;
+		bool m_HasPlayed;
 	};
 }
