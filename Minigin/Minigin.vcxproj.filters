@@ -138,9 +138,6 @@
     <ClInclude Include="..\3rdParty\imgui-1.82\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.82\backends\imgui_impl_sdl.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -170,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="ThreadWrapper.h">
       <Filter>Header Files\RAII Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     <ClCompile Include="..\3rdParty\imgui-1.82\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_sdl.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -265,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="ThreadWrapper.cpp">
       <Filter>Source Files\RAII Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

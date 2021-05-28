@@ -1,6 +1,10 @@
-# Build and .vs
+# Build and .vs Engine
 .vs
 Minigin/x64
 Minigin/x84
 /x64
 /x86
+
+# Build for Game
+Game/x64
+Game/x86
