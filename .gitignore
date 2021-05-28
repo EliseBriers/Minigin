@@ -2,9 +2,12 @@
 .vs
 Minigin/x64
 Minigin/x84
+Minigin/Win32
+/Win32
 /x64
 /x86
 
 # Build for Game
 Game/x64
 Game/x86
+Game/Win32
