@@ -4,19 +4,21 @@
 
 using namespace dae;
 
-unsigned int Scene::m_IdCounter = 0;
-
-Scene::Scene( const std::string& name, const ConstructorTag& )
+Scene::Scene( const std::string& name )
 	: m_Name{ name }
 {
 }
 
 Scene::~Scene( ) = default;
 
-void Scene::Add( std::unique_ptr<GameObject> object, InitInfo& initInfo )
+const std::string& Scene::GetName( ) const
 {
-	object->Init( initInfo );
-	m_Objects.emplace_back( std::move( object ) );
+	return m_Name;
+}
+
+void Scene::Add( std::unique_ptr<GameObject> object )
+{
+	m_UninitializedObjects.emplace_back( std::move( object ) );
 }
 
 void Scene::FixedUpdate( const UpdateInfo& updateInfo )
@@ -27,7 +29,7 @@ void Scene::FixedUpdate( const UpdateInfo& updateInfo )
 	}
 }
 
-void Scene::Update(const UpdateInfo& updateInfo)
+void Scene::Update( const UpdateInfo& updateInfo )
 {
 	for( auto& object : m_Objects )
 	{
@@ -41,6 +43,16 @@ void Scene::Render( Renderer& renderer ) const
 	{
 		object->Draw( renderer );
 	}
+}
+
+void Scene::InitGameObjects( InitInfo& initInfo )
+{
+	for( std::unique_ptr<GameObject>& pObject : m_UninitializedObjects )
+	{
+		pObject->Init( initInfo );
+		m_Objects.emplace_back( std::move( pObject ) );
+	}
+	m_UninitializedObjects.clear( );
 }
 
 GameObject* Scene::GetGameObject( const std::string& name ) const

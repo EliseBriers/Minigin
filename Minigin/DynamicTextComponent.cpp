@@ -18,6 +18,19 @@ dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, char st
 	m_pTextures.reserve( charCount );
 }
 
+dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+	: IComponent{ gameObject }
+	, m_pTextures{ }
+	, m_FontFileName{ jsonObject["font_file_name"].GetString( ) }
+	, m_Text{ }
+	, m_FontSize{ jsonObject["size"].GetUint( ) }
+	, m_Spacing{ }
+	, m_pTransform{ nullptr }
+	, m_Start{ jsonObject["start_char"].GetString( )[0] }
+	, m_CharCount{ static_cast<uint8_t>(jsonObject["char_count"].GetUint( )) }
+{
+}
+
 void dae::DynamicTextComponent::SetText( const std::string& text )
 {
 	for( char c : text )

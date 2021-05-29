@@ -11,6 +11,15 @@ dae::TextureComponent::TextureComponent( const std::string& fileName, GameObject
 {
 }
 
+dae::TextureComponent::TextureComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+	: IComponent{ gameObject }
+	, m_FileName{ jsonObject["texture_file_name"].GetString( ) }
+	, m_pTexture{ nullptr }
+	, m_pTransformComponent{ nullptr }
+
+{
+}
+
 void dae::TextureComponent::Draw( Renderer& renderer )
 {
 	const glm::vec3 pos{ m_pTransformComponent->GetPosition( ) };

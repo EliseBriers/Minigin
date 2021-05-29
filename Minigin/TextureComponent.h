@@ -2,6 +2,7 @@
 #include "IComponent.h"
 #include "Texture2D.h"
 #include "TransformComponent.h"
+#include <document.h>
 
 namespace dae
 {
@@ -9,6 +10,7 @@ namespace dae
 	{
 	public:
 		TextureComponent( const std::string& fileName, GameObject& gameObject );
+		TextureComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& ) override;
 

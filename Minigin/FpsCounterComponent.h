@@ -1,5 +1,6 @@
 #pragma once
 #include "IComponent.h"
+#include <document.h>
 
 namespace dae
 {
@@ -9,6 +10,7 @@ namespace dae
 	{
 	public:
 		FpsCounterComponent( GameObject& gameObject );
+		FpsCounterComponent(GameObject& gameObject, const rapidjson::Value::Object& );
 
 		virtual void Update(const UpdateInfo& updateInfo) override;
 		virtual void Init( const InitInfo& ) override;

@@ -12,6 +12,12 @@ dae::TransformComponent::TransformComponent( GameObject& gameObject, float x, fl
 {
 }
 
+dae::TransformComponent::TransformComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+	: IComponent{ gameObject }
+	, m_Position{ jsonObject["x"].GetFloat( ), jsonObject["y"].GetFloat( ), jsonObject["z"].GetFloat( ) }
+{
+}
+
 const glm::vec3& dae::TransformComponent::GetPosition( ) const
 {
 	return m_Position;

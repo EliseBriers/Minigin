@@ -12,6 +12,16 @@ dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const std
 {
 }
 
+dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+	: IComponent{ gameObject }
+	, m_Text{ jsonObject["text"].GetString( ) }
+	, m_FontFileName{ jsonObject["font_file_name"].GetString( ) }
+	, m_pTexture{ nullptr }
+	, m_pTransformComponent{ nullptr }
+	, m_Size{ jsonObject["size"].GetUint( ) }
+{
+}
+
 void dae::StaticTextComponent::Draw( Renderer& renderer )
 {
 	const glm::vec3 pos{ m_pTransformComponent->GetPosition( ) };

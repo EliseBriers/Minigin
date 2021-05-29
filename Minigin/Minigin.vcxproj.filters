@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Sound">
       <UniqueIdentifier>{e739035d-51e0-40ba-a224-4b5844363ddc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Factories">
+      <UniqueIdentifier>{863e5a8c-54eb-4943-a41b-03497194d5c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factories">
+      <UniqueIdentifier>{7c7258dc-4362-4ecf-9440-0dee9921ae8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceManager.h">
@@ -171,6 +177,15 @@
     <ClInclude Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentFactory.h">
+      <Filter>Header Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectFactory.h">
+      <Filter>Header Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>Header Files\Factories</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -265,6 +280,15 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

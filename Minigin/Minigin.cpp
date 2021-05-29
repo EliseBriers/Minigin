@@ -30,9 +30,22 @@
 #include "SDLSoundSystem.h"
 #include "ThreadWrapper.h"
 // #pragma warning(pop)
+#include <document.h>
+#include <istreamwrapper.h>
+#include <fstream>
 
 using namespace std;
 using namespace std::chrono;
+
+dae::Minigin::Minigin( )
+	: m_Window{ nullptr }
+	, m_SceneManager{ }
+	, m_SceneFactory{ "../Data/Scenes/" }
+	, m_GameActive{ true }
+	, m_pSoundSystem{ nullptr }
+{
+	RegisterComponents( );
+}
 
 void dae::Minigin::Initialize( )
 {
@@ -58,96 +71,18 @@ void dae::Minigin::Initialize( )
 
 	m_pSoundSystem = std::make_unique<SDLSoundSystem>( );
 	m_pSoundSystem->Init( );
+
+	// Quit when SDL_QUIT happens
+	m_InputManager.AddSDLEventCommand( SDL_QUIT, std::make_unique<SetVarCommand<bool>>( m_GameActive, false ) );
 }
 
-dae::Minigin::Minigin( )
-	: m_Window{ nullptr }
-	, m_GameActive{ true }
-	, m_pSoundSystem{ nullptr }
+void dae::Minigin::RegisterComponents( )
 {
-}
-/**
- * Code constructing the scene world starts here
- */
-void dae::Minigin::LoadGame( )
-{
-	auto& scene = m_SceneManager.CreateScene( "Demo" );
-	InitInfo io{ m_ResourceManager, m_Renderer, m_InputManager, scene, *m_pSoundSystem };
-
-
-	{
-		auto go = std::make_unique<GameObject>( "Background" );
-		auto texture{ std::make_unique<TextureComponent>( "background.jpg", *go ) };
-		auto transform{ std::make_unique<TransformComponent>( *go, 0.f, 0.f, 0.f ) };
-		go->AddComponent( std::move( texture ) );
-		go->AddComponent( std::move( transform ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		auto go = std::make_unique<GameObject>( "Logo" );
-		auto texture{ std::make_unique<TextureComponent>( "logo.png", *go ) };
-		auto transform{ std::make_unique<TransformComponent>( *go, 216.f, 180.f, 0.f ) };
-		go->AddComponent( std::move( texture ) );
-		go->AddComponent( std::move( transform ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		auto go = std::make_unique<GameObject>( "Title" );
-		auto texture{ std::make_unique<StaticTextComponent>( *go, "Programming 4 Assignment", "Lingua.otf", 36u ) };
-		auto transform{ std::make_unique<TransformComponent>( *go, 80.f, 20.f, 0.f ) };
-		go->AddComponent( std::move( texture ) );
-		go->AddComponent( std::move( transform ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		auto go = std::make_unique<GameObject>( "FPS Counter" );
-		auto texture{ std::make_unique<DynamicTextComponent>( *go, ' ', uint8_t( 'z' - ' ' + 1 ), 0.f, "Lingua.otf", 36u ) };
-		auto framerateCounter{ std::make_unique<FpsCounterComponent>( *go ) };
-		auto transform{ std::make_unique<TransformComponent>( *go, 20.f, 20.f, 0.f ) };
-		go->AddComponent( std::move( texture ) );
-		go->AddComponent( std::move( transform ) );
-		go->AddComponent( std::move( framerateCounter ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		auto go = std::make_unique<GameObject>( "Qbert" );
-		auto qbert{ std::make_unique<QbertComponent>( *go ) };
-		go->AddComponent( std::move( qbert ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		auto go = std::make_unique<GameObject>( "Lives Counter" );
-		auto counter{ std::make_unique<LivesCounterComponent>( *go ) };
-		auto text{ std::make_unique<DynamicTextComponent>( *go, '0', uint8_t( 10u ), 0.f, "Lingua.otf", 12u ) };
-		auto transform{ std::make_unique<TransformComponent>( *go, 20.f, 80.f, 0.f ) };
-		go->AddComponent( std::move( counter ) );
-		go->AddComponent( std::move( text ) );
-		go->AddComponent( std::move( transform ) );
-		scene.Add( std::move( go ), io );
-	}
-
-	{
-		// m_InputManager.AddKeyboardCommand( ButtonState::Pressed, SDLK_ESCAPE, std::make_unique<SetVarCommand>( m_GameActive, false ) );
-		m_InputManager.AddSDLEventCommand( SDL_QUIT, std::make_unique<SetVarCommand<bool>>( m_GameActive, false ) );
-	}
-
-	//{
-	//	auto go = std::make_unique<GameObject>( );
-	//	auto imGuiDemo{ std::make_unique<ImGuiDemoComponent>( *go ) };
-	//	go->AddComponent( std::move( imGuiDemo ) );
-	//	go->Init( io );
-	//	scene.Add( std::move( go ) );
-	//}
-
-	//{
-	//	const uint16_t id{ m_pSoundSystem->GetSound( "../Data/bell.wav" ) };
-	//	m_pSoundSystem->PushSound( id, 30.f );
-	//}
+	m_SceneFactory.RegisterComponent<TextureComponent>( );
+	m_SceneFactory.RegisterComponent<TransformComponent>( );
+	m_SceneFactory.RegisterComponent<StaticTextComponent>( );
+	m_SceneFactory.RegisterComponent<DynamicTextComponent>( );
+	m_SceneFactory.RegisterComponent<FpsCounterComponent>( );
 }
 
 void dae::Minigin::Cleanup( )
@@ -164,7 +99,7 @@ void dae::Minigin::Run( )
 	// tell the resource manager where he can find the game data
 	m_ResourceManager.Init( "../Data/" );
 
-	LoadGame( );
+	RegisterComponents( );
 	{
 		ThreadWrapper audioThread{
 			[this]( )
@@ -178,6 +113,15 @@ void dae::Minigin::Run( )
 		auto lastUpdate = high_resolution_clock::now( );
 		while( m_GameActive )
 		{
+			{
+				Scene* activeScene{ m_SceneManager.GetActiveScene( ) };
+				if( activeScene )
+				{
+					InitInfo io{ m_ResourceManager, m_Renderer, m_InputManager, *activeScene, *m_pSoundSystem };
+					activeScene->InitGameObjects( io );
+				}
+			}
+			
 			// Time
 			const auto currentTime = high_resolution_clock::now( );
 			const float elapsedSec{ duration_cast<duration<float>>( currentTime - lastUpdate ).count( ) };
@@ -211,6 +155,16 @@ void dae::Minigin::Run( )
 	}
 
 	Cleanup( );
+}
+
+void dae::Minigin::SetActiveScene( const std::string& sceneName )
+{
+	m_SceneManager.SetActiveScene( sceneName );
+}
+
+void dae::Minigin::AddSceneFromFile( const std::string& fileName )
+{
+	m_SceneManager.AddScene( m_SceneFactory.ReadScene( fileName ) );
 }
 
 dae::Minigin::~Minigin( ) = default;

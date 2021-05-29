@@ -9,6 +9,12 @@ dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject )
 {
 }
 
+dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const rapidjson::Value::Object& )
+	: IComponent{ gameObject }
+	, m_pTextComponent{ }
+{
+}
+
 void dae::FpsCounterComponent::Update( const UpdateInfo& updateInfo )
 {
 	m_pTextComponent->EmplaceText( std::to_string( uint32_t( 1.f / updateInfo.GetDeltaTime( ) ) ) );

@@ -1,6 +1,7 @@
 #pragma once
 #include "IComponent.h"
 #include <vector>
+#include <document.h>
 
 namespace dae
 {
@@ -10,6 +11,7 @@ namespace dae
 	{
 	public:
 		DynamicTextComponent( GameObject& gameObject, char start, uint8_t charCount, float spacing, std::string fontFileName, uint32_t fontSize );
+		DynamicTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
 
 		void SetText( const std::string& text );
 		void EmplaceText( std::string&& text );
