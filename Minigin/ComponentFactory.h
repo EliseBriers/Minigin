@@ -3,6 +3,7 @@
 #include "IComponent.h"
 #include <document.h>
 #include "functional"
+#include "JsonObjectWrapper.h"
 
 namespace dae
 {
@@ -10,18 +11,18 @@ namespace dae
 
 	class ComponentFactory
 	{
-		using allocator_t = std::function<std::unique_ptr<IComponent>( GameObject&, const rapidjson::Value::Object& )>;
+		using allocator_t = std::function<std::unique_ptr<IComponent>( GameObject&, const JsonObjectWrapper& )>;
 		using map_t = std::unordered_map<std::string, allocator_t>;
 	public:
 		template <typename T>
 		void RegisterComponent( );
-		std::unique_ptr<IComponent> GetComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		std::unique_ptr<IComponent> GetComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 	private:
-		std::unique_ptr<IComponent> GetComponent( const std::string& name, GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		std::unique_ptr<IComponent> GetComponent( const std::string& name, GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 		map_t m_Map;
 
 		template <typename T>
-		static std::unique_ptr<IComponent> DefaultAllocator( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		static std::unique_ptr<IComponent> DefaultAllocator( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 	};
 
 	template <typename T>
@@ -32,7 +33,7 @@ namespace dae
 	}
 
 	template <typename T>
-	std::unique_ptr<IComponent> ComponentFactory::DefaultAllocator( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+	std::unique_ptr<IComponent> ComponentFactory::DefaultAllocator( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 	{
 		return std::make_unique<T>( gameObject, jsonObject );
 	}

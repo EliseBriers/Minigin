@@ -5,13 +5,14 @@
 
 namespace dae
 {
+	class JsonObjectWrapper;
 	class TransformComponent;
 
 	class StaticTextComponent : public IComponent
 	{
 	public:
 		StaticTextComponent( GameObject& gameObject, const std::string& text, const std::string& fontFileName, uint32_t size );
-		StaticTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& initInfo ) override;
 

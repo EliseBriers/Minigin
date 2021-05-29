@@ -8,12 +8,14 @@
 
 namespace dae
 {
+	class JsonObjectWrapper;
+
 	class TransformComponent : public IComponent
 	{
 	public:
 		TransformComponent( GameObject& gameObject );
 		TransformComponent( GameObject& gameObject, float x, float y, float z );
-		TransformComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 		const glm::vec3& GetPosition( ) const;
 
 		void SetPosition( float x, float y, float z );

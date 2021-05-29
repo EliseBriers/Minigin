@@ -6,7 +6,7 @@ namespace dae
 	class GameObjectFactory
 	{
 	public:
-		std::unique_ptr<GameObject> GenerateGameObject( const rapidjson::Value::Object& jsonObject );
+		std::unique_ptr<GameObject> GenerateGameObject( const JsonObjectWrapper& jsonObject );
 		template <typename T>
 		void RegisterComponent( );
 	private:

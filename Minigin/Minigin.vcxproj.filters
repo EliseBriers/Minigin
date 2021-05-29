@@ -37,12 +37,6 @@
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{b860df8b-43b6-49d5-af14-c23ae6565466}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\RAII Wrappers">
-      <UniqueIdentifier>{465586b4-3eb2-473f-a64e-a3f3bda17daf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RAII Wrappers">
-      <UniqueIdentifier>{f698c86e-1130-4ba5-8fde-ac04dfb2eee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Commands">
       <UniqueIdentifier>{4dd3b7fe-c434-41c9-ade4-359a75a5b453}</UniqueIdentifier>
     </Filter>
@@ -63,6 +57,18 @@
     </Filter>
     <Filter Include="Source Files\Factories">
       <UniqueIdentifier>{7c7258dc-4362-4ecf-9440-0dee9921ae8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Wrappers">
+      <UniqueIdentifier>{4a2b1b16-28a8-4306-89ac-ab0535a1b0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Wrappers\RAII Wrappers">
+      <UniqueIdentifier>{465586b4-3eb2-473f-a64e-a3f3bda17daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Wrappers">
+      <UniqueIdentifier>{4010f831-268f-4a24-98eb-89e96a18503e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Wrappers\RAII Wrappers">
+      <UniqueIdentifier>{f698c86e-1130-4ba5-8fde-ac04dfb2eee8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,13 +118,13 @@
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>Header Files\RAII Wrappers</Filter>
+      <Filter>Header Files\Wrappers\RAII Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>Header Files\RAII Wrappers</Filter>
+      <Filter>Header Files\Wrappers\RAII Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Header Files\RAII Wrappers</Filter>
+      <Filter>Header Files\Wrappers\RAII Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="ICommand.h">
       <Filter>Header Files\Commands</Filter>
@@ -172,7 +178,7 @@
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="ThreadWrapper.h">
-      <Filter>Header Files\RAII Wrappers</Filter>
+      <Filter>Header Files\Wrappers\RAII Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.h">
       <Filter>imgui</Filter>
@@ -185,6 +191,12 @@
     </ClInclude>
     <ClInclude Include="SceneFactory.h">
       <Filter>Header Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjectWrapper.h">
+      <Filter>Header Files\Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -234,13 +246,13 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>Source Files\RAII Wrappers</Filter>
+      <Filter>Source Files\Wrappers\RAII Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files\RAII Wrappers</Filter>
+      <Filter>Source Files\Wrappers\RAII Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\RAII Wrappers</Filter>
+      <Filter>Source Files\Wrappers\RAII Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.82\imgui.cpp">
       <Filter>imgui</Filter>
@@ -276,7 +288,7 @@
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="ThreadWrapper.cpp">
-      <Filter>Source Files\RAII Wrappers</Filter>
+      <Filter>Source Files\Wrappers\RAII Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.82\backends\imgui_impl_opengl2.cpp">
       <Filter>imgui</Filter>
@@ -289,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="SceneFactory.cpp">
       <Filter>Source Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonObjectWrapper.cpp">
+      <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

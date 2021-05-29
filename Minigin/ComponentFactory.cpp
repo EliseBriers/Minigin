@@ -1,14 +1,14 @@
 #include "MiniginPCH.h"
 #include "ComponentFactory.h"
 
-std::unique_ptr<dae::IComponent> dae::ComponentFactory::GetComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+std::unique_ptr<dae::IComponent> dae::ComponentFactory::GetComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 {
-	const std::string className{ jsonObject["class"].GetString( ) };
-	const rapidjson::Value::Object object{ jsonObject["desc"].GetObjectA( ) };
+	const std::string className{ jsonObject.GetString( "class" ) };
+	const JsonObjectWrapper object{ jsonObject.GetObjectWrapper("desc") };
 	return GetComponent( className, gameObject, object );
 }
 
-std::unique_ptr<dae::IComponent> dae::ComponentFactory::GetComponent( const std::string& name, GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+std::unique_ptr<dae::IComponent> dae::ComponentFactory::GetComponent( const std::string& name, GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 {
 	const auto it{ m_Map.find( "class " + name ) };
 	if( it == m_Map.end( ) )

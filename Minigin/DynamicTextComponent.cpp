@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include <SDL.h>
+#include "JsonObjectWrapper.h"
 
 dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, char start, uint8_t charCount, float spacing, std::string fontFileName, uint32_t fontSize )
 	: IComponent{ gameObject }
@@ -18,16 +19,16 @@ dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, char st
 	m_pTextures.reserve( charCount );
 }
 
-dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }
 	, m_pTextures{ }
-	, m_FontFileName{ jsonObject["font_file_name"].GetString( ) }
+	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_Text{ }
-	, m_FontSize{ jsonObject["size"].GetUint( ) }
+	, m_FontSize{ jsonObject.GetUint( "size" ) }
 	, m_Spacing{ }
 	, m_pTransform{ nullptr }
-	, m_Start{ jsonObject["start_char"].GetString( )[0] }
-	, m_CharCount{ static_cast<uint8_t>(jsonObject["char_count"].GetUint( )) }
+	, m_Start{ jsonObject.GetString( "start_char" )[0] }
+	, m_CharCount{ static_cast<uint8_t>(jsonObject.GetUint( "char_count" )) }
 {
 }
 

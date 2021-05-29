@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
+#include "JsonObjectWrapper.h"
 
 dae::TransformComponent::TransformComponent( GameObject& gameObject )
 	: TransformComponent{ gameObject, 0.f, 0.f, 0.f }
@@ -12,9 +13,9 @@ dae::TransformComponent::TransformComponent( GameObject& gameObject, float x, fl
 {
 }
 
-dae::TransformComponent::TransformComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+dae::TransformComponent::TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }
-	, m_Position{ jsonObject["x"].GetFloat( ), jsonObject["y"].GetFloat( ), jsonObject["z"].GetFloat( ) }
+	, m_Position{ jsonObject.GetFloat( "x" ), jsonObject.GetFloat( "y" ), jsonObject.GetFloat( "z" ) }
 {
 }
 

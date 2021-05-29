@@ -5,13 +5,14 @@
 
 namespace dae
 {
+	class JsonObjectWrapper;
 	class TransformComponent;
 
 	class DynamicTextComponent final : public IComponent
 	{
 	public:
 		DynamicTextComponent( GameObject& gameObject, char start, uint8_t charCount, float spacing, std::string fontFileName, uint32_t fontSize );
-		DynamicTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 
 		void SetText( const std::string& text );
 		void EmplaceText( std::string&& text );

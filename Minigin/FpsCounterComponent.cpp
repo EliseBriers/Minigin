@@ -9,7 +9,7 @@ dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject )
 {
 }
 
-dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const rapidjson::Value::Object& )
+dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const JsonObjectWrapper& )
 	: IComponent{ gameObject }
 	, m_pTextComponent{ }
 {

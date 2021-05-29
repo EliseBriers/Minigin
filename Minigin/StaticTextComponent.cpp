@@ -3,6 +3,7 @@
 #include "TransformComponent.h"
 #include "Renderer.h"
 #include "InitInfo.h"
+#include "JsonObjectWrapper.h"
 
 dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const std::string& text, const std::string& fontFileName, uint32_t size )
 	: IComponent{ gameObject }
@@ -12,13 +13,13 @@ dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const std
 {
 }
 
-dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }
-	, m_Text{ jsonObject["text"].GetString( ) }
-	, m_FontFileName{ jsonObject["font_file_name"].GetString( ) }
+	, m_Text{ jsonObject.GetString( "text" ) }
+	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_pTexture{ nullptr }
 	, m_pTransformComponent{ nullptr }
-	, m_Size{ jsonObject["size"].GetUint( ) }
+	, m_Size{ jsonObject.GetUint( "size" ) }
 {
 }
 

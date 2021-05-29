@@ -2,6 +2,7 @@
 #include "TextureComponent.h"
 #include "Renderer.h"
 #include "InitInfo.h"
+#include "JsonObjectWrapper.h"
 
 dae::TextureComponent::TextureComponent( const std::string& fileName, GameObject& gameObject )
 	: IComponent{ gameObject }
@@ -11,9 +12,9 @@ dae::TextureComponent::TextureComponent( const std::string& fileName, GameObject
 {
 }
 
-dae::TextureComponent::TextureComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject )
+dae::TextureComponent::TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }
-	, m_FileName{ jsonObject["texture_file_name"].GetString( ) }
+	, m_FileName{ jsonObject.GetString( "texture_file_name" ) }
 	, m_pTexture{ nullptr }
 	, m_pTransformComponent{ nullptr }
 

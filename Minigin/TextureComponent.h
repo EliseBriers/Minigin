@@ -2,15 +2,16 @@
 #include "IComponent.h"
 #include "Texture2D.h"
 #include "TransformComponent.h"
-#include <document.h>
 
 namespace dae
 {
+	class JsonObjectWrapper;
+
 	class TextureComponent : public IComponent
 	{
 	public:
 		TextureComponent( const std::string& fileName, GameObject& gameObject );
-		TextureComponent( GameObject& gameObject, const rapidjson::Value::Object& jsonObject );
+		TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& ) override;
 

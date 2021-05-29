@@ -4,13 +4,14 @@
 
 namespace dae
 {
+	class JsonObjectWrapper;
 	class DynamicTextComponent;
 
 	class FpsCounterComponent final : public IComponent
 	{
 	public:
 		FpsCounterComponent( GameObject& gameObject );
-		FpsCounterComponent(GameObject& gameObject, const rapidjson::Value::Object& );
+		FpsCounterComponent(GameObject& gameObject, const JsonObjectWrapper& );
 
 		virtual void Update(const UpdateInfo& updateInfo) override;
 		virtual void Init( const InitInfo& ) override;
