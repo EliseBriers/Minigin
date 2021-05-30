@@ -3,9 +3,11 @@
 #include <istreamwrapper.h>
 #include <fstream>
 #include "Scene.h"
+#include "ResourceManager.h"
 
-dae::SceneFactory::SceneFactory( std::string dataFolder )
+dae::SceneFactory::SceneFactory( std::string dataFolder, ResourceManager& resourceManager )
 	: m_DataFolder{ std::move( dataFolder ) }
+	, m_ResourceManager{ resourceManager }
 {
 }
 
@@ -13,13 +15,9 @@ std::unique_ptr<dae::Scene> dae::SceneFactory::ReadScene( const std::string& fil
 {
 	using namespace rapidjson;
 	// Read Json File
-	const std::string fileString{ m_DataFolder + fileName };
-	std::ifstream testJsonFile{ fileString };
-	IStreamWrapper streamWrapper{ testJsonFile };
-	Document doc{ };
-	doc.ParseStream( streamWrapper );
-	assert( doc.IsObject() );
-	JsonObjectWrapper rootObject{ doc.GetObjectA( ), "root" };
+	const Document& doc{ m_ResourceManager.GetJsonDocument( fileName ) };
+	rapidjson::Value::ConstObject obj{ doc.GetObjectA() };
+	const JsonObjectWrapper rootObject{doc.GetObjectA(), fileName, m_ResourceManager};
 	
 	// Extract name and gameObjects
 	const std::string name{ rootObject.GetString( "name" ) };

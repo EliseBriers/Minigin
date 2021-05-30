@@ -1,0 +1,30 @@
+{
+      "name": "FPS Counter",
+      "components": [
+        {
+          "class": "dae::DynamicTextComponent",
+          "desc": {
+            "start_char": " ",
+            "char_count": 91,
+            "font_file_name": "Lingua.otf",
+            "size": 36,
+            "pivot": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 20,
+            "y": 20,
+            "z": 0
+          }
+        },
+        {
+          "class": "dae::FpsCounterComponent",
+          "desc": {}
+        }
+      ]
+    }

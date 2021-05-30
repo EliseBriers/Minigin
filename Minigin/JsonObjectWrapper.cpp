@@ -1,10 +1,19 @@
 #include "MiniginPCH.h"
 #include "JsonObjectWrapper.h"
 #include "Logger.h"
+#include <istreamwrapper.h>
+#include <fstream>
+#include "ResourceManager.h"
 
-dae::JsonObjectWrapper::JsonObjectWrapper( const rapidjson::Value::Object& obj, std::string name )
+dae::JsonObjectWrapper::JsonObjectWrapper( const rapidjson::Value::ConstObject& obj, std::string name, ResourceManager& resourceManager )
 	: m_Object{ obj }
 	, m_Name{ std::move( name ) }
+	, m_ResourceManager{ resourceManager }
+{
+}
+
+dae::JsonObjectWrapper::JsonObjectWrapper( const std::string& fileName, ResourceManager& resourceManager )
+	: JsonObjectWrapper{ resourceManager.GetJsonConstObject( fileName ), fileName, resourceManager }
 {
 }
 
@@ -66,31 +75,19 @@ dae::JsonObjectWrapper dae::JsonObjectWrapper::GetObjectWrapper( const std::stri
 		throw std::exception{ "Invalid Index" };
 	}
 
+	if( m_Object[idx.c_str( )].IsString( ) )
+	{
+		return { m_Object[idx.c_str( )].GetString( ), m_ResourceManager };
+	}
+
 	if( !m_Object[idx.c_str( )].IsObject( ) )
 	{
 		Logger::LogError( "dae::JsonObjectWrapper::GetObjectWrapper > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain an object" );
 		throw std::exception{ "Invalid Jason Object" };
 	}
 
-	return { m_Object[idx.c_str( )].GetObjectA( ), m_Name + '.' + idx };
+	return { m_Object[idx.c_str( )].GetObjectA( ), m_Name + '.' + idx, m_ResourceManager };
 }
-
-// rapidjson::Value::Array dae::JsonObjectWrapper::GetArray( const std::string& idx ) const
-// {
-// 	if( !m_Object.HasMember( idx.c_str( ) ) )
-// 	{
-// 		Logger::LogError( "dae::JsonObjectWrapper::GetArray > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
-// 		throw std::exception{ "Invalid Index" };
-// 	}
-// 
-// 	if( !m_Object[idx.c_str( )].IsArray( ) )
-// 	{
-// 		Logger::LogError( "dae::JsonObjectWrapper::GetArray > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain an array" );
-// 		throw std::exception{ "Invalid Jason Array" };
-// 	}
-// 
-// 	return m_Object[idx.c_str( )].GetArray( );
-// }
 
 std::vector<dae::JsonObjectWrapper> dae::JsonObjectWrapper::GetObjectArray( const std::string& idx ) const
 {
@@ -113,12 +110,18 @@ std::vector<dae::JsonObjectWrapper> dae::JsonObjectWrapper::GetObjectArray( cons
 	for( auto& obj : vec )
 	{
 		const std::string name{ arrayName + '[' + std::to_string( i++ ) + ']' };
-		if( !obj.IsObject( ) )
+		if( obj.IsString( ) )
+		{
+			objects.emplace_back( std::string{ obj.GetString( ) }, m_ResourceManager );
+		}
+		else if( obj.IsObject( ) )
+		{
+			objects.emplace_back( obj.GetObjectA( ), name, m_ResourceManager );
+		}
+		else
 		{
 			Logger::LogWarning( "Invalid object found in array \"" + arrayName + '"' );
-			continue;
 		}
-		objects.emplace_back( obj.GetObjectA( ), name );
 	}
 
 	return objects;

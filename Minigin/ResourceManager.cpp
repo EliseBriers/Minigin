@@ -7,18 +7,20 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include <istreamwrapper.h>
+#include <fstream>
 
-dae::ResourceManager::ResourceManager( )
-	: m_Textures{ TextureAllocator }
+dae::ResourceManager::ResourceManager( DataPaths dataPaths )
+	: m_DataPaths{ std::move( dataPaths ) }
+	, m_Textures{ TextureAllocator }
 	, m_Fonts{ FontAllocator }
 	, m_TextTextures{ TextAllocator }
+	, m_JsonDocuments{ JsonDocumentAllocator }
 {
 }
 
-void dae::ResourceManager::Init( const std::string& dataPath )
+void dae::ResourceManager::Init( )
 {
-	m_DataPath = dataPath;
-
 	// load support for png and jpg, this takes a while!
 
 	if( ( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) != IMG_INIT_PNG )
@@ -39,21 +41,34 @@ void dae::ResourceManager::Init( const std::string& dataPath )
 
 const dae::Texture2D& dae::ResourceManager::GetTexture( const std::string& file, Renderer& renderer )
 {
-	return m_Textures.GetElement( file, m_DataPath + file, renderer );
+	return m_Textures.GetElement( file, m_DataPaths.TextureDataPath + file, renderer );
 }
 
 dae::Font& dae::ResourceManager::LoadFont( const std::string& file, unsigned int size )
 {
-	return m_Fonts.GetElement( file + ":_:" + std::to_string( size ), m_DataPath + file, size );
+	return m_Fonts.GetElement( file + ":_:" + std::to_string( size ), m_DataPaths.FontDataPath + file, size );
 }
 
 const dae::Texture2D& dae::ResourceManager::LoadText( const std::string& text, const std::string& fileName, uint32_t size, Renderer& renderer )
 {
 	const Font& font{ LoadFont( fileName, size ) };
 
-	std::string elementName{ fileName + ":_:" + text + std::to_string( size ) };
+	const std::string elementName{ fileName + ":_:" + text + std::to_string( size ) };
 
 	return m_TextTextures.GetElement( elementName, text, renderer, font );
+}
+
+const rapidjson::Document& dae::ResourceManager::GetJsonDocument( const std::string& fileName )
+{
+	const std::string filePath{ m_DataPaths.SceneDataPath + fileName };
+
+	return m_JsonDocuments.GetElement( fileName, filePath );
+}
+
+rapidjson::Value::ConstObject dae::ResourceManager::GetJsonConstObject( const std::string& fileName )
+{
+	const rapidjson::Document& doc{ GetJsonDocument( fileName ) };
+	return doc.GetObjectA( );
 }
 
 std::unique_ptr<dae::Texture2D> dae::ResourceManager::TextureAllocator( const std::string& file, Renderer& renderer )
@@ -85,4 +100,14 @@ std::unique_ptr<dae::Texture2D> dae::ResourceManager::TextAllocator( const std::
 
 	SDL_FreeSurface( surf );
 	return std::make_unique<Texture2D>( texture );
+}
+
+std::unique_ptr<rapidjson::Document> dae::ResourceManager::JsonDocumentAllocator( const std::string& fileName )
+{
+	std::ifstream testJsonFile{ fileName };
+	rapidjson::IStreamWrapper streamWrapper{ testJsonFile };
+	std::unique_ptr<rapidjson::Document> doc{ std::make_unique<rapidjson::Document>( ) };
+	doc->ParseStream( streamWrapper );
+	assert( doc->IsObject() );
+	return doc;
 }

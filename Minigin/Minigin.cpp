@@ -40,7 +40,8 @@ using namespace std::chrono;
 dae::Minigin::Minigin( )
 	: m_Window{ nullptr }
 	, m_SceneManager{ }
-	, m_SceneFactory{ "../Data/Scenes/" }
+	, m_ResourceManager{ GetDataPaths( ) }
+	, m_SceneFactory{ "../Data/Scenes/", m_ResourceManager }
 	, m_GameActive{ true }
 	, m_pSoundSystem{ nullptr }
 {
@@ -92,12 +93,19 @@ void dae::Minigin::Cleanup( )
 	SDL_Quit( );
 }
 
+dae::ResourceManager::DataPaths dae::Minigin::GetDataPaths( )
+{
+	ResourceManager::DataPaths paths{ };
+	paths.TextureDataPath = "../Data/Textures/";
+	paths.FontDataPath = "../Data/Fonts/";
+	paths.SceneDataPath = "../Data/Scenes/";
+	return paths;
+}
+
 void dae::Minigin::Run( )
 {
 	Initialize( );
-
-	// tell the resource manager where he can find the game data
-	m_ResourceManager.Init( "../Data/" );
+	m_ResourceManager.Init( );
 
 	RegisterComponents( );
 	{
