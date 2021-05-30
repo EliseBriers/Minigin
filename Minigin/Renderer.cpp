@@ -20,7 +20,7 @@ void dae::Renderer::Init( SDL_Window* window, bool useVSync )
 	Uint32 flags{ SDL_RENDERER_ACCELERATED };
 	if( useVSync )
 		flags |= SDL_RENDERER_PRESENTVSYNC;
-	m_pSDLRenderer = SDL_CreateRenderer( window, GetOpenGLDriverIndex(), flags );
+	m_pSDLRenderer = SDL_CreateRenderer( window, GetOpenGLDriverIndex( ), flags );
 	if( m_pSDLRenderer == nullptr )
 	{
 		throw std::runtime_error( std::string( "SDL_CreateRenderer Error: " ) + SDL_GetError( ) );
@@ -45,6 +45,11 @@ void dae::Renderer::Render( SceneManager& sceneManager )
 	ImGui_ImplOpenGL2_RenderDrawData( ImGui::GetDrawData( ) );
 
 	SDL_RenderPresent( m_pSDLRenderer );
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& pos ) const
+{
+	RenderTexture( texture, pos.x, pos.y );
 }
 
 void dae::Renderer::RenderTexture( const Texture2D& texture, const float x, const float y ) const

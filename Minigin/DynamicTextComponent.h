@@ -19,6 +19,7 @@ namespace dae
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& initInfo ) override;
 
+
 		~DynamicTextComponent( ) override = default;
 		DynamicTextComponent( const DynamicTextComponent& other ) = delete;
 		DynamicTextComponent( DynamicTextComponent&& other ) noexcept = delete;
@@ -33,5 +34,10 @@ namespace dae
 		TransformComponent* m_pTransform;
 		char m_Start;
 		uint8_t m_CharCount;
+		glm::vec2 m_Size;
+		glm::vec2 m_Pivot;
+
+		void UpdateSize( );
+		glm::vec2 GetDrawPos() const;
 	};
 }

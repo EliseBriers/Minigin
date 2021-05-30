@@ -24,5 +24,6 @@ namespace dae
 		std::string m_FileName;
 		Texture2D const* m_pTexture;
 		TransformComponent* m_pTransformComponent;
+		glm::vec2 m_Pivot;
 	};
 }

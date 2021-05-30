@@ -1,5 +1,8 @@
 #pragma once
 struct SDL_Texture;
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+
 namespace dae
 {
 	/**
@@ -8,15 +11,17 @@ namespace dae
 	class Texture2D
 	{
 	public:
-		SDL_Texture* GetSDLTexture() const;
-		explicit Texture2D(SDL_Texture* texture);
-		~Texture2D();
+		SDL_Texture* GetSDLTexture( ) const;
+		const glm::vec2& GetSize( ) const;
+		explicit Texture2D( SDL_Texture* pTexture );
+		~Texture2D( );
 
-		Texture2D(const Texture2D &) = delete;
-		Texture2D(Texture2D &&) = delete;
-		Texture2D & operator= (const Texture2D &) = delete;
-		Texture2D & operator= (const Texture2D &&) = delete;
+		Texture2D( const Texture2D& ) = delete;
+		Texture2D( Texture2D&& ) = delete;
+		Texture2D& operator=( const Texture2D& ) = delete;
+		Texture2D& operator=( const Texture2D&& ) = delete;
 	private:
-		SDL_Texture* m_Texture;
+		SDL_Texture* m_pTexture;
+		glm::vec2 m_Size;
 	};
 }

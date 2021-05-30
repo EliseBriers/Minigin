@@ -27,5 +27,6 @@ namespace dae
 		Texture2D const* m_pTexture;
 		TransformComponent const* m_pTransformComponent;
 		uint32_t m_Size;
+		glm::vec2 m_Pivot;
 	};
 }
