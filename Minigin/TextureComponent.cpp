@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "InitInfo.h"
 #include "JsonObjectWrapper.h"
+#include "Logger.h"
 
 dae::TextureComponent::TextureComponent( const std::string& fileName, GameObject& gameObject )
 	: IComponent{ gameObject }
@@ -23,11 +24,15 @@ dae::TextureComponent::TextureComponent( GameObject& gameObject, const JsonObjec
 
 void dae::TextureComponent::Draw( Renderer& renderer )
 {
+	if( !m_pTransformComponent )
+	{
+		Logger::LogError( "dae::TextureComponent::Draw > Failed to draw because m_pTransformComponent is nullptr" );
+		return;
+	}
+
 	const glm::vec2 pos{ m_pTransformComponent->GetPosition( ) };
-	const glm::vec2& size{ m_pTexture->GetSize( ) };
-	const glm::vec2 offset{ size * m_Pivot };
-	const glm::vec2 finalPos{ pos - offset };
-	renderer.RenderTexture( *m_pTexture, finalPos);
+	const float scale{ m_pTransformComponent->GetScale( ) };
+	renderer.RenderTexture( *m_pTexture, pos, m_Pivot, scale );
 }
 
 void dae::TextureComponent::Init( const InitInfo& initInfo )

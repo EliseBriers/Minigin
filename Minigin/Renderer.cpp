@@ -52,14 +52,59 @@ void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& po
 	RenderTexture( texture, pos.x, pos.y );
 }
 
+void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, const glm::vec2& scale ) const
+{
+	const glm::vec2& dimensions{ texture.GetSize( ) };
+	const glm::vec2 offset{ -dimensions * pivot * scale };
+	const glm::vec2 finalPos{ offset + pos };
+	SDL_Rect dst;
+	dst.x = static_cast<int>(finalPos.x);
+	dst.y = static_cast<int>(finalPos.y);
+	const glm::vec2 destSize{ dimensions * scale };
+	dst.w = static_cast<int>(destSize.x);
+	dst.h = static_cast<int>(destSize.y);
+
+	RenderTexture( texture, dst );
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, const glm::vec2& scale, const Rect2D& src ) const
+{
+	const glm::vec2 dimensions{ src.w, src.h };
+	const glm::vec2 offset{ -dimensions * pivot * scale };
+	const glm::vec2 finalPos{ offset + pos };
+	SDL_Rect dst;
+	dst.x = static_cast<int>(finalPos.x);
+	dst.y = static_cast<int>(finalPos.y);
+	const glm::vec2 destSize{ dimensions * scale };
+	dst.w = static_cast<int>(destSize.x);
+	dst.h = static_cast<int>(destSize.y);
+
+	SDL_Rect sdlSrc{ };
+	sdlSrc.x = static_cast<int>(src.x);
+	sdlSrc.y = static_cast<int>(src.y);
+	sdlSrc.w = static_cast<int>(src.w);
+	sdlSrc.h = static_cast<int>(src.h);
+
+	RenderTexture( texture, dst, sdlSrc );
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, float scale ) const
+{
+	RenderTexture( texture, pos, pivot, { scale, scale } );
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, float scale, const Rect2D& src ) const
+{
+	RenderTexture( texture, pos, pivot, { scale, scale }, src );
+}
+
 void dae::Renderer::RenderTexture( const Texture2D& texture, const float x, const float y ) const
 {
 	SDL_Rect dst;
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
 	SDL_QueryTexture( texture.GetSDLTexture( ), nullptr, nullptr, &dst.w, &dst.h );
-	SDL_RenderCopy( GetSDLRenderer( ), texture.GetSDLTexture( ), nullptr, &dst );
-	// SDL_RenderCopyEx( GetSDLRenderer( ), texture.GetSDLTexture( ), nullptr, &dst, 0.f, nullptr, { } );
+	RenderTexture( texture, dst );
 }
 
 void dae::Renderer::RenderTexture( const Texture2D& texture, const float x, const float y, const float width, const float height ) const
@@ -69,7 +114,7 @@ void dae::Renderer::RenderTexture( const Texture2D& texture, const float x, cons
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
-	SDL_RenderCopy( GetSDLRenderer( ), texture.GetSDLTexture( ), nullptr, &dst );
+	RenderTexture( texture, dst );
 }
 
 SDL_Renderer* dae::Renderer::GetSDLRenderer( ) const
@@ -103,4 +148,14 @@ int dae::Renderer::GetOpenGLDriverIndex( )
 				openglIndex = i;
 	}
 	return openglIndex;
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const SDL_Rect& dest ) const
+{
+	SDL_RenderCopy( GetSDLRenderer( ), texture.GetSDLTexture( ), nullptr, &dest );
+}
+
+void dae::Renderer::RenderTexture( const Texture2D& texture, const SDL_Rect& dest, const SDL_Rect& src ) const
+{
+	SDL_RenderCopy( GetSDLRenderer( ), texture.GetSDLTexture( ), &src, &dest );
 }

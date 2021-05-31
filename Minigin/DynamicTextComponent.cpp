@@ -64,14 +64,15 @@ void dae::DynamicTextComponent::EmplaceText( std::string&& text )
 void dae::DynamicTextComponent::Draw( Renderer& renderer )
 {
 	glm::vec2 transform{ GetDrawPos( ) };
+	const float scale{ m_pTransform->GetScale( ) };
 
 	for( char c : m_Text )
 	{
 		const size_t offset{ size_t( c - m_Start ) };
 		const Texture2D& charTexture{ m_pTextures[offset].get( ) };
-		renderer.RenderTexture( charTexture, transform );
+		renderer.RenderTexture( charTexture, transform, { }, scale );
 
-		const float width{ charTexture.GetSize( ).x };
+		const float width{ charTexture.GetSize( ).x * scale };
 
 		transform.x += width + m_Spacing;
 	}
@@ -91,7 +92,7 @@ void dae::DynamicTextComponent::Init( const InitInfo& initInfo )
 void dae::DynamicTextComponent::UpdateSize( )
 {
 	m_Size = { };
-	
+
 	for( char c : m_Text )
 	{
 		const size_t offset{ size_t( c - m_Start ) };
@@ -105,8 +106,9 @@ void dae::DynamicTextComponent::UpdateSize( )
 
 glm::vec2 dae::DynamicTextComponent::GetDrawPos( ) const
 {
+	const float scale{ m_pTransform->GetScale( ) };
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
-	const glm::vec2 offset{ m_Size * m_Pivot };
+	const glm::vec2 offset{ m_Size * m_Pivot * scale };
 	const glm::vec2 finalPos{ pos - offset };
 	return finalPos;
 }

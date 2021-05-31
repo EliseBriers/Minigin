@@ -4,11 +4,21 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Rect;
 
 namespace dae
 {
 	class SceneManager;
 	class Texture2D;
+
+	struct Rect2D
+	{
+		float x;
+		float y;
+		float w;
+		float h;
+	};
+	
 	/**
 	 * Simple RAII wrapper for the SDL renderer
 	 */
@@ -20,6 +30,10 @@ namespace dae
 		void Render( SceneManager& sceneManager );
 
 		void RenderTexture( const Texture2D& texture, const glm::vec2& pos ) const;
+		void RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, const glm::vec2& scale ) const;
+		void RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, const glm::vec2& scale, const Rect2D& src ) const;
+		void RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, float scale ) const;
+		void RenderTexture( const Texture2D& texture, const glm::vec2& pos, const glm::vec2& pivot, float scale, const Rect2D& src ) const;
 		void RenderTexture( const Texture2D& texture, float x, float y ) const;
 		void RenderTexture( const Texture2D& texture, float x, float y, float width, float height ) const;
 
@@ -38,5 +52,7 @@ namespace dae
 
 		// ReSharper disable once CppInconsistentNaming
 		static int GetOpenGLDriverIndex( );
+		void RenderTexture( const Texture2D& texture, const SDL_Rect& dest ) const;
+		void RenderTexture( const Texture2D& texture, const SDL_Rect& dest, const SDL_Rect& src ) const;
 	};
 }

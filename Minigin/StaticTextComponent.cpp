@@ -5,6 +5,7 @@
 #include "InitInfo.h"
 #include "JsonObjectWrapper.h"
 #include "Texture2D.h"
+#include "Logger.h"
 
 dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const std::string& text, const std::string& fontFileName, uint32_t size )
 	: IComponent{ gameObject }
@@ -27,11 +28,15 @@ dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const Jso
 
 void dae::StaticTextComponent::Draw( Renderer& renderer )
 {
+	if( !m_pTransformComponent )
+	{
+		Logger::LogError( "dae::StaticTextComponent::Draw > Failed to draw because m_pTransformComponent is nullptr" );
+		return;
+	}
+
 	const glm::vec2 pos{ m_pTransformComponent->GetPosition( ) };
-	const glm::vec2& size{ m_pTexture->GetSize( ) };
-	const glm::vec2 offset{ size * m_Pivot };
-	const glm::vec2 finalPos{ pos - offset };
-	renderer.RenderTexture( *m_pTexture, finalPos );
+	const float scale{ m_pTransformComponent->GetScale( ) };
+	renderer.RenderTexture( *m_pTexture, pos, m_Pivot, scale );
 }
 
 void dae::StaticTextComponent::Init( const InitInfo& initInfo )

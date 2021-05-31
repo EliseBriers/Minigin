@@ -72,6 +72,26 @@
         }
       ]
     },
+    {
+      "name": "CubeGrid",
+      "components": [
+        {
+          "class": "CubeGrid",
+          "desc": {
+            "sprite_sheet": "sprite_sheet.json"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 100,
+            "z": 0,
+			"scale": 1.8
+          }
+        }
+      ]
+    },
     "fps_counter.json"
   ]
 }

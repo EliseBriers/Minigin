@@ -17,17 +17,24 @@ dae::JsonObjectWrapper::JsonObjectWrapper( const std::string& fileName, Resource
 {
 }
 
+std::string dae::JsonObjectWrapper::GetFullVarName( const std::string& idx ) const
+{
+	return m_Name + '.' + idx;
+}
+
 std::string dae::JsonObjectWrapper::GetString( const std::string& idx ) const
 {
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
 	if( !m_Object.HasMember( idx.c_str( ) ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetString > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
+		WarnKeyNotFound( __func__, idx );
 		return "";
 	}
 
 	if( !m_Object[idx.c_str( )].IsString( ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetString > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain a string" );
+		WarnInvalidObject( __func__, idx, "a string" );
 		return "";
 	}
 
@@ -36,16 +43,33 @@ std::string dae::JsonObjectWrapper::GetString( const std::string& idx ) const
 
 float dae::JsonObjectWrapper::GetFloat( const std::string& idx ) const
 {
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
 	if( !m_Object.HasMember( idx.c_str( ) ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetFloat > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
+		WarnKeyNotFound( __func__, idx );
 		return 0.f;
 	}
 
 	if( !m_Object[idx.c_str( )].IsNumber( ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetFloat > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain a float" );
+		WarnInvalidObject( __func__, idx, "a float" );
 		return 0.f;
+	}
+
+	return m_Object[idx.c_str( )].GetFloat( );
+}
+
+float dae::JsonObjectWrapper::GetOptionalFloat( const std::string& idx, float defaultVal ) const
+{
+	if( !m_Object.HasMember( idx.c_str( ) ) )
+	{
+		return defaultVal;
+	}
+
+	if( !m_Object[idx.c_str( )].IsNumber( ) )
+	{
+		return defaultVal;
 	}
 
 	return m_Object[idx.c_str( )].GetFloat( );
@@ -53,15 +77,18 @@ float dae::JsonObjectWrapper::GetFloat( const std::string& idx ) const
 
 uint32_t dae::JsonObjectWrapper::GetUint( const std::string& idx ) const
 {
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
 	if( !m_Object.HasMember( idx.c_str( ) ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetUint > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
+		WarnKeyNotFound( __func__, idx );
 		return 0u;
 	}
 
 	if( !m_Object[idx.c_str( )].IsUint( ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetUint > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain a uint" );
+		WarnInvalidObject( __func__, idx, "a uint" );
+		return 0u;
 	}
 
 	return m_Object[idx.c_str( )].GetUint( );
@@ -69,9 +96,11 @@ uint32_t dae::JsonObjectWrapper::GetUint( const std::string& idx ) const
 
 dae::JsonObjectWrapper dae::JsonObjectWrapper::GetObjectWrapper( const std::string& idx ) const
 {
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
 	if( !m_Object.HasMember( idx.c_str( ) ) )
 	{
-		Logger::LogError( "dae::JsonObjectWrapper::GetObjectWrapper > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
+		ErrorKeyNotFound( __func__, idx );
 		throw std::exception{ "Invalid Index" };
 	}
 
@@ -82,7 +111,7 @@ dae::JsonObjectWrapper dae::JsonObjectWrapper::GetObjectWrapper( const std::stri
 
 	if( !m_Object[idx.c_str( )].IsObject( ) )
 	{
-		Logger::LogError( "dae::JsonObjectWrapper::GetObjectWrapper > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain an object" );
+		ErrorInvalidObject( __func__, idx, "an object or string" );
 		throw std::exception{ "Invalid Jason Object" };
 	}
 
@@ -91,15 +120,17 @@ dae::JsonObjectWrapper dae::JsonObjectWrapper::GetObjectWrapper( const std::stri
 
 std::vector<dae::JsonObjectWrapper> dae::JsonObjectWrapper::GetObjectArray( const std::string& idx ) const
 {
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
 	if( !m_Object.HasMember( idx.c_str( ) ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetObjectArray > No key \"" + idx + "\" found in Jason object \"" + m_Name + "\"" );
+		WarnKeyNotFound( __func__, idx );
 		return { };
 	}
 
 	if( !m_Object[idx.c_str( )].IsArray( ) )
 	{
-		Logger::LogWarning( "dae::JsonObjectWrapper::GetObjectArray > Key \"" + idx + "\" in Jason object \"" + m_Name + "\" does not contain an array" );
+		WarnInvalidObject( __func__, idx, "an array" );
 		return { };
 	}
 
@@ -133,4 +164,32 @@ glm::vec2 dae::JsonObjectWrapper::GetVec2( const std::string& idx ) const
 	const float x{ vec2Json.GetFloat( "x" ) };
 	const float y{ vec2Json.GetFloat( "y" ) };
 	return { x, y };
+}
+
+void dae::JsonObjectWrapper::WarnInvalidObject( const std::string& currentFunction, const std::string& idx, const std::string& objectType ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	Logger::LogWarning( "dae::JsonObjectWrapper::" + currentFunction + " > " + fullVarName + " does not contain " + objectType );
+}
+
+void dae::JsonObjectWrapper::ErrorInvalidObject( const std::string& currentFunction, const std::string& idx, const std::string& objectType ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	Logger::LogError( "dae::JsonObjectWrapper::" + currentFunction + " > " + fullVarName + " does not contain " + objectType );
+}
+
+void dae::JsonObjectWrapper::WarnKeyNotFound( const std::string& currentFunction, const std::string& idx ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	Logger::LogWarning( "dae::JsonObjectWrapper::" + currentFunction + " > " + fullVarName + " not found" );
+}
+
+void dae::JsonObjectWrapper::ErrorKeyNotFound( const std::string& currentFunction, const std::string& idx ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	Logger::LogError( "dae::JsonObjectWrapper::" + currentFunction + " > " + fullVarName + " not found" );
 }

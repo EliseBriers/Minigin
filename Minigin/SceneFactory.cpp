@@ -15,9 +15,9 @@ std::unique_ptr<dae::Scene> dae::SceneFactory::ReadScene( const std::string& fil
 {
 	using namespace rapidjson;
 	// Read Json File
-	const Document& doc{ m_ResourceManager.GetJsonDocument( fileName ) };
-	rapidjson::Value::ConstObject obj{ doc.GetObjectA() };
-	const JsonObjectWrapper rootObject{doc.GetObjectA(), fileName, m_ResourceManager};
+	// const Document& doc{ m_ResourceManager.GetJsonDocument( fileName ) };
+	// rapidjson::Value::ConstObject obj{ doc.GetObjectA() };
+	const JsonObjectWrapper rootObject{ fileName, m_ResourceManager};
 	
 	// Extract name and gameObjects
 	const std::string name{ rootObject.GetString( "name" ) };
