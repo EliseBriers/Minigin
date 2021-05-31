@@ -95,7 +95,7 @@ int CubeGrid::RowColToIdx( int c, int r ) const
 glm::vec2 CubeGrid::CalculateOffset( int c, int r ) const
 {
 	const float y{ 0.75f * m_CubeSize.y * r };
-	const float xOffset{ GetColumnCount( r ) * 0.5f };
+	const float xOffset{ GetColumnCount( r ) * 0.5f - 0.5f };
 	const float x{ ( c - xOffset ) * m_CubeSize.x };
 	const glm::vec2 offset{ x, y };
 	return offset * 0.95f;
