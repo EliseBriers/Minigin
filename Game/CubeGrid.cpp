@@ -118,3 +118,29 @@ glm::vec2 CubeGrid::CalculateOffset( int c, int r ) const
 	const glm::vec2 offset{ x, y };
 	return offset * 0.95f;
 }
+
+glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direction ) const
+{
+	glm::vec2 offset{ };
+
+	switch( direction )
+	{
+	case MoveDirection::Left:
+		offset = { -0.5f, -0.5f };
+		break;
+	case MoveDirection::Right:
+		offset = { 0.5f, 0.5f };
+		break;
+	case MoveDirection::Up:
+		offset = { 0.5f, -0.5f };
+		break;
+	case MoveDirection::Down:
+		offset = { - 0.5f, 0.5f };
+		break;
+	}
+	offset *= m_CubeSize;
+	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
+	const float scale{ m_pTransform->GetScale( ) };
+
+	return pos + ( offset + m_Cubes[idx].Offset ) * scale;
+}

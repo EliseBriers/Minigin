@@ -84,8 +84,11 @@ void GridHopper::Hop( MoveDirection direction )
 	const int desiredIndex{ GetToIndex( cube, direction ) };
 	if( desiredIndex == -1 )
 	{
-		m_State = State::OutOfGrid;
+		m_State = State::Hopping;
+		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
+		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction );
 		dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
+		m_CurrentIndex = -1;
 		return;
 	}
 

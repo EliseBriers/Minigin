@@ -1,6 +1,7 @@
 #pragma once
 #include "IComponent.h"
 #include "SpriteSheet.h"
+#include "Enums.h"
 
 namespace dae
 {
@@ -52,9 +53,10 @@ public:
 
 	const Cube& GetCube( size_t idx ) const;
 	glm::vec2 GetCubePos( size_t idx ) const;
+	glm::vec2 CalculateImaginaryBlockPos( size_t idx, MoveDirection direction ) const;
+	size_t GetCubeCount( ) const;
 
 	~CubeGrid( ) override = default;
-	size_t GetCubeCount( ) const;
 	CubeGrid( const CubeGrid& other ) = delete;
 	CubeGrid( CubeGrid&& other ) noexcept = delete;
 	CubeGrid& operator=( const CubeGrid& other ) = delete;
@@ -73,5 +75,4 @@ private:
 	glm::vec2 CalculateOffset( int c, int r ) const;
 
 	// ToDo: Implement
-	glm::vec2 CalculateImaginaryBlockPos( );
 };
