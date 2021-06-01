@@ -181,9 +181,16 @@
   <ItemGroup>
     <ClCompile Include="..\Minigin\CubeGrid.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GridHopper.cpp" />
+    <ClCompile Include="QbertPlayer.cpp" />
+    <ClCompile Include="QbertSpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\CubeGrid.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="GridHopper.h" />
+    <ClInclude Include="QbertPlayer.h" />
+    <ClInclude Include="QbertSpriteComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -159,9 +159,6 @@
     <ClInclude Include="Observable.h">
       <Filter>Header Files\Observers</Filter>
     </ClInclude>
-    <ClInclude Include="QbertComponent.h">
-      <Filter>Header Files\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="KillQbertCommand.h">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
@@ -199,7 +196,7 @@
       <Filter>Header Files\Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="SpriteSheet.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +275,6 @@
     <ClCompile Include="ImGuiDemoComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="QbertComponent.cpp">
-      <Filter>Source Files\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="LivesCounterComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
@@ -312,7 +306,7 @@
       <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="SpriteSheet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

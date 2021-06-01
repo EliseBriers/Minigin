@@ -87,11 +87,12 @@
             "x": 320,
             "y": 100,
             "z": 0,
-			"scale": 1.8
+            "scale": 1.8
           }
         }
       ]
     },
+	"player_1.json",
     "fps_counter.json"
   ]
 }

@@ -65,6 +65,24 @@ void CubeGrid::Init( const InitInfo& initInfo )
 	}
 }
 
+const CubeGrid::Cube& CubeGrid::GetCube( size_t idx ) const
+{
+	return m_Cubes[idx];
+}
+
+glm::vec2 CubeGrid::GetCubePos( size_t idx ) const
+{
+	const Cube& cube{ GetCube( idx ) };
+	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
+	const float scale{ m_pTransform->GetScale( ) };
+	return cube.Offset * scale + pos;
+}
+
+size_t CubeGrid::GetCubeCount( ) const
+{
+	return m_Cubes.size( );
+}
+
 int CubeGrid::GetCubeIdx( const Cube& cube )
 {
 	const size_t offset{ 0u };

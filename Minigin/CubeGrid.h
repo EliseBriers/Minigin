@@ -31,6 +31,7 @@ class CubeGrid : public dae::IComponent
 		CubeColor_Size
 	};
 
+public:
 	struct Cube
 	{
 		glm::vec2 Offset;
@@ -43,14 +44,17 @@ class CubeGrid : public dae::IComponent
 		int ConnectionLeft;
 	};
 
-public:
 	CubeGrid( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
 
 	void Update( const dae::UpdateInfo& ) override;
 	void Draw( dae::Renderer& ) override;
 	void Init( const dae::InitInfo& initInfo ) override;
 
+	const Cube& GetCube( size_t idx ) const;
+	glm::vec2 GetCubePos( size_t idx ) const;
+
 	~CubeGrid( ) override = default;
+	size_t GetCubeCount( ) const;
 	CubeGrid( const CubeGrid& other ) = delete;
 	CubeGrid( CubeGrid&& other ) noexcept = delete;
 	CubeGrid& operator=( const CubeGrid& other ) = delete;
@@ -67,4 +71,7 @@ private:
 	static int GetCubeCount( int rows );
 	int RowColToIdx( int c, int r ) const;
 	glm::vec2 CalculateOffset( int c, int r ) const;
+
+	// ToDo: Implement
+	glm::vec2 CalculateImaginaryBlockPos( );
 };
