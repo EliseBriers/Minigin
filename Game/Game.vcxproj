@@ -179,14 +179,14 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Minigin\CubeGrid.cpp" />
+    <ClCompile Include="CubeGrid.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GridHopper.cpp" />
     <ClCompile Include="QbertPlayer.cpp" />
     <ClCompile Include="QbertSpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\CubeGrid.h" />
+    <ClInclude Include="CubeGrid.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GridHopper.h" />
     <ClInclude Include="QbertPlayer.h" />
