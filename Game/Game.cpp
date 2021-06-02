@@ -16,9 +16,9 @@ int main( int, char*[] )
 	engine.RegisterComponent<QbertPlayer>( );
 	engine.RegisterComponent<QbertSpriteComponent>( );
 	engine.RegisterComponent<SphereOverlapDetector>( );
-	engine.AddSceneFromFile( "test.json" );
+	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
+	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 	engine.SetActiveScene( "Demo" );
-	engine.GetActiveScene( )->SetBehavior( std::make_unique<QbertSceneBehavior>( ) );
 	engine.Run( );
 	return 0;
 }

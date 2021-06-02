@@ -7,6 +7,7 @@
 
 GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_StompBehavior{ GetStompBehavior( jsonObject.GetString( "stomp_behavior" ) ) }
 	, m_Callback{ VoidTouchdown }
 	, m_pCubeGrid{ nullptr }
 	, m_pTransform{ nullptr }
@@ -42,6 +43,40 @@ void GridHopper::Init( const dae::InitInfo& initInfo )
 	m_InitializedBehavior = true;
 }
 
+void GridHopper::OnHopComplete( )
+{
+	m_MovementPercentage = 0.f;
+	m_State = State::Idle;
+	m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
+
+	if( m_CurrentIndex == -1 )
+		return;
+
+	const CubeGrid::CubeState state{ m_pCubeGrid->GetCubeState( m_CurrentIndex ) };
+	switch( m_StompBehavior )
+	{
+	case StompBehavior::Complete:
+		m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Done );
+		break;
+	case StompBehavior::Advance:
+		if( state == CubeGrid::CubeState::Default )
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Marked );
+		else
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Done );
+		break;
+	case StompBehavior::UndoOne:
+		if( state == CubeGrid::CubeState::Done )
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Marked );
+		break;
+	case StompBehavior::UndoAll:
+		if( state == CubeGrid::CubeState::Done )
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Marked );
+		else
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Default );
+		break;
+	}
+}
+
 void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 {
 	if( !m_InitializedBehavior )
@@ -52,9 +87,7 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 	m_MovementPercentage += dt * m_Speed;
 	if( m_MovementPercentage > 1.f )
 	{
-		m_MovementPercentage = 0.f;
-		m_State = State::Idle;
-		m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
+		OnHopComplete( );
 		return;
 	}
 
@@ -151,4 +184,19 @@ int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction 
 
 void GridHopper::VoidTouchdown( TouchdownType )
 {
+}
+
+GridHopper::StompBehavior GridHopper::GetStompBehavior( const std::string& str )
+{
+	if( str == "complete" )
+		return StompBehavior::Complete;
+	if( str == "advance" )
+		return StompBehavior::Advance;
+	if( str == "undo_one" )
+		return StompBehavior::UndoOne;
+	if( str == "undo_all" )
+		return StompBehavior::UndoAll;
+
+	dae::Logger::LogWarning( "GridHopper::GetStompBehavior > invalid string provided" );
+	return StompBehavior::Complete;
 }

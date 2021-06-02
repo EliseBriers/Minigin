@@ -2,20 +2,32 @@
 #include "CubeGrid.h"
 #include "JsonObjectWrapper.h"
 #include "Logger.h"
+#include "TimerComponent.h"
+#include "QbertSceneBehavior.h"
+#include <InitInfo.h>
 
 using namespace dae;
 
 CubeGrid::CubeGrid( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_pSceneBehavior{ nullptr }
+	, m_pAnimationFlipTimer{ nullptr }
+	, m_pAnimationTimer{ nullptr }
+	, m_EndAnimationState{ CubeState::Default }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_pTransform{ nullptr }
 	, m_Rows{ 7 }
+	, m_GameCompleted{ false }
 {
 	m_Cubes.reserve( GetCubeCount( m_Rows ) );
 }
 
 void CubeGrid::Update( const UpdateInfo& )
 {
+	if( m_GameCompleted )
+		return;
+
+	CheckGameComplete( );
 }
 
 void CubeGrid::Draw( Renderer& renderer )
@@ -31,7 +43,9 @@ void CubeGrid::Draw( Renderer& renderer )
 	const glm::vec2 cubePivot{ 0.5, 0.25 };
 	for( const Cube& cube : m_Cubes )
 	{
-		m_SpriteSheet.Draw( renderer, cube.Offset * scale + pos, cubePivot, scale, GetCubeIdx( cube ) );
+		const CubeState state{ m_GameCompleted ? m_EndAnimationState : cube.State };
+		const size_t spriteIndex{ GetSpriteIdx( state, cube.Color ) };
+		m_SpriteSheet.Draw( renderer, cube.Offset * scale + pos, cubePivot, scale, spriteIndex );
 	}
 }
 
@@ -40,12 +54,17 @@ void CubeGrid::Init( const InitInfo& initInfo )
 	m_SpriteSheet.Init( initInfo );
 	m_CubeSize = { m_SpriteSheet.GetSpriteSource( 0 ).w, m_SpriteSheet.GetSpriteSource( 0 ).h };
 	m_pTransform = m_GameObject.get( ).GetComponent<TransformComponent>( );
+	if( !m_pTransform )
+	{
+		Logger::LogError( "CubeGrid::Init > m_pTransform was nullptr" );
+		return;
+	}
 
 	for( int y{ }; y < m_Rows; ++y )
 	{
 		for( int x{ }; x < GetColumnCount( y ); ++x )
 		{
-			const int idx{ RowColToIdx( x, y ) };
+			// const int idx{ RowColToIdx( x, y ) };
 			// Logger::LogInfo( "y: " + std::to_string( y ) + " x: " + std::to_string( x ) + " i: " + std::to_string( idx ) );
 
 			// Calculate connections
@@ -61,6 +80,35 @@ void CubeGrid::Init( const InitInfo& initInfo )
 			m_Cubes.push_back( c );
 		}
 	}
+
+	m_pAnimationFlipTimer = GetGameObject( ).GetComponentByName<TimerComponent>( "AnimationFlipTimer" );
+
+	if( !m_pAnimationFlipTimer )
+	{
+		Logger::LogError( "CubeGrid::Init > m_pAnimationFlipTimer was nullptr" );
+		return;
+	}
+
+	m_pAnimationFlipTimer->SetCallback( [this]( )
+	{
+		DoAnimationSwap( );
+	} );
+
+
+	m_pAnimationTimer = GetGameObject( ).GetComponentByName<TimerComponent>( "AnimationTimer" );
+
+	if( !m_pAnimationTimer )
+	{
+		Logger::LogError( "CubeGrid::Init > m_pAnimationTimer was nullptr" );
+		return;
+	}
+
+	m_pAnimationTimer->SetCallback( [this]( )
+	{
+		EndAnimation( );
+	} );
+
+	m_pSceneBehavior = initInfo.Scene_GetSceneBehaviorAs<QbertSceneBehavior>( );
 }
 
 const CubeGrid::Cube& CubeGrid::GetCube( size_t idx ) const
@@ -81,12 +129,40 @@ size_t CubeGrid::GetCubeCount( ) const
 	return m_Cubes.size( );
 }
 
-int CubeGrid::GetCubeIdx( const Cube& cube )
+void CubeGrid::SetCubeState( size_t idx, CubeState cubeState )
+{
+	m_Cubes[idx].State = cubeState;
+}
+
+CubeGrid::CubeState CubeGrid::GetCubeState( size_t idx ) const
+{
+	return m_Cubes[idx].State;
+}
+
+void CubeGrid::DoAnimationSwap( )
+{
+	if( m_EndAnimationState == CubeState::Done )
+		m_EndAnimationState = CubeState::Default;
+	else
+		m_EndAnimationState = CubeState::Done;
+}
+
+void CubeGrid::EndAnimation( )
+{
+	m_pSceneBehavior->EndLevel( );
+}
+
+size_t CubeGrid::GetSpriteIdx( const Cube& cube )
+{
+	return GetSpriteIdx( cube.State, cube.Color );
+}
+
+size_t CubeGrid::GetSpriteIdx( CubeState state, CubeColor color )
 {
 	const size_t offset{ 0u };
 	const size_t stateCount{ static_cast<size_t>(CubeState::CubeState_Size) };
 
-	return static_cast<int>(cube.State) + static_cast<int>(cube.Color) * stateCount + offset;
+	return static_cast<size_t>(state) + static_cast<size_t>(color) * stateCount + offset;
 }
 
 int CubeGrid::GetColumnCount( int row )
@@ -115,6 +191,20 @@ glm::vec2 CubeGrid::CalculateOffset( int c, int r ) const
 	const float x{ ( c - xOffset ) * m_CubeSize.x };
 	const glm::vec2 offset{ x, y };
 	return offset * 0.95f;
+}
+
+void CubeGrid::CheckGameComplete( )
+{
+	for( const Cube& cube : m_Cubes )
+	{
+		if( cube.State != CubeState::Done )
+			return;
+	}
+
+	Logger::LogInfo( "Game Completed" );
+	m_GameCompleted = true;
+	m_pAnimationFlipTimer->Start( );
+	m_pAnimationTimer->Start( );
 }
 
 glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direction ) const

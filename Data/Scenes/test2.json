@@ -1,5 +1,5 @@
 {
-  "name": "Demo",
+  "name": "Demo2",
   "objects": [
     {
       "name": "Background Image",
@@ -108,7 +108,7 @@
         }
       ]
     },
-    "player_1.json",
+    "player_2.json",
     {
       "name": "TestTrigger",
       "components": [

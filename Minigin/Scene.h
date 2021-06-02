@@ -25,6 +25,8 @@ namespace dae
 		void SetBehavior( std::unique_ptr<SceneBehavior> pBehavior );
 		template <typename T>
 		T* GetSceneBehaviorAs( ) const;
+		SceneManager* GetSceneManager( ) const;
+		void SetSceneManager( SceneManager* pSceneManager );
 
 		~Scene( );
 		Scene( const Scene& other ) = delete;
@@ -32,6 +34,7 @@ namespace dae
 		Scene& operator=( const Scene& other ) = delete;
 		Scene& operator=( Scene&& other ) = delete;
 	private:
+		SceneManager* m_pSceneManager;
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_Objects;
 		std::vector<std::unique_ptr<GameObject>> m_UninitializedObjects;

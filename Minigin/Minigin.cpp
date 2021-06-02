@@ -174,9 +174,12 @@ void dae::Minigin::SetActiveScene( const std::string& sceneName )
 	m_SceneManager.SetActiveScene( sceneName );
 }
 
-void dae::Minigin::AddSceneFromFile( const std::string& fileName )
+dae::Scene* dae::Minigin::AddSceneFromFile( const std::string& fileName )
 {
-	m_SceneManager.AddScene( m_SceneFactory.ReadScene( fileName ) );
+	std::unique_ptr<Scene> pScene{ m_SceneFactory.ReadScene( fileName ) };
+	Scene* pRaw{ pScene.get( ) };
+	m_SceneManager.AddScene( std::move( pScene ) );
+	return pRaw;
 }
 
 dae::Minigin::~Minigin( ) = default;

@@ -11,6 +11,16 @@ dae::Scene::Scene( const std::string& name )
 {
 }
 
+dae::SceneManager* dae::Scene::GetSceneManager( ) const
+{
+	return m_pSceneManager;
+}
+
+void dae::Scene::SetSceneManager( SceneManager* pSceneManager ) 
+{
+	m_pSceneManager = pSceneManager;
+}
+
 dae::Scene::~Scene( ) = default;
 
 const std::string& dae::Scene::GetName( ) const

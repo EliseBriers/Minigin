@@ -29,6 +29,7 @@ dae::Scene* dae::SceneManager::GetActiveScene( ) const
 
 void dae::SceneManager::AddScene( std::unique_ptr<Scene> pScene )
 {
+	pScene->SetSceneManager( this );
 	m_Scenes.emplace_back( std::move( pScene ) );
 }
 

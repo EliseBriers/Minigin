@@ -21,8 +21,17 @@ public:
 		OutOfGrid
 	};
 
+	enum class StompBehavior
+	{
+		Complete,
+		Advance,
+		UndoOne,
+		UndoAll
+	};
+
 	GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 	void Init( const dae::InitInfo& ) override;
+	void OnHopComplete( );
 	void Update( const dae::UpdateInfo& ) override;
 	void Hop( MoveDirection direction );
 	bool CanHop( ) const;
@@ -37,6 +46,7 @@ public:
 	GridHopper& operator=( const GridHopper& other ) = delete;
 	GridHopper& operator=( GridHopper&& other ) noexcept = delete;
 private:
+	StompBehavior m_StompBehavior;
 	touchdown_callback_t m_Callback;
 	glm::vec2 m_FromPos;
 	glm::vec2 m_ToPos;
@@ -51,4 +61,5 @@ private:
 
 	static int GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction );
 	static void VoidTouchdown( TouchdownType );
+	static StompBehavior GetStompBehavior( const std::string& str );
 };

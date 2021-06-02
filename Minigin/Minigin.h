@@ -20,7 +20,7 @@ namespace dae
 		void RegisterComponent( );
 
 		void SetActiveScene( const std::string& sceneName );
-		void AddSceneFromFile( const std::string& fileName );
+		Scene* AddSceneFromFile( const std::string& fileName );
 		
 		// Rule of 5
 		~Minigin( );

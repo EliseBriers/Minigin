@@ -6,7 +6,7 @@
       "desc": {
         "speed": 2,
         "jump_height": 10,
-        "stomp_behavior": "complete"
+        "stomp_behavior": "advance"
       }
     },
     {
