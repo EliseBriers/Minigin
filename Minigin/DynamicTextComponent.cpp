@@ -7,20 +7,8 @@
 #include <SDL.h>
 #include "JsonObjectWrapper.h"
 
-dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, char start, uint8_t charCount, float spacing, std::string fontFileName, uint32_t fontSize )
-	: IComponent{ gameObject }
-	, m_FontFileName{ fontFileName }
-	, m_FontSize{ fontSize }
-	, m_Spacing{ spacing }
-	, m_pTransform{ }
-	, m_Start{ start }
-	, m_CharCount{ charCount }
-{
-	m_pTextures.reserve( charCount );
-}
-
-dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_pTextures{ }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_Text{ }

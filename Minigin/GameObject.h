@@ -27,7 +27,9 @@ namespace dae
 		void Init( InitInfo& initInfo );
 
 		template <typename T>
-		T* GetComponent( );
+		T* GetComponent( ) const;
+		template <typename T>
+		T* GetComponentByName( const std::string& name ) const;
 		const std::string& GetName( ) const;
 		const UUID<GameObject> Id;
 
@@ -44,12 +46,24 @@ namespace dae
 	};
 
 	template <typename T>
-	T* GameObject::GetComponent( )
+	T* GameObject::GetComponent( ) const
 	{
 		for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
 		{
 			T* pReturnVal{ dynamic_cast<T*>(pComponent.get( )) };
 			if( pReturnVal )
+				return pReturnVal;
+		}
+		return nullptr;
+	}
+
+	template <typename T>
+	T* GameObject::GetComponentByName( const std::string& name ) const
+	{
+		for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+		{
+			T* pReturnVal{ dynamic_cast<T*>(pComponent.get( )) };
+			if( pReturnVal && pReturnVal->GetName( ) == name )
 				return pReturnVal;
 		}
 		return nullptr;

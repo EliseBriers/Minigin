@@ -180,6 +180,19 @@ void dae::JsonObjectWrapper::ErrorInvalidObject( const std::string& currentFunct
 	Logger::LogError( "dae::JsonObjectWrapper::" + currentFunction + " > " + fullVarName + " does not contain " + objectType );
 }
 
+std::string dae::JsonObjectWrapper::GetOptionalString( const std::string& idx, const std::string& defaultVal ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	if( !m_Object.HasMember( idx.c_str( ) ) )
+		return defaultVal;
+
+	if( !m_Object[idx.c_str( )].IsString( ) )
+		return defaultVal;
+
+	return { m_Object[idx.c_str( )].GetString( ) };
+}
+
 void dae::JsonObjectWrapper::WarnKeyNotFound( const std::string& currentFunction, const std::string& idx ) const
 {
 	const std::string fullVarName{ GetFullVarName( idx ) };

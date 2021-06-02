@@ -2,8 +2,8 @@
 #include "ImGuiDemoComponent.h"
 #include "imgui.h"
 
-dae::ImGuiDemoComponent::ImGuiDemoComponent( GameObject& gameObject )
-	: IComponent{ gameObject }
+dae::ImGuiDemoComponent::ImGuiDemoComponent( GameObject& gameObject, const JsonObjectWrapper&, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 {
 }
 

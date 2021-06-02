@@ -192,13 +192,13 @@
     <ClInclude Include="JsonObjectWrapper.h">
       <Filter>Header Files\Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteSheet.h">
-      <Filter>Header Files\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="SceneBehavior.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="UUID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -305,11 +305,11 @@
     <ClCompile Include="JsonObjectWrapper.cpp">
       <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteSheet.cpp">
-      <Filter>Source Files\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="SceneBehavior.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteSheet.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

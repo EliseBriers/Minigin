@@ -5,16 +5,8 @@
 #include "JsonObjectWrapper.h"
 #include "Logger.h"
 
-dae::TextureComponent::TextureComponent( const std::string& fileName, GameObject& gameObject )
-	: IComponent{ gameObject }
-	, m_FileName{ fileName }
-	, m_pTexture{ nullptr }
-	, m_pTransformComponent{ nullptr }
-{
-}
-
-dae::TextureComponent::TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+dae::TextureComponent::TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_FileName{ jsonObject.GetString( "texture_file_name" ) }
 	, m_pTexture{ nullptr }
 	, m_pTransformComponent{ nullptr }

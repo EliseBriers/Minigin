@@ -45,7 +45,7 @@ public:
 		int ConnectionLeft;
 	};
 
-	CubeGrid( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
+	CubeGrid(dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
 
 	void Update( const dae::UpdateInfo& ) override;
 	void Draw( dae::Renderer& ) override;

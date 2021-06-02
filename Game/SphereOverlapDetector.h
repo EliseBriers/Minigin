@@ -19,7 +19,7 @@ public:
 
 	using callback_t = std::function<void( dae::GameObject*, TriggerAction )>;
 
-	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
+	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
 	void Update( const dae::UpdateInfo& ) override;
 	void Draw( dae::Renderer& ) override;
 	void Init( const dae::InitInfo& ) override;

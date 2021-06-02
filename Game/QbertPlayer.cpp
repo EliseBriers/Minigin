@@ -6,8 +6,8 @@
 #include "SetVarCommand.h"
 #include "QbertSpriteComponent.h"
 
-QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& )
-	: IComponent{ gameObject }
+QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper&, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_pGridHopper{ nullptr }
 	, m_pSprite{ nullptr }
 	, m_InputLeft{ false }
@@ -20,7 +20,7 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 void QbertPlayer::Update( const dae::UpdateInfo& )
 {
 	m_pSprite->SetState( m_pGridHopper->IsHopping( ) ? QbertSpriteComponent::State::Jumping : QbertSpriteComponent::State::Idle );
-	
+
 	if( GetInputCount( ) != 1 )
 		return;
 

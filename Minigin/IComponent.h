@@ -3,6 +3,7 @@
 
 namespace dae
 {
+	class JsonObjectWrapper;
 	class InitInfo;
 	class UpdateInfo;
 	class Renderer;
@@ -10,7 +11,7 @@ namespace dae
 	class IComponent
 	{
 	public:
-		IComponent( GameObject& gameObject );
+		IComponent( GameObject& gameObject, std::string name );
 
 		virtual void FixedUpdate( const UpdateInfo& );
 		virtual void Update( const UpdateInfo& );
@@ -19,6 +20,9 @@ namespace dae
 
 		GameObject& GetGameObject( ) const;
 
+		const std::string& GetName( ) const;
+		const UUID<IComponent> Id;
+
 		virtual ~IComponent( ) = default;
 		IComponent( const IComponent& other ) = delete;
 		IComponent( IComponent&& other ) noexcept = delete;
@@ -26,5 +30,6 @@ namespace dae
 		IComponent& operator=( IComponent&& other ) noexcept = delete;
 	protected:
 		std::reference_wrapper<GameObject> m_GameObject;
+		std::string m_Name;
 	};
 }

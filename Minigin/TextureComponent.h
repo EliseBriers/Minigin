@@ -10,8 +10,7 @@ namespace dae
 	class TextureComponent : public IComponent
 	{
 	public:
-		TextureComponent( const std::string& fileName, GameObject& gameObject );
-		TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
+		TextureComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& ) override;
 

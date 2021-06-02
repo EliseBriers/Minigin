@@ -3,14 +3,8 @@
 #include "DynamicTextComponent.h"
 #include "UpdateInfo.h"
 
-dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject )
-	: IComponent{ gameObject }
-	, m_pTextComponent{ }
-{
-}
-
-dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const JsonObjectWrapper& )
-	: IComponent{ gameObject }
+dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const JsonObjectWrapper&, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_pTextComponent{ }
 {
 }

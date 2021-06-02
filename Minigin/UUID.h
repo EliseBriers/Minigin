@@ -9,6 +9,7 @@ namespace dae
 		UUID( );
 		bool operator==( const UUID<T>& other ) const;
 		bool operator!=( const UUID<T>& other ) const;
+		size_t GetValue( ) const;
 
 		UUID( const UUID& other ) = delete;
 		UUID( UUID&& other ) noexcept = delete;
@@ -38,5 +39,11 @@ namespace dae
 	bool UUID<T>::operator!=( const UUID<T>& other ) const
 	{
 		return !( *this == other );
+	}
+
+	template <typename T>
+	size_t UUID<T>::GetValue( ) const
+	{
+		return m_Id;
 	}
 }

@@ -10,8 +10,7 @@ namespace dae
 	class FpsCounterComponent final : public IComponent
 	{
 	public:
-		FpsCounterComponent( GameObject& gameObject );
-		FpsCounterComponent(GameObject& gameObject, const JsonObjectWrapper& );
+		FpsCounterComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
 
 		virtual void Update(const UpdateInfo& updateInfo) override;
 		virtual void Init( const InitInfo& ) override;

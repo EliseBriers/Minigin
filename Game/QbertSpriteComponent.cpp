@@ -2,8 +2,8 @@
 #include "QbertSpriteComponent.h"
 #include "JsonObjectWrapper.h"
 
-QbertSpriteComponent::QbertSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+QbertSpriteComponent::QbertSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_pTransform{ nullptr }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_Direction{ Direction::Down }

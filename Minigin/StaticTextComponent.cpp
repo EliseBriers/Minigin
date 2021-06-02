@@ -7,16 +7,8 @@
 #include "Texture2D.h"
 #include "Logger.h"
 
-dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const std::string& text, const std::string& fontFileName, uint32_t size )
-	: IComponent{ gameObject }
-	, m_Text{ text }
-	, m_FontFileName{ fontFileName }
-	, m_Size{ size }
-{
-}
-
-dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_Text{ jsonObject.GetString( "text" ) }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_pTexture{ nullptr }

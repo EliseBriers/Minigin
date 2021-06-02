@@ -12,9 +12,7 @@ namespace dae
 	class TransformComponent : public IComponent
 	{
 	public:
-		TransformComponent( GameObject& gameObject );
-		TransformComponent( GameObject& gameObject, float x, float y, float z );
-		TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
+		TransformComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
 		const glm::vec3& GetPosition( ) const;
 		float GetScale() const;
 		

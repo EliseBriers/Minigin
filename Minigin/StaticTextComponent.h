@@ -11,8 +11,7 @@ namespace dae
 	class StaticTextComponent : public IComponent
 	{
 	public:
-		StaticTextComponent( GameObject& gameObject, const std::string& text, const std::string& fontFileName, uint32_t size );
-		StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
+		StaticTextComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& initInfo ) override;
 

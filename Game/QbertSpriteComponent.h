@@ -10,7 +10,7 @@ namespace dae
 class QbertSpriteComponent : public dae::IComponent
 {
 public:
-	QbertSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
+	QbertSpriteComponent(dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
 
 	enum class Direction : size_t
 	{

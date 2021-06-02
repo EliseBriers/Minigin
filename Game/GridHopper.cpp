@@ -5,8 +5,8 @@
 #include "JsonObjectWrapper.h"
 #include "UpdateInfo.h"
 
-GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_pCubeGrid{ nullptr }
 	, m_pTransform{ nullptr }
 	, m_CurrentIndex{ 0u }
@@ -87,12 +87,12 @@ void GridHopper::Hop( MoveDirection direction )
 		m_State = State::Hopping;
 		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
 		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction );
-		dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
+		// dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
 		m_CurrentIndex = -1;
 		return;
 	}
 
-	dae::Logger::LogInfo( "GridHopper::Hop > Hopping from index " + std::to_string( m_CurrentIndex ) + " to index " + std::to_string( desiredIndex ) );
+	// dae::Logger::LogInfo( "GridHopper::Hop > Hopping from index " + std::to_string( m_CurrentIndex ) + " to index " + std::to_string( desiredIndex ) );
 	m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
 	m_ToPos = m_pCubeGrid->GetCubePos( desiredIndex );
 	m_CurrentIndex = desiredIndex;

@@ -13,7 +13,7 @@ public:
 		OutOfGrid
 	};
 
-	GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
+	GridHopper(dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
 	void Init( const dae::InitInfo& ) override;
 	void Update( const dae::UpdateInfo& ) override;
 	void Hop( MoveDirection direction );

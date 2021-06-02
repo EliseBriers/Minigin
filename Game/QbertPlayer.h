@@ -12,7 +12,7 @@ class QbertSpriteComponent;
 class QbertPlayer : public dae::IComponent
 {
 public:
-	QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject );
+	QbertPlayer(dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
 
 	void Update( const dae::UpdateInfo& ) override;
 	void Init( const dae::InitInfo& initInfo ) override;

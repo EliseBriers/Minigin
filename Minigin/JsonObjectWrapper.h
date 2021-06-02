@@ -16,6 +16,7 @@ namespace dae
 		JsonObjectWrapper( const std::string& fileName, ResourceManager& resourceManager );
 		std::string GetFullVarName( const std::string& idx ) const;
 		std::string GetString( const std::string& idx ) const;
+		std::string GetOptionalString( const std::string& idx, const std::string& defaultVal ) const;
 		float GetFloat( const std::string& idx ) const;
 		float GetOptionalFloat( const std::string& idx, float defaultVal ) const;
 		uint32_t GetUint( const std::string& idx ) const;

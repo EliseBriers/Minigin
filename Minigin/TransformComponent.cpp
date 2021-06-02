@@ -2,20 +2,8 @@
 #include "TransformComponent.h"
 #include "JsonObjectWrapper.h"
 
-dae::TransformComponent::TransformComponent( GameObject& gameObject )
-	: TransformComponent{ gameObject, 0.f, 0.f, 0.f }
-{
-}
-
-dae::TransformComponent::TransformComponent( GameObject& gameObject, float x, float y, float z )
-	: IComponent{ gameObject }
-	, m_Position{ x, y, z }
-	, m_Scale{ 1.f }
-{
-}
-
-dae::TransformComponent::TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+dae::TransformComponent::TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_Position{ jsonObject.GetFloat( "x" ), jsonObject.GetFloat( "y" ), jsonObject.GetFloat( "z" ) }
 	, m_Scale{ jsonObject.GetOptionalFloat( "scale", 1.f ) }
 {

@@ -11,14 +11,12 @@ namespace dae
 	class DynamicTextComponent final : public IComponent
 	{
 	public:
-		DynamicTextComponent( GameObject& gameObject, char start, uint8_t charCount, float spacing, std::string fontFileName, uint32_t fontSize );
-		DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject );
+		DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name );
 
 		void SetText( const std::string& text );
 		void EmplaceText( std::string&& text );
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& initInfo ) override;
-
 
 		~DynamicTextComponent( ) override = default;
 		DynamicTextComponent( const DynamicTextComponent& other ) = delete;
@@ -38,6 +36,6 @@ namespace dae
 		glm::vec2 m_Pivot;
 
 		void UpdateSize( );
-		glm::vec2 GetDrawPos() const;
+		glm::vec2 GetDrawPos( ) const;
 	};
 }

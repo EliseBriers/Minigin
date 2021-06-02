@@ -4,8 +4,8 @@
 #include <InitInfo.h>
 #include "QbertSceneBehavior.h"
 
-SphereOverlapDetector::SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+SphereOverlapDetector::SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_Callback{ DefaultCallback }
 	, m_Circle{ }
 	, m_Radius{ jsonObject.GetFloat( "radius" ) }
@@ -70,7 +70,14 @@ void SphereOverlapDetector::UpdateCircle( )
 
 void SphereOverlapDetector::DefaultCallback( dae::GameObject*, TriggerAction )
 {
-	// dae::Logger::LogInfo( "SphereOverlapDetector::DefaultCallback > Called" );
+	// if( ta == TriggerAction::Enter )
+	// {
+	// 	dae::Logger::LogInfo( "GameObject got entered by \"" + pGo->GetName( ) + "\" with id " + std::to_string( pGo->Id.GetValue( ) ) );
+	// }
+	// else
+	// {
+	// 	dae::Logger::LogInfo( "GameObject got exited by \"" + pGo->GetName( ) + "\" with id " + std::to_string( pGo->Id.GetValue( ) ) );
+	// }
 }
 
 void SphereOverlapDetector::RegisterOverlap( dae::GameObject* pOther )

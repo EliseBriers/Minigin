@@ -6,7 +6,7 @@ namespace dae
 	class ImGuiDemoComponent final : public IComponent
 	{
 	public:
-		ImGuiDemoComponent( GameObject& gameObject );
+		ImGuiDemoComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
 		void Draw( Renderer& ) override;
 	};
 }

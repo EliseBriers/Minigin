@@ -5,8 +5,8 @@
 
 using namespace dae;
 
-CubeGrid::CubeGrid( GameObject& gameObject, const JsonObjectWrapper& jsonObject )
-	: IComponent{ gameObject }
+CubeGrid::CubeGrid( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
+	: IComponent{ gameObject, std::move( name ) }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_pTransform{ nullptr }
 	, m_Rows{ 7 }
