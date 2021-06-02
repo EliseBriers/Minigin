@@ -1,9 +1,9 @@
+#include "GamePCH.h"
 #include "GridHopper.h"
 #include "InitInfo.h"
 #include "Logger.h"
 #include "JsonObjectWrapper.h"
 #include "UpdateInfo.h"
-#include "TransformComponent.h"
 
 GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }

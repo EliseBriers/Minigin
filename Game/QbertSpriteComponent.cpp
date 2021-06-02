@@ -1,6 +1,6 @@
+#include "GamePCH.h"
 #include "QbertSpriteComponent.h"
 #include "JsonObjectWrapper.h"
-#include "TransformComponent.h"
 
 QbertSpriteComponent::QbertSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject )
 	: IComponent{ gameObject }

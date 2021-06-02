@@ -36,6 +36,9 @@
     <ClCompile Include="CubeGrid.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GamePCH.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridHopper.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="CubeGrid.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePCH.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

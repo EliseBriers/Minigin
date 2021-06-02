@@ -1,8 +1,6 @@
-#include "MiniginPCH.h"
+#include "GamePCH.h"
 #include "CubeGrid.h"
 #include "JsonObjectWrapper.h"
-#include "GameObject.h"
-#include "TransformComponent.h"
 #include "Logger.h"
 
 using namespace dae;

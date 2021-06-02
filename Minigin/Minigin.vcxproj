@@ -251,7 +251,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClInclude Include="ImGuiDemoComponent.h" />
     <ClInclude Include="InitInfo.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="LivesCounterComponent.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="ManagerMap.h" />
     <ClInclude Include="Minigin.h" />
@@ -382,7 +381,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClCompile Include="InitInfo.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonObjectWrapper.cpp" />
-    <ClCompile Include="LivesCounterComponent.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />

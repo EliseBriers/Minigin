@@ -21,9 +21,6 @@
 #include "DynamicTextComponent.h"
 #include "FpsCounterComponent.h"
 #include "SetVarCommand.h"
-#include "ImGuiDemoComponent.h"
-#include "QbertComponent.h"
-#include "LivesCounterComponent.h"
 
 #include <SDL_mixer.h>
 #include "ISoundSystem.h"

@@ -18,9 +18,10 @@ public:
 	void Update( const dae::UpdateInfo& ) override;
 	void Hop( MoveDirection direction );
 	bool CanHop( ) const;
-	// Rule of 5
-	~GridHopper( ) override = default;
 	bool IsHopping( ) const;
+	// Rule of 5
+	
+	~GridHopper( ) override = default;
 	GridHopper( const GridHopper& other ) = delete;
 	GridHopper( GridHopper&& other ) noexcept = delete;
 	GridHopper& operator=( const GridHopper& other ) = delete;

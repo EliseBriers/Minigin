@@ -162,9 +162,6 @@
     <ClInclude Include="KillQbertCommand.h">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="LivesCounterComponent.h">
-      <Filter>Header Files\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="ISoundSystem.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
@@ -273,9 +270,6 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiDemoComponent.cpp">
-      <Filter>Source Files\GameObject\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesCounterComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp">
