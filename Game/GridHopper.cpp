@@ -7,6 +7,7 @@
 
 GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_Callback{ VoidTouchdown }
 	, m_pCubeGrid{ nullptr }
 	, m_pTransform{ nullptr }
 	, m_CurrentIndex{ 0u }
@@ -53,6 +54,7 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 	{
 		m_MovementPercentage = 0.f;
 		m_State = State::Idle;
+		m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
 		return;
 	}
 
@@ -110,6 +112,25 @@ bool GridHopper::IsHopping( ) const
 	return m_State == State::Hopping;
 }
 
+void GridHopper::Teleport( size_t index )
+{
+	if( index >= m_pCubeGrid->GetCubeCount( ) )
+	{
+		dae::Logger::LogWarning( "GridHopper::Teleport > invalid index" );
+		return;
+	}
+
+	m_CurrentIndex = static_cast<int>(index);
+	const glm::vec2 pos{ m_pCubeGrid->GetCubePos( index ) };
+	m_pTransform->SetPosition( pos.x, pos.y, 0.f );
+	m_State = State::Idle;
+}
+
+void GridHopper::SetTouchdownCallback( const touchdown_callback_t& onTouchdown )
+{
+	m_Callback = onTouchdown;
+}
+
 int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction )
 {
 	switch( direction )
@@ -126,4 +147,8 @@ int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction 
 		dae::Logger::LogWarning( "GridHopper::GetToIndex > direction invalid" );
 		return -1;
 	}
+}
+
+void GridHopper::VoidTouchdown( TouchdownType )
+{
 }

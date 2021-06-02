@@ -4,9 +4,9 @@
     {
       "class": "GridHopper",
       "desc": {
-	  "speed": 2,
-	  "jump_height": 10
-	  }
+        "speed": 2,
+        "jump_height": 10
+      }
     },
     {
       "class": "QbertPlayer",
@@ -27,11 +27,18 @@
         "sprite_sheet": "qbert_sprites.json"
       }
     },
-	{
+    {
       "class": "SphereOverlapDetector",
       "desc": {
-	  "radius": 5
-	  }
+        "radius": 5
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "respawn_timer",
+      "desc": {
+        "loop": false
+      }
     }
   ]
 }

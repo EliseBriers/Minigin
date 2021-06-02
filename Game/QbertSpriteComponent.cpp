@@ -13,6 +13,9 @@ QbertSpriteComponent::QbertSpriteComponent( dae::GameObject& gameObject, const d
 
 void QbertSpriteComponent::Draw( dae::Renderer& r )
 {
+	if( m_State == State::Dead )
+		return;
+
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
 	const float scale{ m_pTransform->GetScale( ) };
 

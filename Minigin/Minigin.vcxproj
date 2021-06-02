@@ -269,6 +269,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="ThreadWrapper.h" />
+    <ClInclude Include="TimerComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateInfo.h" />
     <ClInclude Include="UUID.h" />
@@ -405,6 +406,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="ThreadWrapper.cpp" />
+    <ClCompile Include="TimerComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="UpdateInfo.cpp" />
   </ItemGroup>

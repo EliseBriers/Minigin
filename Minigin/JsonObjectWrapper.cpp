@@ -193,6 +193,25 @@ std::string dae::JsonObjectWrapper::GetOptionalString( const std::string& idx, c
 	return { m_Object[idx.c_str( )].GetString( ) };
 }
 
+bool dae::JsonObjectWrapper::GetBool( const std::string& idx ) const
+{
+	const std::string fullVarName{ GetFullVarName( idx ) };
+
+	if( !m_Object.HasMember( idx.c_str( ) ) )
+	{
+		WarnKeyNotFound( __func__, idx );
+		return false;
+	}
+
+	if( !m_Object[idx.c_str( )].IsBool( ) )
+	{
+		WarnInvalidObject( __func__, idx, "a boolean" );
+		return false;
+	}
+
+	return m_Object[idx.c_str( )].GetBool( );
+}
+
 void dae::JsonObjectWrapper::WarnKeyNotFound( const std::string& currentFunction, const std::string& idx ) const
 {
 	const std::string fullVarName{ GetFullVarName( idx ) };

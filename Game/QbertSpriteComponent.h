@@ -23,7 +23,8 @@ public:
 	enum class State : size_t
 	{
 		Idle,
-		Jumping
+		Jumping,
+		Dead
 	};
 
 	void Draw( dae::Renderer& ) override;

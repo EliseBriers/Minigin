@@ -31,6 +31,7 @@
 #include <istreamwrapper.h>
 #include <fstream>
 #include "Logger.h"
+#include "TimerComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -82,6 +83,7 @@ void dae::Minigin::RegisterComponents( )
 	m_SceneFactory.RegisterComponent<StaticTextComponent>( );
 	m_SceneFactory.RegisterComponent<DynamicTextComponent>( );
 	m_SceneFactory.RegisterComponent<FpsCounterComponent>( );
+	m_SceneFactory.RegisterComponent<TimerComponent>( );
 }
 
 void dae::Minigin::Cleanup( )
