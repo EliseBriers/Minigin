@@ -12,7 +12,7 @@ GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrappe
 	, m_CurrentIndex{ 0u }
 	, m_Speed{ jsonObject.GetOptionalFloat( "speed", 1.f ) }
 	, m_JumpHeight{ jsonObject.GetOptionalFloat( "jump_height", 15.f ) }
-	, m_IsInitialized{ false }
+	, m_InitializedBehavior{ false }
 	, m_State{ State::Idle }
 {
 }
@@ -38,12 +38,12 @@ void GridHopper::Init( const dae::InitInfo& initInfo )
 		return;
 	}
 
-	m_IsInitialized = true;
+	m_InitializedBehavior = true;
 }
 
 void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 {
-	if( !m_IsInitialized )
+	if( !m_InitializedBehavior )
 		return;
 	if( m_State != State::Hopping )
 		return;

@@ -6,6 +6,7 @@ namespace dae
 {
 	class GameObject;
 	class InitInfo;
+	class SceneBehavior;
 
 	class Scene
 	{
@@ -17,12 +18,15 @@ namespace dae
 		void FixedUpdate( const UpdateInfo& updateInfo );
 		void Update( const UpdateInfo& updateInfo );
 		void Render( Renderer& renderer ) const;
-		void InitGameObjects( InitInfo& initInfo );
+		void Init( InitInfo& initInfo );
+		const std::string& GetName( ) const;
 
 		GameObject* GetGameObject( const std::string& name ) const;
+		void SetBehavior( std::unique_ptr<SceneBehavior> pBehavior );
+		template <typename T>
+		T* GetSceneBehaviorAs( ) const;
 
 		~Scene( );
-		const std::string& GetName( ) const;
 		Scene( const Scene& other ) = delete;
 		Scene( Scene&& other ) = delete;
 		Scene& operator=( const Scene& other ) = delete;
@@ -31,5 +35,13 @@ namespace dae
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_Objects;
 		std::vector<std::unique_ptr<GameObject>> m_UninitializedObjects;
+		std::unique_ptr<SceneBehavior> m_pSceneBehavior;
+		bool m_InitializedBehavior;
 	};
+
+	template <typename T>
+	T* Scene::GetSceneBehaviorAs( ) const
+	{
+		return dynamic_cast<T*>(m_pSceneBehavior.get( ));
+	}
 }

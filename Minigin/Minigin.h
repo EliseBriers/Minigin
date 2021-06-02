@@ -24,6 +24,7 @@ namespace dae
 		
 		// Rule of 5
 		~Minigin( );
+		Scene* GetActiveScene( ) const;
 		Minigin( const Minigin& other ) = delete;
 		Minigin( Minigin&& other ) noexcept = delete;
 		Minigin& operator=( const Minigin& other ) = delete;

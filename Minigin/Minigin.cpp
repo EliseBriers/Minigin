@@ -30,6 +30,7 @@
 #include <document.h>
 #include <istreamwrapper.h>
 #include <fstream>
+#include "Logger.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -123,7 +124,11 @@ void dae::Minigin::Run( )
 				if( activeScene )
 				{
 					InitInfo io{ m_ResourceManager, m_Renderer, m_InputManager, *activeScene, *m_pSoundSystem };
-					activeScene->InitGameObjects( io );
+					activeScene->Init( io );
+				}
+				else
+				{
+					Logger::LogWarning( "dae::Minigin::Run > No active scene!" );
 				}
 			}
 			
@@ -173,3 +178,8 @@ void dae::Minigin::AddSceneFromFile( const std::string& fileName )
 }
 
 dae::Minigin::~Minigin( ) = default;
+
+dae::Scene* dae::Minigin::GetActiveScene( ) const
+{
+	return m_SceneManager.GetActiveScene( );
+}

@@ -12,10 +12,12 @@ namespace dae
 	public:
 		IComponent( GameObject& gameObject );
 
-		virtual void FixedUpdate(const UpdateInfo&);
+		virtual void FixedUpdate( const UpdateInfo& );
 		virtual void Update( const UpdateInfo& );
 		virtual void Draw( Renderer& );
 		virtual void Init( const InitInfo& );
+
+		GameObject& GetGameObject( ) const;
 
 		virtual ~IComponent( ) = default;
 		IComponent( const IComponent& other ) = delete;

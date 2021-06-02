@@ -25,7 +25,11 @@
 #include <glm/vec2.hpp>
 // #pragma warning(pop)
 
+// #include "MathHelpers.h"
+
 // Engine stuff
 #include <IComponent.h>
 #include <GameObject.h>
 #include <TransformComponent.h>
+#include <Logger.h>
+#include <JsonObjectWrapper.h>

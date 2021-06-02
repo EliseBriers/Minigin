@@ -195,16 +195,24 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePCH.cpp" />
     <ClCompile Include="GridHopper.cpp" />
+    <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="QbertPlayer.cpp" />
+    <ClCompile Include="QbertSceneBehavior.cpp" />
     <ClCompile Include="QbertSpriteComponent.cpp" />
+    <ClCompile Include="SphereOverlapDetector.cpp" />
+    <ClCompile Include="TriggerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeGrid.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="GridHopper.h" />
+    <ClInclude Include="MathHelpers.h" />
     <ClInclude Include="QbertPlayer.h" />
+    <ClInclude Include="QbertSceneBehavior.h" />
     <ClInclude Include="QbertSpriteComponent.h" />
+    <ClInclude Include="SphereOverlapDetector.h" />
+    <ClInclude Include="TriggerManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,6 +19,18 @@
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{cfb950d3-d108-4179-abec-242e1a99253c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SceneBehaviors">
+      <UniqueIdentifier>{c44a3fe4-5ac2-42ee-ab73-1c82e377f930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneBehaviors">
+      <UniqueIdentifier>{6832fb65-806b-41da-af8c-fd298e08b8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{2d5fef40-3568-49b9-97e8-ad9ce8f5903d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{3593e3c6-3c60-43dd-bdfa-56be4fc37cee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -39,6 +51,18 @@
     <ClCompile Include="GamePCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QbertSceneBehavior.cpp">
+      <Filter>Source Files\SceneBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereOverlapDetector.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MathHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridHopper.h">
@@ -58,6 +82,18 @@
     </ClInclude>
     <ClInclude Include="GamePCH.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSceneBehavior.h">
+      <Filter>Header Files\SceneBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereOverlapDetector.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

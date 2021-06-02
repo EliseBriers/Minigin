@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL.h>
 #include "InputManager.h"
+#include "Scene.h"
 
 namespace dae
 {
@@ -25,6 +26,9 @@ namespace dae
 
 		uint16_t GetSound( const std::string& fileName ) const;
 
+		template <typename T>
+		T* Scene_GetSceneBehaviorAs( ) const;
+
 		~InitInfo( ) = default;
 		GameObject* Scene_GetGameObject( const std::string& name ) const;
 		InitInfo( const InitInfo& other ) = delete;
@@ -38,4 +42,10 @@ namespace dae
 		Scene& m_Scene;
 		ISoundSystem& m_SoundSystem;
 	};
+
+	template <typename T>
+	T* InitInfo::Scene_GetSceneBehaviorAs( ) const
+	{
+		return m_Scene.GetSceneBehaviorAs<T>( );
+	}
 }

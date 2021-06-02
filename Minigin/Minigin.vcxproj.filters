@@ -195,6 +195,12 @@
     <ClInclude Include="SpriteSheet.h">
       <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="SceneBehavior.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UUID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -301,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="SpriteSheet.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBehavior.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

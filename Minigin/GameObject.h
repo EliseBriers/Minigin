@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "UUID.h"
 
 namespace dae
 {
@@ -28,17 +29,18 @@ namespace dae
 		template <typename T>
 		T* GetComponent( );
 		const std::string& GetName( ) const;
+		const UUID<GameObject> Id;
 
 		GameObject( ) = default;
+
 		~GameObject( );
 		GameObject( const GameObject& other ) = delete;
 		GameObject( GameObject&& other ) = delete;
 		GameObject& operator=( const GameObject& other ) = delete;
 		GameObject& operator=( GameObject&& other ) = delete;
-
 	private:
 		std::vector<std::unique_ptr<IComponent>> m_pComponents;
-		std::string m_Name;
+		const std::string m_Name;
 	};
 
 	template <typename T>

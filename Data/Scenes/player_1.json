@@ -26,6 +26,12 @@
       "desc": {
         "sprite_sheet": "qbert_sprites.json"
       }
+    },
+	{
+      "class": "SphereOverlapDetector",
+      "desc": {
+	  "radius": 5
+	  }
     }
   ]
 }

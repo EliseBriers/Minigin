@@ -21,3 +21,8 @@ void dae::IComponent::Draw( Renderer& )
 void dae::IComponent::Init( const InitInfo& )
 {
 }
+
+dae::GameObject& dae::IComponent::GetGameObject( ) const
+{
+	return m_GameObject.get( );
+}

@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "backends/imgui_impl_sdl.h"
 #include "backends/imgui_impl_opengl2.h"
+#include "Logger.h"
 
 dae::Renderer::Renderer( )
 	: m_pSDLRenderer{ nullptr }
@@ -122,6 +123,59 @@ SDL_Renderer* dae::Renderer::GetSDLRenderer( ) const
 	return m_pSDLRenderer;
 }
 
+void dae::Renderer::RenderCircle( const glm::vec2& pos, float r, const SDL_Color& color ) const
+{
+	const SDL_Color oldColor{ GetSDLColor( ) };
+	SetSDLColor( color );
+	const int x{ static_cast<int>(pos.x) };
+	const int y{ static_cast<int>(pos.y) };
+	const int radius{ static_cast<int>(r) };
+	int offsetX{ };
+	int offsetY{ radius };
+	int d{ radius - 1 };
+	int status{ };
+
+
+	while( offsetY >= offsetX )
+	{
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x + offsetX, y + offsetY );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x + offsetY, y + offsetX );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x - offsetX, y + offsetY );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x - offsetY, y + offsetX );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x + offsetX, y - offsetY );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x + offsetY, y - offsetX );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x - offsetX, y - offsetY );
+		status += SDL_RenderDrawPoint( m_pSDLRenderer, x - offsetY, y - offsetX );
+
+		if( status < 0 )
+		{
+			status = -1;
+			break;
+		}
+
+		if( d >= 2 * offsetX )
+		{
+			d -= 2 * offsetX + 1;
+			offsetX += 1;
+		}
+		else if( d < 2 * ( radius - offsetY ) )
+		{
+			d += 2 * offsetY - 1;
+			offsetY -= 1;
+		}
+		else
+		{
+			d += 2 * ( offsetY - offsetX - 1 );
+			offsetY -= 1;
+			offsetX += 1;
+		}
+	}
+
+	SetSDLColor( oldColor );
+	if( status < 0 )
+		Logger::LogWarning( "dae::Renderer::RenderCircle > SDL Reported invalid status" );
+}
+
 dae::Renderer::~Renderer( )
 {
 	ImGui_ImplOpenGL2_Shutdown( );
@@ -133,6 +187,18 @@ dae::Renderer::~Renderer( )
 		SDL_DestroyRenderer( m_pSDLRenderer );
 		m_pSDLRenderer = nullptr;
 	}
+}
+
+void dae::Renderer::SetSDLColor( const SDL_Color& c ) const
+{
+	SDL_SetRenderDrawColor( m_pSDLRenderer, c.r, c.g, c.b, c.a );
+}
+
+SDL_Color dae::Renderer::GetSDLColor( ) const
+{
+	SDL_Color c{ };
+	SDL_GetRenderDrawColor( m_pSDLRenderer, &c.r, &c.g, &c.b, &c.a );
+	return c;
 }
 
 int dae::Renderer::GetOpenGLDriverIndex( )

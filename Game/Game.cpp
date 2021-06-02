@@ -4,6 +4,9 @@
 #include "GridHopper.h"
 #include "QbertPlayer.h"
 #include "QbertSpriteComponent.h"
+#include <Scene.h>
+#include "QbertSceneBehavior.h"
+#include "SphereOverlapDetector.h"
 
 int main( int, char*[] )
 {
@@ -12,8 +15,10 @@ int main( int, char*[] )
 	engine.RegisterComponent<GridHopper>( );
 	engine.RegisterComponent<QbertPlayer>( );
 	engine.RegisterComponent<QbertSpriteComponent>( );
+	engine.RegisterComponent<SphereOverlapDetector>( );
 	engine.AddSceneFromFile( "test.json" );
 	engine.SetActiveScene( "Demo" );
+	engine.GetActiveScene( )->SetBehavior( std::make_unique<QbertSceneBehavior>( ) );
 	engine.Run( );
 	return 0;
 }

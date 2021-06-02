@@ -35,7 +35,7 @@ private:
 	float m_Speed;
 	float m_MovementPercentage;
 	float m_JumpHeight;
-	bool m_IsInitialized;
+	bool m_InitializedBehavior;
 	State m_State;
 
 	static int GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction );

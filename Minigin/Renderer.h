@@ -5,6 +5,7 @@
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Rect;
+struct SDL_Color;
 
 namespace dae
 {
@@ -38,6 +39,7 @@ namespace dae
 		void RenderTexture( const Texture2D& texture, float x, float y, float width, float height ) const;
 
 		SDL_Renderer* GetSDLRenderer( ) const;
+		void RenderCircle( const glm::vec2& pos, float r, const SDL_Color& color ) const;
 
 		~Renderer( );
 		Renderer( const Renderer& other ) = delete;
@@ -49,6 +51,8 @@ namespace dae
 		SDL_Renderer* m_pSDLRenderer;
 		SDL_Window* m_pWindow;
 		bool m_ShowDemo;
+		void SetSDLColor( const SDL_Color& c ) const;
+		SDL_Color GetSDLColor( ) const;
 
 		// ReSharper disable once CppInconsistentNaming
 		static int GetOpenGLDriverIndex( );
