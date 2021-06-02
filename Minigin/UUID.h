@@ -3,7 +3,7 @@
 namespace dae
 {
 	template <typename T>
-	class UUID
+	class UUID final
 	{
 	public:
 		UUID( );

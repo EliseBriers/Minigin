@@ -2,7 +2,7 @@
 #include <SceneBehavior.h>
 #include "TriggerManager.h"
 
-class QbertSceneBehavior : public dae::SceneBehavior
+class QbertSceneBehavior final : public dae::SceneBehavior
 {
 public:
 

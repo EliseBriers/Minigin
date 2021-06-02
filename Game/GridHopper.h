@@ -3,7 +3,7 @@
 #include "CubeGrid.h"
 #include "Enums.h"
 
-class GridHopper : public dae::IComponent
+class GridHopper final : public dae::IComponent
 {
 public:
 	enum class TouchdownType

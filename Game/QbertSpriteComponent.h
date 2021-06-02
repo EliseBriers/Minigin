@@ -7,7 +7,7 @@ namespace dae
 	class TransformComponent;
 }
 
-class QbertSpriteComponent : public dae::IComponent
+class QbertSpriteComponent final : public dae::IComponent
 {
 public:
 	QbertSpriteComponent(dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);

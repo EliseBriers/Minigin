@@ -10,7 +10,7 @@ namespace dae
 }
 class QbertSceneBehavior;
 
-class CubeGrid : public dae::IComponent
+class CubeGrid final : public dae::IComponent
 {
 	enum class CubeColor : int
 	{
