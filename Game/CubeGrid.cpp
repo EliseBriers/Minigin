@@ -5,11 +5,13 @@
 #include "TimerComponent.h"
 #include "QbertSceneBehavior.h"
 #include <InitInfo.h>
+#include "EnumHelpers.h"
 
 using namespace dae;
 
 CubeGrid::CubeGrid( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_Color{ EnumHelpers::StringToLevelColor( jsonObject.GetString( "color" ) ) }
 	, m_pSceneBehavior{ nullptr }
 	, m_pAnimationFlipTimer{ nullptr }
 	, m_pAnimationTimer{ nullptr }
@@ -44,7 +46,7 @@ void CubeGrid::Draw( Renderer& renderer )
 	for( const Cube& cube : m_Cubes )
 	{
 		const CubeState state{ m_GameCompleted ? m_EndAnimationState : cube.PlayerState };
-		const size_t spriteIndex{ GetSpriteIdx( state, cube.Color ) };
+		const size_t spriteIndex{ GetSpriteIdx( state, m_Color ) };
 		m_SpriteSheet.Draw( renderer, cube.Offset * scale + pos, cubePivot, scale, spriteIndex );
 	}
 }
@@ -76,7 +78,7 @@ void CubeGrid::Init( const InitInfo& initInfo )
 			// Calculate offset
 
 
-			Cube c{ CalculateOffset( x, y ), CubeState::Default, LevelColor::Orange, connectionUp, connectionDown, connectionRight, connectionLeft };
+			Cube c{ CalculateOffset( x, y ), CubeState::Default, connectionUp, connectionDown, connectionRight, connectionLeft };
 			m_Cubes.push_back( c );
 		}
 	}
@@ -152,11 +154,6 @@ void CubeGrid::EndAnimation( )
 	m_pSceneBehavior->EndLevel( );
 }
 
-size_t CubeGrid::GetSpriteIdx( const Cube& cube )
-{
-	return GetSpriteIdx( cube.PlayerState, cube.Color );
-}
-
 size_t CubeGrid::GetSpriteIdx( CubeState state, LevelColor color )
 {
 	const size_t offset{ 0u };
@@ -187,7 +184,7 @@ int CubeGrid::RowColToIdx( int c, int r ) const
 glm::vec2 CubeGrid::CalculateOffset( int c, int r ) const
 {
 	const float y{ 0.75f * m_CubeSize.y * r };
-	const float xOffset{ GetColumnCount( r ) * 0.5f - 0.5f };
+	const float xOffset{ static_cast<float>(GetColumnCount( r )) * 0.5f - 0.5f };
 	const float x{ ( c - xOffset ) * m_CubeSize.x };
 	const glm::vec2 offset{ x, y };
 	return offset * 0.95f;

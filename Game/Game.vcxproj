@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="CubeGrid.cpp" />
     <ClCompile Include="DiskComponent.cpp" />
+    <ClCompile Include="EnumHelpers.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePCH.cpp" />
     <ClCompile Include="GridHopper.cpp" />
@@ -206,6 +207,7 @@
   <ItemGroup>
     <ClInclude Include="CubeGrid.h" />
     <ClInclude Include="DiskComponent.h" />
+    <ClInclude Include="EnumHelpers.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="GridHopper.h" />

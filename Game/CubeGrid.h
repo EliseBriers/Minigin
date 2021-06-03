@@ -17,9 +17,9 @@ class CubeGrid final : public dae::IComponent
 public:
 	enum class CubeState : int
 	{
+		Done,
 		Default,
 		Marked,
-		Done,
 		CubeState_Size
 	};
 
@@ -27,7 +27,6 @@ public:
 	{
 		glm::vec2 Offset;
 		CubeState PlayerState;
-		LevelColor Color;
 		// Connections, -1 = no connection
 		int ConnectionUp;
 		int ConnectionDown;
@@ -51,12 +50,14 @@ public:
 	void DoAnimationSwap( );
 	void EndAnimation( );
 
+	// Rule of 5
 	~CubeGrid( ) override = default;
 	CubeGrid( const CubeGrid& other ) = delete;
 	CubeGrid( CubeGrid&& other ) noexcept = delete;
 	CubeGrid& operator=( const CubeGrid& other ) = delete;
 	CubeGrid& operator=( CubeGrid&& other ) noexcept = delete;
 private:
+	LevelColor m_Color;
 	QbertSceneBehavior* m_pSceneBehavior;
 	dae::TimerComponent* m_pAnimationFlipTimer;
 	dae::TimerComponent* m_pAnimationTimer;
@@ -68,7 +69,7 @@ private:
 	glm::vec2 m_CubeSize;
 	bool m_GameCompleted;
 
-	static size_t GetSpriteIdx( const Cube& cube );
+
 	static size_t GetSpriteIdx( CubeState state, LevelColor color );
 	static int GetColumnCount( int row );
 	static int GetCubeCount( int rows );

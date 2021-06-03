@@ -78,7 +78,8 @@
         {
           "class": "CubeGrid",
           "desc": {
-            "sprite_sheet": "sprite_sheet.json"
+            "sprite_sheet": "sprite_sheet.json",
+			"color": "orange"
           }
         },
         {
@@ -116,7 +117,8 @@
           "desc": {
             "spawn_index": 14,
             "sprite_sheet": "disk_sprite.json",
-			"speed": 70
+			"speed": 70,
+			"color": "orange"
           }
         },
         {
