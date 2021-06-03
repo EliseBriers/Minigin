@@ -1,4 +1,5 @@
 #include "GamePCH.h"
+#define SDL_MAIN_HANDLED
 #include <Minigin.h>
 #include "CubeGrid.h"
 #include "GridHopper.h"
@@ -21,7 +22,8 @@ int main( int, char*[] )
 	engine.RegisterComponent<DiskComponent>( );
 
 	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
-	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
+	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false) );
+	engine.AddSceneFromFile( "test3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 
 	engine.SetActiveScene( "Demo" );
 	engine.Run( );

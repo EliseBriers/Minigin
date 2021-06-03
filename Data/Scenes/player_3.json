@@ -1,0 +1,45 @@
+{
+  "name": "Player1",
+  "components": [
+    {
+      "class": "GridHopper",
+      "desc": {
+        "speed": 2,
+        "jump_height": 10,
+        "stomp_behavior": "toggle"
+      }
+    },
+    {
+      "class": "QbertPlayer",
+      "desc": {}
+    },
+    {
+      "class": "dae::TransformComponent",
+      "desc": {
+        "x": 320,
+        "y": 100,
+        "z": 0,
+        "scale": 1.8
+      }
+    },
+    {
+      "class": "QbertSpriteComponent",
+      "desc": {
+        "sprite_sheet": "qbert_sprites.json"
+      }
+    },
+    {
+      "class": "SphereOverlapDetector",
+      "desc": {
+        "radius": 5
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "respawn_timer",
+      "desc": {
+        "loop": false
+      }
+    }
+  ]
+}

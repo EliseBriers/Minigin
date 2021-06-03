@@ -1,5 +1,5 @@
 {
-  "name": "Demo2",
+  "name": "Demo3",
   "objects": [
     {
       "name": "Background Image",
@@ -152,7 +152,7 @@
         }
       ]
     },
-    "player_2.json",
+    "player_3.json",
     "fps_counter.json"
   ]
 }

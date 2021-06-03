@@ -26,7 +26,8 @@ public:
 		Complete,
 		Advance,
 		UndoOne,
-		UndoAll
+		UndoAll,
+		Toggle
 	};
 
 	GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );

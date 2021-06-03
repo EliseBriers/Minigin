@@ -75,6 +75,12 @@ void GridHopper::OnHopComplete( )
 		else
 			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Default );
 		break;
+	case StompBehavior::Toggle:
+		if( state == CubeGrid::CubeState::Done )
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Default );
+		else
+			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Done );
+		break;
 	}
 }
 
@@ -208,6 +214,8 @@ GridHopper::StompBehavior GridHopper::GetStompBehavior( const std::string& str )
 		return StompBehavior::UndoOne;
 	if( str == "undo_all" )
 		return StompBehavior::UndoAll;
+	if( str == "toggle" )
+		return StompBehavior::Toggle;
 
 	dae::Logger::LogWarning( "GridHopper::GetStompBehavior > invalid string provided" );
 	return StompBehavior::Complete;

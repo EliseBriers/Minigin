@@ -153,25 +153,6 @@
       ]
     },
     "player_1.json",
-    {
-      "name": "TestTrigger",
-      "components": [
-        {
-          "class": "dae::TransformComponent",
-          "desc": {
-            "x": 320,
-            "y": 200,
-            "z": 0
-          }
-        },
-        {
-          "class": "SphereOverlapDetector",
-          "desc": {
-            "radius": 15
-          }
-        }
-      ]
-    },
     "fps_counter.json"
   ]
 }
