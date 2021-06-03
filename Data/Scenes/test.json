@@ -108,6 +108,50 @@
         }
       ]
     },
+    {
+      "name": "Disk1",
+      "components": [
+        {
+          "class": "DiskComponent",
+          "desc": {
+            "spawn_index": 14,
+            "sprite_sheet": "disk_sprite.json",
+			"speed": 70
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "SphereOverlapDetector",
+          "desc": {
+            "radius": 5
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "RotationTimer",
+          "desc": {
+            "duration": 0.2,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "EndTimer",
+          "desc": {
+            "duration": 1,
+            "loop": false
+          }
+        }
+      ]
+    },
     "player_1.json",
     {
       "name": "TestTrigger",

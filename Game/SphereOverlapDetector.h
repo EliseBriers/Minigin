@@ -1,6 +1,7 @@
 #pragma once
 #include <IComponent.h>
 #include "MathHelpers.h"
+#include "Enums.h"
 
 class SphereOverlapDetector final : public dae::IComponent
 {
@@ -11,18 +12,15 @@ class SphereOverlapDetector final : public dae::IComponent
 	};
 
 public:
-	enum class TriggerAction
-	{
-		Enter,
-		Exit
-	};
 
 	using callback_t = std::function<void( dae::GameObject*, TriggerAction )>;
 
-	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name);
+	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 	void Update( const dae::UpdateInfo& ) override;
 	void Draw( dae::Renderer& ) override;
 	void Init( const dae::InitInfo& ) override;
+
+	void SetCallback( const callback_t& callback );
 
 	void DetectOverlap( SphereOverlapDetector& other );
 	

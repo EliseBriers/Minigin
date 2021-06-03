@@ -43,7 +43,7 @@ void CubeGrid::Draw( Renderer& renderer )
 	const glm::vec2 cubePivot{ 0.5, 0.25 };
 	for( const Cube& cube : m_Cubes )
 	{
-		const CubeState state{ m_GameCompleted ? m_EndAnimationState : cube.State };
+		const CubeState state{ m_GameCompleted ? m_EndAnimationState : cube.PlayerState };
 		const size_t spriteIndex{ GetSpriteIdx( state, cube.Color ) };
 		m_SpriteSheet.Draw( renderer, cube.Offset * scale + pos, cubePivot, scale, spriteIndex );
 	}
@@ -76,7 +76,7 @@ void CubeGrid::Init( const InitInfo& initInfo )
 			// Calculate offset
 
 
-			Cube c{ CalculateOffset( x, y ), CubeState::Default, CubeColor::Orange, connectionUp, connectionDown, connectionRight, connectionLeft };
+			Cube c{ CalculateOffset( x, y ), CubeState::Default, LevelColor::Orange, connectionUp, connectionDown, connectionRight, connectionLeft };
 			m_Cubes.push_back( c );
 		}
 	}
@@ -131,12 +131,12 @@ size_t CubeGrid::GetCubeCount( ) const
 
 void CubeGrid::SetCubeState( size_t idx, CubeState cubeState )
 {
-	m_Cubes[idx].State = cubeState;
+	m_Cubes[idx].PlayerState = cubeState;
 }
 
 CubeGrid::CubeState CubeGrid::GetCubeState( size_t idx ) const
 {
-	return m_Cubes[idx].State;
+	return m_Cubes[idx].PlayerState;
 }
 
 void CubeGrid::DoAnimationSwap( )
@@ -154,10 +154,10 @@ void CubeGrid::EndAnimation( )
 
 size_t CubeGrid::GetSpriteIdx( const Cube& cube )
 {
-	return GetSpriteIdx( cube.State, cube.Color );
+	return GetSpriteIdx( cube.PlayerState, cube.Color );
 }
 
-size_t CubeGrid::GetSpriteIdx( CubeState state, CubeColor color )
+size_t CubeGrid::GetSpriteIdx( CubeState state, LevelColor color )
 {
 	const size_t offset{ 0u };
 	const size_t stateCount{ static_cast<size_t>(CubeState::CubeState_Size) };
@@ -197,7 +197,7 @@ void CubeGrid::CheckGameComplete( )
 {
 	for( const Cube& cube : m_Cubes )
 	{
-		if( cube.State != CubeState::Done )
+		if( cube.PlayerState != CubeState::Done )
 			return;
 	}
 

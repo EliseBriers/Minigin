@@ -14,7 +14,7 @@ public:
 
 	using touchdown_callback_t = std::function<void( TouchdownType )>;
 
-	enum class State
+	enum class PlayerState
 	{
 		Hopping,
 		Idle,
@@ -34,13 +34,14 @@ public:
 	void OnHopComplete( );
 	void Update( const dae::UpdateInfo& ) override;
 	void Hop( MoveDirection direction );
+	void HopToIndex( size_t index );
 	bool CanHop( ) const;
 	bool IsHopping( ) const;
 	void Teleport( size_t index );
+	void SetTouchdownCallback( const touchdown_callback_t& onTouchdown );
 
 	// Rule of 5
 	~GridHopper( ) override = default;
-	void SetTouchdownCallback( const touchdown_callback_t& onTouchdown );
 	GridHopper( const GridHopper& other ) = delete;
 	GridHopper( GridHopper&& other ) noexcept = delete;
 	GridHopper& operator=( const GridHopper& other ) = delete;
@@ -57,7 +58,7 @@ private:
 	float m_MovementPercentage;
 	float m_JumpHeight;
 	bool m_InitializedBehavior;
-	State m_State;
+	PlayerState m_State;
 
 	static int GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction );
 	static void VoidTouchdown( TouchdownType );

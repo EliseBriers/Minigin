@@ -12,19 +12,7 @@ class QbertSceneBehavior;
 
 class CubeGrid final : public dae::IComponent
 {
-	enum class CubeColor : int
-	{
-		Teal,
-		Orange,
-		Gray,
-		Blue,
-		Black,
-		LimeOrange,
-		LimeBlue,
-		Green,
-		Void,
-		CubeColor_Size
-	};
+
 
 public:
 	enum class CubeState : int
@@ -38,8 +26,8 @@ public:
 	struct Cube
 	{
 		glm::vec2 Offset;
-		CubeState State;
-		CubeColor Color;
+		CubeState PlayerState;
+		LevelColor Color;
 		// Connections, -1 = no connection
 		int ConnectionUp;
 		int ConnectionDown;
@@ -81,7 +69,7 @@ private:
 	bool m_GameCompleted;
 
 	static size_t GetSpriteIdx( const Cube& cube );
-	static size_t GetSpriteIdx( CubeState state, CubeColor color );
+	static size_t GetSpriteIdx( CubeState state, LevelColor color );
 	static int GetColumnCount( int row );
 	static int GetCubeCount( int rows );
 	int RowColToIdx( int c, int r ) const;

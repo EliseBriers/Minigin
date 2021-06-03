@@ -62,6 +62,11 @@ void SphereOverlapDetector::Init( const dae::InitInfo& initInfo )
 	pSceneBehavior->RegisterOverlapDetector( *this );
 }
 
+void SphereOverlapDetector::SetCallback( const callback_t& callback )
+{
+	m_Callback = callback;
+}
+
 void SphereOverlapDetector::UpdateCircle( )
 {
 	m_Circle.Pos = m_pTransform->GetPosition( );

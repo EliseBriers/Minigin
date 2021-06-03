@@ -7,13 +7,13 @@ QbertSpriteComponent::QbertSpriteComponent( dae::GameObject& gameObject, const d
 	, m_pTransform{ nullptr }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_Direction{ Direction::Down }
-	, m_State{ State::Idle }
+	, m_State{ PlayerState::Idle }
 {
 }
 
 void QbertSpriteComponent::Draw( dae::Renderer& r )
 {
-	if( m_State == State::Dead )
+	if( m_State == PlayerState::Dead )
 		return;
 
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
@@ -33,12 +33,32 @@ void QbertSpriteComponent::SetDirection( Direction direction )
 	m_Direction = direction;
 }
 
-void QbertSpriteComponent::SetState( State state )
+void QbertSpriteComponent::SetState( PlayerState state )
 {
 	m_State = state;
 }
 
-size_t QbertSpriteComponent::GetIndex( Direction direction, State state )
+void QbertSpriteComponent::NextRotation( )
+{
+	switch( m_Direction )
+	{
+	case Direction::Up:
+		m_Direction = Direction::Left;
+		break;
+	case Direction::Left:
+		m_Direction = Direction::Down;
+		break;
+	case Direction::Right:
+		m_Direction = Direction::Up;
+		break;
+	case Direction::Down:
+		m_Direction = Direction::Right;
+		break;
+	default: ;
+	}
+}
+
+size_t QbertSpriteComponent::GetIndex( Direction direction, PlayerState state )
 {
 	return static_cast<size_t>(direction) * 2u + static_cast<size_t>(state);
 }

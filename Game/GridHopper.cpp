@@ -13,9 +13,10 @@ GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrappe
 	, m_pTransform{ nullptr }
 	, m_CurrentIndex{ 0u }
 	, m_Speed{ jsonObject.GetOptionalFloat( "speed", 1.f ) }
+	, m_MovementPercentage{ 0.f }
 	, m_JumpHeight{ jsonObject.GetOptionalFloat( "jump_height", 15.f ) }
 	, m_InitializedBehavior{ false }
-	, m_State{ State::Idle }
+	, m_State{ PlayerState::Idle }
 {
 }
 
@@ -46,7 +47,7 @@ void GridHopper::Init( const dae::InitInfo& initInfo )
 void GridHopper::OnHopComplete( )
 {
 	m_MovementPercentage = 0.f;
-	m_State = State::Idle;
+	m_State = PlayerState::Idle;
 	m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
 
 	if( m_CurrentIndex == -1 )
@@ -81,7 +82,7 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 {
 	if( !m_InitializedBehavior )
 		return;
-	if( m_State != State::Hopping )
+	if( m_State != PlayerState::Hopping )
 		return;
 	const float dt{ updateInfo.GetDeltaTime( ) };
 	m_MovementPercentage += dt * m_Speed;
@@ -112,14 +113,14 @@ void GridHopper::Hop( MoveDirection direction )
 	if( m_CurrentIndex == -1 || m_CurrentIndex >= cubeCount )
 	{
 		dae::Logger::LogWarning( "GridHopper::Hop > Invalid current index" );
-		m_State = State::OutOfGrid;
+		m_State = PlayerState::OutOfGrid;
 		return;
 	}
 	const CubeGrid::Cube& cube{ m_pCubeGrid->GetCube( static_cast<size_t>(m_CurrentIndex) ) };
 	const int desiredIndex{ GetToIndex( cube, direction ) };
 	if( desiredIndex == -1 )
 	{
-		m_State = State::Hopping;
+		m_State = PlayerState::Hopping;
 		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
 		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction );
 		// dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
@@ -132,17 +133,17 @@ void GridHopper::Hop( MoveDirection direction )
 	m_ToPos = m_pCubeGrid->GetCubePos( desiredIndex );
 	m_CurrentIndex = desiredIndex;
 
-	m_State = State::Hopping;
+	m_State = PlayerState::Hopping;
 }
 
 bool GridHopper::CanHop( ) const
 {
-	return m_State == State::Idle;
+	return m_State == PlayerState::Idle;
 }
 
 bool GridHopper::IsHopping( ) const
 {
-	return m_State == State::Hopping;
+	return m_State == PlayerState::Hopping;
 }
 
 void GridHopper::Teleport( size_t index )
@@ -156,12 +157,23 @@ void GridHopper::Teleport( size_t index )
 	m_CurrentIndex = static_cast<int>(index);
 	const glm::vec2 pos{ m_pCubeGrid->GetCubePos( index ) };
 	m_pTransform->SetPosition( pos.x, pos.y, 0.f );
-	m_State = State::Idle;
+	m_State = PlayerState::Idle;
 }
 
 void GridHopper::SetTouchdownCallback( const touchdown_callback_t& onTouchdown )
 {
 	m_Callback = onTouchdown;
+}
+
+void GridHopper::HopToIndex( size_t index )
+{
+	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
+
+	m_FromPos = pos;
+	m_ToPos = m_pCubeGrid->GetCubePos( index );
+	m_CurrentIndex = index;
+
+	m_State = PlayerState::Hopping;
 }
 
 int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction )

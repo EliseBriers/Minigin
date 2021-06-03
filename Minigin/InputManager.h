@@ -36,12 +36,12 @@ namespace dae
 		// using SDLInputKey = std::pair<ButtonState, SDL_Keycode>;
 		struct SDLInputKey
 		{
-			ButtonState State;
+			ButtonState PlayerState;
 			SDL_Keycode KeyCode;
 
 			friend bool operator==( const SDLInputKey& lhs, const SDLInputKey& rhs )
 			{
-				return lhs.State == rhs.State
+				return lhs.PlayerState == rhs.PlayerState
 					&& lhs.KeyCode == rhs.KeyCode;
 			}
 
@@ -55,7 +55,7 @@ namespace dae
 				size_t operator()( const SDLInputKey& val ) const
 				{
 					// I sold my soul to Satan in exchange for this code
-					return ( ( std::hash<int>( )( val.KeyCode ) ^ ( std::hash<int>( )( static_cast<int>(val.State) ) << 1 ) ) >> 1 );
+					return ( ( std::hash<int>( )( val.KeyCode ) ^ ( std::hash<int>( )( static_cast<int>(val.PlayerState) ) << 1 ) ) >> 1 );
 
 					// As funny as that is I feel obligated to include my actual source:
 					// https://stackoverflow.com/questions/29058254/how-to-fix-this-c3848-error-on-vs2013

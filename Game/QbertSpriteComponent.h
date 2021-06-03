@@ -20,7 +20,7 @@ public:
 		Down
 	};
 
-	enum class State : size_t
+	enum class PlayerState : size_t
 	{
 		Idle,
 		Jumping,
@@ -31,10 +31,11 @@ public:
 	void Init( const dae::InitInfo& ) override;
 
 	void SetDirection( Direction direction );
-	void SetState( State state );
+	void SetState( PlayerState state );
 	
 	// Rule of 5
 	~QbertSpriteComponent( ) override = default;
+	void NextRotation( );
 	QbertSpriteComponent( const QbertSpriteComponent& other ) = delete;
 	QbertSpriteComponent( QbertSpriteComponent&& other ) noexcept = delete;
 	QbertSpriteComponent& operator=( const QbertSpriteComponent& other ) = delete;
@@ -44,7 +45,7 @@ private:
 
 	dae::SpriteSheet m_SpriteSheet;
 	Direction m_Direction;
-	State m_State;
+	PlayerState m_State;
 
-	static size_t GetIndex( Direction direction, State state );
+	static size_t GetIndex( Direction direction, PlayerState state );
 };

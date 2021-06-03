@@ -1,6 +1,8 @@
 #pragma once
 #include <IComponent.h>
 #include "GridHopper.h"
+#include "ObservableVariable.h"
+#include "Enums.h"
 
 namespace dae
 {
@@ -10,16 +12,9 @@ namespace dae
 
 class QbertSpriteComponent;
 
-class QbertPlayer : public dae::IComponent
+class QbertPlayer final : public dae::IComponent
 {
-	enum class State
-	{
-		Idle,
-		Jumping,
-		Dead,
-		Moving
-	};
-
+	using state_observer_t = dae::ObservableVariable<PlayerState>::observer_t;
 public:
 	QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 
@@ -30,13 +25,18 @@ public:
 	void Respawn( );
 	void OnDeath( );
 
+	void RegisterStateObserver( state_observer_t stateObserver );
+	void NextRotation( );
+	void SetPosition( const glm::vec2& newPos ) const;
+	
+	// Rule of 5
 	~QbertPlayer( ) override = default;
 	QbertPlayer( const QbertPlayer& other ) = delete;
 	QbertPlayer( QbertPlayer&& other ) noexcept = delete;
 	QbertPlayer& operator=( const QbertPlayer& other ) = delete;
 	QbertPlayer& operator=( QbertPlayer&& other ) noexcept = delete;
 private:
-	State m_State;
+	dae::ObservableVariable<PlayerState> m_State;
 	GridHopper* m_pGridHopper;
 	QbertSpriteComponent* m_pSprite;
 	dae::TimerComponent* m_pRespawnTimer;
@@ -44,6 +44,11 @@ private:
 	bool m_InputRight;
 	bool m_InputUp;
 	bool m_InputDown;
+	dae::TransformComponent* m_pTransform;
 
 	int GetInputCount( ) const;
+
+	// Inits
+	void InitCollider( );
+	void InitInputs( const dae::InitInfo& initInfo );
 };
