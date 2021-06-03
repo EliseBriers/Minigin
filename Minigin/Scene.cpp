@@ -16,7 +16,7 @@ dae::SceneManager* dae::Scene::GetSceneManager( ) const
 	return m_pSceneManager;
 }
 
-void dae::Scene::SetSceneManager( SceneManager* pSceneManager ) 
+void dae::Scene::SetSceneManager( SceneManager* pSceneManager )
 {
 	m_pSceneManager = pSceneManager;
 }
@@ -48,6 +48,21 @@ void dae::Scene::Update( const UpdateInfo& updateInfo )
 {
 	if( m_pSceneBehavior )
 		m_pSceneBehavior->Update( updateInfo );
+
+	// Check if objects need to be removed
+	const auto removeIt{
+		std::remove_if( m_Objects.begin( ), m_Objects.end( ), []( const std::unique_ptr<GameObject>& pObj )
+		{
+			return !pObj->IsActive( );
+		} )
+	};
+	// Move objects to inactive vector to prevent gc in main loop
+	for( auto it{ removeIt }; it < m_Objects.end( ); ++it )
+	{
+		m_InactiveObjects.emplace_back( std::move( it->get( ) ) );
+	}
+	m_Objects.erase( removeIt, m_Objects.end( ) );
+
 
 	for( auto& object : m_Objects )
 	{

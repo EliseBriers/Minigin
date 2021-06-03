@@ -17,6 +17,7 @@ namespace dae
 		virtual void Update( const UpdateInfo& );
 		virtual void Draw( Renderer& );
 		virtual void Init( const InitInfo& );
+		virtual void Deactivate( );
 
 		GameObject& GetGameObject( ) const;
 

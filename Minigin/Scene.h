@@ -37,6 +37,7 @@ namespace dae
 		SceneManager* m_pSceneManager;
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_Objects;
+		std::vector<std::unique_ptr<GameObject>> m_InactiveObjects;
 		std::vector<std::unique_ptr<GameObject>> m_UninitializedObjects;
 		std::unique_ptr<SceneBehavior> m_pSceneBehavior;
 		bool m_InitializedBehavior;

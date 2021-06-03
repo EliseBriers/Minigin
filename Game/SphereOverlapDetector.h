@@ -2,6 +2,7 @@
 #include <IComponent.h>
 #include "MathHelpers.h"
 #include "Enums.h"
+#include "QbertSceneBehavior.h"
 
 class SphereOverlapDetector final : public dae::IComponent
 {
@@ -16,9 +17,10 @@ public:
 	using callback_t = std::function<void( dae::GameObject*, TriggerAction )>;
 
 	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
-	void Update( const dae::UpdateInfo& ) override;
-	void Draw( dae::Renderer& ) override;
-	void Init( const dae::InitInfo& ) override;
+	virtual void Update( const dae::UpdateInfo& ) override;
+	virtual void Draw( dae::Renderer& ) override;
+	virtual void Init( const dae::InitInfo& ) override;
+	virtual void Deactivate() override;
 
 	void SetCallback( const callback_t& callback );
 
@@ -37,6 +39,7 @@ private:
 	dae::TransformComponent* m_pTransform;
 
 	std::vector<OverlapData> m_Overlaps;
+	QbertSceneBehavior* m_pSceneBehavior;
 
 	void RegisterOverlap( dae::GameObject* pOther );
 	void UpdateCircle( );

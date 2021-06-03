@@ -18,6 +18,11 @@ void QbertSceneBehavior::RegisterOverlapDetector( SphereOverlapDetector& overlap
 	m_TriggerManager.AddOverlapDetector( overlapDetector );
 }
 
+void QbertSceneBehavior::UnRegisterOverlapDetector( const SphereOverlapDetector& sphereOverlapDetector )
+{
+	m_TriggerManager.RemoveOverlapDetector( sphereOverlapDetector );
+}
+
 void QbertSceneBehavior::EndLevel( ) const
 {
 	if( !m_IsLastLevel )

@@ -177,7 +177,7 @@ void GridHopper::HopToIndex( size_t index )
 
 	m_FromPos = pos;
 	m_ToPos = m_pCubeGrid->GetCubePos( index );
-	m_CurrentIndex = index;
+	m_CurrentIndex = static_cast<int>(index);
 
 	m_State = PlayerState::Hopping;
 }

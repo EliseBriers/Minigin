@@ -10,10 +10,11 @@ public:
 
 	void Update( const dae::UpdateInfo& ) override;
 	void RegisterOverlapDetector( SphereOverlapDetector& overlapDetector );
+	void UnRegisterOverlapDetector( const SphereOverlapDetector& sphereOverlapDetector );
+	void EndLevel( ) const;
 	
 	// Rule of 5
 	~QbertSceneBehavior( ) override = default;
-	void EndLevel( ) const;
 	QbertSceneBehavior( const QbertSceneBehavior& other ) = delete;
 	QbertSceneBehavior( QbertSceneBehavior&& other ) noexcept = delete;
 	QbertSceneBehavior& operator=( const QbertSceneBehavior& other ) = delete;

@@ -169,7 +169,7 @@ void DiskComponent::StartEndTimer( )
 	pTimer->SetCallback( [this]( )
 	{
 		m_State.Set( DiskState::Inactive );
-		m_pTransform->SetPosition( 10000.f, 100000.f, 0.f );
+		GetGameObject( ).Deactivate( );
 	} );
 	pTimer->Start( );
 }

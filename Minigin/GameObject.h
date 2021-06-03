@@ -25,6 +25,7 @@ namespace dae
 		void FixedUpdate( const UpdateInfo& updateInfo );
 		void Update( const UpdateInfo& updateInfo );
 		void Init( InitInfo& initInfo );
+		void Deactivate( );
 
 		template <typename T>
 		T* GetComponent( ) const;
@@ -35,6 +36,8 @@ namespace dae
 
 		GameObject( ) = default;
 
+		bool IsActive( ) const;
+
 		~GameObject( );
 		GameObject( const GameObject& other ) = delete;
 		GameObject( GameObject&& other ) = delete;
@@ -43,6 +46,7 @@ namespace dae
 	private:
 		std::vector<std::unique_ptr<IComponent>> m_pComponents;
 		const std::string m_Name;
+		bool m_IsActive;
 	};
 
 	template <typename T>

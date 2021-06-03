@@ -5,11 +5,13 @@
 
 dae::GameObject::GameObject( const std::string& name )
 	: m_Name{ name }
+	, m_IsActive{ true }
 {
 }
 
 dae::GameObject::GameObject( std::string&& name )
 	: m_Name{ std::move( name ) }
+	, m_IsActive{ true }
 {
 }
 
@@ -50,9 +52,23 @@ void dae::GameObject::Init( InitInfo& initInfo )
 	}
 }
 
+void dae::GameObject::Deactivate( )
+{
+	m_IsActive = false;
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	{
+		pComponent->Deactivate( );
+	}
+}
+
 const std::string& dae::GameObject::GetName( ) const
 {
 	return m_Name;
+}
+
+bool dae::GameObject::IsActive( ) const
+{
+	return m_IsActive;
 }
 
 dae::GameObject::~GameObject( ) = default;
