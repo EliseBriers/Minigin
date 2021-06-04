@@ -6,7 +6,7 @@
 
 SphereOverlapDetector::SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
-	, m_Callback{ DefaultCallback }
+	, m_Callback{ VoidCallback }
 	, m_Circle{ }
 	, m_Radius{ jsonObject.GetFloat( "radius" ) }
 	, m_pTransform{ nullptr }
@@ -57,15 +57,17 @@ void SphereOverlapDetector::Init( const dae::InitInfo& initInfo )
 	if( !m_pSceneBehavior )
 	{
 		dae::Logger::LogWarning( "SphereOverlapDetector::Init > Scene doesn't have QbertSceneBehavior" );
-		return;
 	}
-
-	m_pSceneBehavior->RegisterOverlapDetector( *this );
 }
 
 void SphereOverlapDetector::Deactivate( )
 {
 	m_pSceneBehavior->UnRegisterOverlapDetector( *this );
+}
+
+void SphereOverlapDetector::Activate( )
+{
+	m_pSceneBehavior->RegisterOverlapDetector( *this );
 }
 
 void SphereOverlapDetector::SetCallback( const callback_t& callback )
@@ -79,7 +81,7 @@ void SphereOverlapDetector::UpdateCircle( )
 	m_Circle.R = m_pTransform->GetScale( ) * m_Radius;
 }
 
-void SphereOverlapDetector::DefaultCallback( dae::GameObject*, TriggerAction )
+void SphereOverlapDetector::VoidCallback( dae::GameObject*, TriggerAction )
 {
 	// if( ta == TriggerAction::Enter )
 	// {

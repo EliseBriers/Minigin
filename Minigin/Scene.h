@@ -19,14 +19,14 @@ namespace dae
 		void Update( const UpdateInfo& updateInfo );
 		void Render( Renderer& renderer ) const;
 		void Init( InitInfo& initInfo );
-		const std::string& GetName( ) const;
 
+		const std::string& GetName( ) const;
 		GameObject* GetGameObject( const std::string& name ) const;
+		SceneManager* GetSceneManager( ) const;
+		void SetSceneManager( SceneManager* pSceneManager );
 		void SetBehavior( std::unique_ptr<SceneBehavior> pBehavior );
 		template <typename T>
 		T* GetSceneBehaviorAs( ) const;
-		SceneManager* GetSceneManager( ) const;
-		void SetSceneManager( SceneManager* pSceneManager );
 
 		~Scene( );
 		Scene( const Scene& other ) = delete;
@@ -37,10 +37,11 @@ namespace dae
 		SceneManager* m_pSceneManager;
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_Objects;
-		std::vector<std::unique_ptr<GameObject>> m_InactiveObjects;
 		std::vector<std::unique_ptr<GameObject>> m_UninitializedObjects;
 		std::unique_ptr<SceneBehavior> m_pSceneBehavior;
 		bool m_InitializedBehavior;
+
+		void MoveActiveGameObjects( );
 	};
 
 	template <typename T>

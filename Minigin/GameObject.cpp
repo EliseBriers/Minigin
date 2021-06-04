@@ -61,6 +61,15 @@ void dae::GameObject::Deactivate( )
 	}
 }
 
+void dae::GameObject::Activate( )
+{
+	m_IsActive = true;
+	for (const std::unique_ptr<IComponent>& pComponent : m_pComponents)
+	{
+		pComponent->Activate();
+	}
+}
+
 const std::string& dae::GameObject::GetName( ) const
 {
 	return m_Name;

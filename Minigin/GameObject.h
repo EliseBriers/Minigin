@@ -26,6 +26,7 @@ namespace dae
 		void Update( const UpdateInfo& updateInfo );
 		void Init( InitInfo& initInfo );
 		void Deactivate( );
+		void Activate( );
 
 		template <typename T>
 		T* GetComponent( ) const;

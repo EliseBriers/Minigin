@@ -5,7 +5,8 @@
 #include "SceneBehavior.h"
 
 dae::Scene::Scene( const std::string& name )
-	: m_Name{ name }
+	: m_pSceneManager{ nullptr }
+	, m_Name{ name }
 	, m_pSceneBehavior{ nullptr }
 	, m_InitializedBehavior{ false }
 {
@@ -22,6 +23,10 @@ void dae::Scene::SetSceneManager( SceneManager* pSceneManager )
 }
 
 dae::Scene::~Scene( ) = default;
+
+void dae::Scene::MoveActiveGameObjects( )
+{
+}
 
 const std::string& dae::Scene::GetName( ) const
 {
@@ -40,7 +45,8 @@ void dae::Scene::FixedUpdate( const UpdateInfo& updateInfo )
 
 	for( auto& object : m_Objects )
 	{
-		object->FixedUpdate( updateInfo );
+		if( object->IsActive( ) )
+			object->FixedUpdate( updateInfo );
 	}
 }
 
@@ -49,24 +55,11 @@ void dae::Scene::Update( const UpdateInfo& updateInfo )
 	if( m_pSceneBehavior )
 		m_pSceneBehavior->Update( updateInfo );
 
-	// Check if objects need to be removed
-	const auto removeIt{
-		std::remove_if( m_Objects.begin( ), m_Objects.end( ), []( const std::unique_ptr<GameObject>& pObj )
-		{
-			return !pObj->IsActive( );
-		} )
-	};
-	// Move objects to inactive vector to prevent gc in main loop
-	for( auto it{ removeIt }; it < m_Objects.end( ); ++it )
-	{
-		m_InactiveObjects.emplace_back( std::move( it->get( ) ) );
-	}
-	m_Objects.erase( removeIt, m_Objects.end( ) );
-
 
 	for( auto& object : m_Objects )
 	{
-		object->Update( updateInfo );
+		if( object->IsActive( ) )
+			object->Update( updateInfo );
 	}
 }
 
@@ -76,7 +69,8 @@ void dae::Scene::Render( Renderer& renderer ) const
 		m_pSceneBehavior->Draw( renderer );
 	for( const auto& object : m_Objects )
 	{
-		object->Draw( renderer );
+		if( object->IsActive( ) )
+			object->Draw( renderer );
 	}
 }
 
@@ -85,6 +79,7 @@ void dae::Scene::Init( InitInfo& initInfo )
 	for( std::unique_ptr<GameObject>& pObject : m_UninitializedObjects )
 	{
 		pObject->Init( initInfo );
+		pObject->Activate( );
 		m_Objects.emplace_back( std::move( pObject ) );
 	}
 	m_UninitializedObjects.clear( );

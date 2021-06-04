@@ -28,6 +28,10 @@ void dae::IComponent::Deactivate( )
 {
 }
 
+void dae::IComponent::Activate( )
+{
+}
+
 dae::GameObject& dae::IComponent::GetGameObject( ) const
 {
 	return m_GameObject.get( );

@@ -17,10 +17,11 @@ public:
 	using callback_t = std::function<void( dae::GameObject*, TriggerAction )>;
 
 	SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
-	virtual void Update( const dae::UpdateInfo& ) override;
-	virtual void Draw( dae::Renderer& ) override;
-	virtual void Init( const dae::InitInfo& ) override;
-	virtual void Deactivate() override;
+	void Update( const dae::UpdateInfo& ) override;
+	void Draw( dae::Renderer& ) override;
+	void Init( const dae::InitInfo& ) override;
+	void Deactivate( ) override;
+	void Activate( ) override;
 
 	void SetCallback( const callback_t& callback );
 
@@ -43,6 +44,6 @@ private:
 
 	void RegisterOverlap( dae::GameObject* pOther );
 	void UpdateCircle( );
-	static void DefaultCallback( dae::GameObject*, TriggerAction );
+	static void VoidCallback( dae::GameObject*, TriggerAction );
 	static bool HasNoOverlap( const OverlapData& overlap );
 };
