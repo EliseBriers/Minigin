@@ -20,6 +20,7 @@ DiskComponent::DiskComponent( dae::GameObject& gameObject, const dae::JsonObject
 	, m_pTransform{ nullptr }
 	, m_SpawnDirection{ }
 	, m_pPlayer{ nullptr }
+	, m_Offset{ 0.f, -0.25f }
 {
 }
 
@@ -135,10 +136,10 @@ void DiskComponent::TeleportToSpawn( const dae::InitInfo& initInfo )
 	else
 		dae::Logger::LogWarning( "DiskComponent::TeleportToSpawn > Couldn't find proper spawn location" );
 
-	const glm::vec2 spawnPos{ pCubeGrid->CalculateImaginaryBlockPos( m_SpawnLocation, m_SpawnDirection ) };
+	const glm::vec2 spawnPos{ pCubeGrid->CalculateImaginaryBlockPos( m_SpawnLocation, m_SpawnDirection, m_Offset ) };
 
 	m_pTransform->SetPosition( spawnPos.x, spawnPos.y, 0.f );
-	m_EndPos = pCubeGrid->CalculateImaginaryBlockPos( 0u, m_SpawnDirection );
+	m_EndPos = pCubeGrid->CalculateImaginaryBlockPos( 0u, m_SpawnDirection, m_Offset );
 }
 
 void DiskComponent::StartRotationTimer( )

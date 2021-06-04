@@ -52,6 +52,8 @@ private:
 	touchdown_callback_t m_Callback;
 	glm::vec2 m_FromPos;
 	glm::vec2 m_ToPos;
+	glm::vec2 m_JumpDirection;
+	glm::vec2 m_Offset;
 	CubeGrid* m_pCubeGrid;
 	dae::TransformComponent* m_pTransform;
 	int m_CurrentIndex;

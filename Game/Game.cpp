@@ -4,7 +4,7 @@
 #include "CubeGrid.h"
 #include "GridHopper.h"
 #include "QbertPlayer.h"
-#include "QbertSpriteComponent.h"
+#include "HopperSpriteComponent.h"
 #include <Scene.h>
 #include "QbertSceneBehavior.h"
 #include "SphereOverlapDetector.h"
@@ -17,7 +17,7 @@ int main( int, char*[] )
 	engine.RegisterComponent<CubeGrid>( );
 	engine.RegisterComponent<GridHopper>( );
 	engine.RegisterComponent<QbertPlayer>( );
-	engine.RegisterComponent<QbertSpriteComponent>( );
+	engine.RegisterComponent<HopperSpriteComponent>( );
 	engine.RegisterComponent<SphereOverlapDetector>( );
 	engine.RegisterComponent<DiskComponent>( );
 

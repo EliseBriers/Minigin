@@ -44,3 +44,31 @@ enum class DiskState
 	Arrived,
 	Inactive
 };
+
+enum class HopperType
+{
+	Qbert1,
+	Qbert2,
+	Coily,
+	Ugg,
+	Wrongway,
+	Slick,
+	Sam,
+	HopperType_Size
+};
+
+// The difference between direction and spriteDirection is that spriteDirection is aligned with the .png with the sprites
+enum class SpriteDirection : size_t
+{
+	Up,
+	Left,
+	Right,
+	Down
+};
+
+enum class SpriteState : size_t
+{
+	Idle,
+	Jumping,
+	Dead
+};

@@ -4,11 +4,14 @@
 #include "Logger.h"
 #include "JsonObjectWrapper.h"
 #include "UpdateInfo.h"
+#include <glm/detail/func_geometric.inl>
 
 GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
 	, m_StompBehavior{ GetStompBehavior( jsonObject.GetString( "stomp_behavior" ) ) }
 	, m_Callback{ VoidTouchdown }
+	, m_JumpDirection{ normalize( jsonObject.GetVec2( "jump_direction" ) ) }
+	, m_Offset{ jsonObject.GetVec2( "offset" ) }
 	, m_pCubeGrid{ nullptr }
 	, m_pTransform{ nullptr }
 	, m_CurrentIndex{ 0u }
@@ -40,6 +43,9 @@ void GridHopper::Init( const dae::InitInfo& initInfo )
 		dae::Logger::LogWarning( "GridHopper::Init > m_pTransform is nullptr" );
 		return;
 	}
+
+	const glm::vec2 spawnPos{ m_pCubeGrid->GetCubePos( m_CurrentIndex, m_Offset ) };
+	m_pTransform->SetPosition( spawnPos.x, spawnPos.y, 0.f );
 
 	m_InitializedBehavior = true;
 }
@@ -100,10 +106,10 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 
 	const float scale{ m_pTransform->GetScale( ) };
 	const float height{ scale * m_JumpHeight * sinf( m_MovementPercentage * static_cast<float>(M_PI) ) };
-
+	const glm::vec2 jumpOffset{ height * m_JumpDirection };
 	const glm::vec2 toTarget{ m_ToPos - m_FromPos };
-	const glm::vec2 newPos{ m_FromPos + toTarget * m_MovementPercentage };
-	m_pTransform->SetPosition( newPos.x, newPos.y - height, 0.f );
+	const glm::vec2 newPos{ m_FromPos + toTarget * m_MovementPercentage + jumpOffset + m_Offset };
+	m_pTransform->SetPosition( newPos.x, newPos.y, 0.f );
 }
 
 void GridHopper::Hop( MoveDirection direction )
@@ -127,16 +133,16 @@ void GridHopper::Hop( MoveDirection direction )
 	if( desiredIndex == -1 )
 	{
 		m_State = PlayerState::Hopping;
-		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
-		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction );
+		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex, m_Offset );
+		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction, m_Offset );
 		// dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
 		m_CurrentIndex = -1;
 		return;
 	}
 
 	// dae::Logger::LogInfo( "GridHopper::Hop > Hopping from index " + std::to_string( m_CurrentIndex ) + " to index " + std::to_string( desiredIndex ) );
-	m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex );
-	m_ToPos = m_pCubeGrid->GetCubePos( desiredIndex );
+	m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex, m_Offset );
+	m_ToPos = m_pCubeGrid->GetCubePos( desiredIndex, m_Offset );
 	m_CurrentIndex = desiredIndex;
 
 	m_State = PlayerState::Hopping;
@@ -161,7 +167,7 @@ void GridHopper::Teleport( size_t index )
 	}
 
 	m_CurrentIndex = static_cast<int>(index);
-	const glm::vec2 pos{ m_pCubeGrid->GetCubePos( index ) };
+	const glm::vec2 pos{ m_pCubeGrid->GetCubePos( index, m_Offset ) };
 	m_pTransform->SetPosition( pos.x, pos.y, 0.f );
 	m_State = PlayerState::Idle;
 }
@@ -176,7 +182,7 @@ void GridHopper::HopToIndex( size_t index )
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
 
 	m_FromPos = pos;
-	m_ToPos = m_pCubeGrid->GetCubePos( index );
+	m_ToPos = m_pCubeGrid->GetCubePos( index, m_Offset );
 	m_CurrentIndex = static_cast<int>(index);
 
 	m_State = PlayerState::Hopping;

@@ -8,12 +8,11 @@ namespace dae
 	class TransformComponent;
 	class TimerComponent;
 }
+
 class QbertSceneBehavior;
 
 class CubeGrid final : public dae::IComponent
 {
-
-
 public:
 	enum class CubeState : int
 	{
@@ -41,8 +40,8 @@ public:
 	void Init( const dae::InitInfo& initInfo ) override;
 
 	const Cube& GetCube( size_t idx ) const;
-	glm::vec2 GetCubePos( size_t idx ) const;
-	glm::vec2 CalculateImaginaryBlockPos( size_t idx, MoveDirection direction ) const;
+	glm::vec2 GetCubePos( size_t idx, const glm::vec2& offset ) const;
+	glm::vec2 CalculateImaginaryBlockPos( size_t idx, MoveDirection direction, const glm::vec2& offset) const;
 	size_t GetCubeCount( ) const;
 
 	void SetCubeState( size_t idx, CubeState cubeState );
@@ -68,7 +67,6 @@ private:
 	int m_Rows;
 	glm::vec2 m_CubeSize;
 	bool m_GameCompleted;
-
 
 	static size_t GetSpriteIdx( CubeState state, LevelColor color );
 	static int GetColumnCount( int row );

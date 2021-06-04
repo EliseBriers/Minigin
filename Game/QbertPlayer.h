@@ -10,7 +10,7 @@ namespace dae
 	class TimerComponent;
 }
 
-class QbertSpriteComponent;
+class HopperSpriteComponent;
 
 class QbertPlayer final : public dae::IComponent
 {
@@ -38,7 +38,7 @@ public:
 private:
 	dae::ObservableVariable<PlayerState> m_State;
 	GridHopper* m_pGridHopper;
-	QbertSpriteComponent* m_pSprite;
+	HopperSpriteComponent* m_pSprite;
 	dae::TimerComponent* m_pRespawnTimer;
 	bool m_InputLeft;
 	bool m_InputRight;

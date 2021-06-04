@@ -4,7 +4,7 @@
 #include "GridHopper.h"
 #include "InitInfo.h"
 #include "SetVarCommand.h"
-#include "QbertSpriteComponent.h"
+#include "HopperSpriteComponent.h"
 #include "TimerComponent.h"
 #include "SphereOverlapDetector.h"
 #include "DiskComponent.h"
@@ -34,38 +34,34 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 
 	if( m_InputLeft )
 	{
-		m_pSprite->SetDirection( QbertSpriteComponent::Direction::Left );
+		m_pSprite->SetDirection( SpriteDirection::Left );
 		m_pGridHopper->Hop( MoveDirection::Left );
 		m_State.Set( PlayerState::Jumping );
-		m_pSprite->SetState( QbertSpriteComponent::PlayerState::Jumping );
 	}
 	if( m_InputRight )
 	{
-		m_pSprite->SetDirection( QbertSpriteComponent::Direction::Right );
+		m_pSprite->SetDirection( SpriteDirection::Right );
 		m_pGridHopper->Hop( MoveDirection::Right );
 		m_State.Set( PlayerState::Jumping );
-		m_pSprite->SetState( QbertSpriteComponent::PlayerState::Jumping );
 	}
 	if( m_InputUp )
 	{
-		m_pSprite->SetDirection( QbertSpriteComponent::Direction::Up );
+		m_pSprite->SetDirection( SpriteDirection::Up );
 		m_pGridHopper->Hop( MoveDirection::Up );
 		m_State.Set( PlayerState::Jumping );
-		m_pSprite->SetState( QbertSpriteComponent::PlayerState::Jumping );
 	}
 	if( m_InputDown )
 	{
-		m_pSprite->SetDirection( QbertSpriteComponent::Direction::Down );
+		m_pSprite->SetDirection( SpriteDirection::Down );
 		m_pGridHopper->Hop( MoveDirection::Down );
 		m_State.Set( PlayerState::Jumping );
-		m_pSprite->SetState( QbertSpriteComponent::PlayerState::Jumping );
 	}
 }
 
 void QbertPlayer::Init( const dae::InitInfo& initInfo )
 {
 	m_pGridHopper = m_GameObject.get( ).GetComponent<GridHopper>( );
-	m_pSprite = m_GameObject.get( ).GetComponent<QbertSpriteComponent>( );
+	m_pSprite = m_GameObject.get( ).GetComponent<HopperSpriteComponent>( );
 	m_pTransform = m_GameObject.get( ).GetComponent<dae::TransformComponent>( );
 	m_pRespawnTimer = m_GameObject.get( ).GetComponentByName<dae::TimerComponent>( "respawn_timer" );
 
@@ -91,6 +87,26 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 
 	InitInputs( initInfo );
 	InitCollider( );
+
+	m_State.AddObserver( [this]( PlayerState playerState )
+	{
+		switch( playerState )
+		{
+		case PlayerState::Moving:
+		case PlayerState::Idle:
+			m_pSprite->SetState( SpriteState::Idle );
+			break;
+		case PlayerState::AwaitingMove:
+		case PlayerState::Jumping:
+			m_pSprite->SetState( SpriteState::Jumping );
+			break;
+		case PlayerState::Dead:
+			m_pSprite->SetState( SpriteState::Dead );
+			break;
+		default:
+			dae::Logger::LogWarning( "QbertPlayer::m_State callback > Invalid playerState" );
+		}
+	} );
 }
 
 void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
@@ -116,14 +132,14 @@ void QbertPlayer::Respawn( )
 {
 	m_pGridHopper->Teleport( 0 );
 	m_State.Set( PlayerState::Idle );
-	m_pSprite->SetDirection( QbertSpriteComponent::Direction::Down );
-	m_pSprite->SetState( QbertSpriteComponent::PlayerState::Idle );
+	m_pSprite->SetDirection( SpriteDirection::Down );
+	m_pSprite->SetState( SpriteState::Idle );
 }
 
 void QbertPlayer::OnDeath( )
 {
 	m_pRespawnTimer->Start( );
-	m_pSprite->SetState( QbertSpriteComponent::PlayerState::Dead );
+	m_pSprite->SetState( SpriteState::Dead );
 	m_State.Set( PlayerState::Dead );
 }
 

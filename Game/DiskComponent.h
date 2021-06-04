@@ -38,6 +38,7 @@ private:
 	MoveDirection m_SpawnDirection;
 	QbertPlayer* m_pPlayer;
 	static constexpr size_t m_RotationCount{ 4 };
+	const glm::vec2 m_Offset;
 
 	void UpdateMovement( const dae::UpdateInfo& );
 	size_t GetSpriteIndex( ) const;

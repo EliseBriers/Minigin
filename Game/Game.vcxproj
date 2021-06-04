@@ -205,7 +205,7 @@
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="QbertPlayer.cpp" />
     <ClCompile Include="QbertSceneBehavior.cpp" />
-    <ClCompile Include="QbertSpriteComponent.cpp" />
+    <ClCompile Include="HopperSpriteComponent.cpp" />
     <ClCompile Include="SphereOverlapDetector.cpp" />
     <ClCompile Include="TriggerManager.cpp" />
   </ItemGroup>
@@ -219,7 +219,7 @@
     <ClInclude Include="MathHelpers.h" />
     <ClInclude Include="QbertPlayer.h" />
     <ClInclude Include="QbertSceneBehavior.h" />
-    <ClInclude Include="QbertSpriteComponent.h" />
+    <ClInclude Include="HopperSpriteComponent.h" />
     <ClInclude Include="SphereOverlapDetector.h" />
     <ClInclude Include="TriggerManager.h" />
   </ItemGroup>

@@ -42,7 +42,7 @@ void CubeGrid::Draw( Renderer& renderer )
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
 	const float scale{ m_pTransform->GetScale( ) };
 
-	const glm::vec2 cubePivot{ 0.5, 0.25 };
+	const glm::vec2 cubePivot{ 0.5, 0.5 };
 	for( const Cube& cube : m_Cubes )
 	{
 		const CubeState state{ m_GameCompleted ? m_EndAnimationState : cube.PlayerState };
@@ -118,12 +118,12 @@ const CubeGrid::Cube& CubeGrid::GetCube( size_t idx ) const
 	return m_Cubes[idx];
 }
 
-glm::vec2 CubeGrid::GetCubePos( size_t idx ) const
+glm::vec2 CubeGrid::GetCubePos( size_t idx, const glm::vec2& offset ) const
 {
 	const Cube& cube{ GetCube( idx ) };
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
 	const float scale{ m_pTransform->GetScale( ) };
-	return cube.Offset * scale + pos;
+	return cube.Offset * scale + pos + offset * m_CubeSize * scale;
 }
 
 size_t CubeGrid::GetCubeCount( ) const
@@ -204,28 +204,28 @@ void CubeGrid::CheckGameComplete( )
 	m_pAnimationTimer->Start( );
 }
 
-glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direction ) const
+glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direction, const glm::vec2& offset ) const
 {
-	glm::vec2 offset{ };
+	glm::vec2 posOffset{ };
 
 	switch( direction )
 	{
 	case MoveDirection::Left:
-		offset = { -0.5f, -0.5f };
+		posOffset = { -0.5f, -0.5f };
 		break;
 	case MoveDirection::Right:
-		offset = { 0.5f, 0.5f };
+		posOffset = { 0.5f, 0.5f };
 		break;
 	case MoveDirection::Up:
-		offset = { 0.5f, -0.5f };
+		posOffset = { 0.5f, -0.5f };
 		break;
 	case MoveDirection::Down:
-		offset = { - 0.5f, 0.5f };
+		posOffset = { - 0.5f, 0.5f };
 		break;
 	}
-	offset *= m_CubeSize;
+	posOffset *= m_CubeSize;
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
 	const float scale{ m_pTransform->GetScale( ) };
 
-	return pos + ( offset + m_Cubes[idx].Offset ) * scale;
+	return pos + ( posOffset + m_Cubes[idx].Offset ) * scale + offset * m_CubeSize * scale;
 }
