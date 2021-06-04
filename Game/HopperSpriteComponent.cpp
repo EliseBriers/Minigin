@@ -55,7 +55,10 @@ void HopperSpriteComponent::NextRotation( )
 		break;
 	case SpriteDirection::Down:
 		m_Direction = SpriteDirection::Right;
-		break;
-	default: ;
 	}
+}
+
+HopperType HopperSpriteComponent::GetHopperType( ) const
+{
+	return m_Type;
 }

@@ -28,3 +28,8 @@ void QbertSceneBehavior::EndLevel( ) const
 	if( !m_IsLastLevel )
 		GetScene( ).GetSceneManager( )->SetActiveScene( m_NextLevel );
 }
+
+void QbertSceneBehavior::QueueUnRegisterOverlapDetector( SphereOverlapDetector& sphereOverlapDetector )
+{
+	m_TriggerManager.QueueUnRegisterOverlapDetector( sphereOverlapDetector );
+}

@@ -12,6 +12,7 @@ public:
 	void RegisterOverlapDetector( SphereOverlapDetector& overlapDetector );
 	void UnRegisterOverlapDetector( const SphereOverlapDetector& sphereOverlapDetector );
 	void EndLevel( ) const;
+	void QueueUnRegisterOverlapDetector( SphereOverlapDetector& sphereOverlapDetector );
 	
 	// Rule of 5
 	~QbertSceneBehavior( ) override = default;

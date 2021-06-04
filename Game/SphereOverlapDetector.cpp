@@ -62,7 +62,7 @@ void SphereOverlapDetector::Init( const dae::InitInfo& initInfo )
 
 void SphereOverlapDetector::Deactivate( )
 {
-	m_pSceneBehavior->UnRegisterOverlapDetector( *this );
+	m_pSceneBehavior->QueueUnRegisterOverlapDetector( *this );
 }
 
 void SphereOverlapDetector::Activate( )

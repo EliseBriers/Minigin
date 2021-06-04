@@ -1,26 +1,28 @@
 {
-  "name": "Player1",
+  "name": "Slick",
   "components": [
+    {
+      "class": "RandomBouncerComponent",
+      "desc": {
+	    "spawn_time": 5
+	  }
+    },
     {
       "class": "GridHopper",
       "desc": {
         "speed": 2,
         "jump_height": 10,
-        "stomp_behavior": "complete",
-		"spawn_index": 0,
+        "stomp_behavior": "undo_one",
+        "spawn_index": 0,
         "up_direction": {
           "x": 0,
           "y": -1
         },
-		"offset":{
-          "x": 0.0,
+        "offset": {
+          "x": 0,
           "y": -0.25
         }
       }
-    },
-    {
-      "class": "QbertPlayer",
-      "desc": {}
     },
     {
       "class": "dae::TransformComponent",
@@ -35,19 +37,28 @@
       "class": "HopperSpriteComponent",
       "desc": {
         "sprite_sheet": "hopper_sprites.json",
-        "type": "qbert_1"
+        "type": "slick"
       }
     },
     {
       "class": "SphereOverlapDetector",
       "desc": {
-        "radius": 5
+        "radius": 3
       }
     },
     {
       "class": "dae::TimerComponent",
-      "name": "respawn_timer",
+      "name": "fall_timer",
       "desc": {
+        "duration": 2,
+        "loop": false
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "next_action_timer",
+      "desc": {
+        "duration": 0.8,
         "loop": false
       }
     }

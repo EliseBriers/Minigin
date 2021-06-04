@@ -9,6 +9,7 @@
 #include "QbertSceneBehavior.h"
 #include "SphereOverlapDetector.h"
 #include "DiskComponent.h"
+#include "RandomBouncerComponent.h"
 
 int main( int, char*[] )
 {
@@ -20,6 +21,7 @@ int main( int, char*[] )
 	engine.RegisterComponent<HopperSpriteComponent>( );
 	engine.RegisterComponent<SphereOverlapDetector>( );
 	engine.RegisterComponent<DiskComponent>( );
+	engine.RegisterComponent<RandomBouncerComponent>( );
 
 	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
 	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false) );

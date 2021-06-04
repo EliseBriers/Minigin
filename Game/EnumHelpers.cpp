@@ -54,3 +54,19 @@ size_t EnumHelpers::GetHopperSpriteIndex( HopperType type, SpriteDirection direc
 	const size_t hopperStartIndex{ static_cast<size_t>(type) * hopperSize };
 	return hopperStartIndex + localIndex;
 }
+
+MoveDirection EnumHelpers::GetRandomMoveDirection( RandomBounceDirection randomBounceDirection )
+{
+	const int rnd{ std::rand( ) % 2 };
+	switch( randomBounceDirection )
+	{
+	case RandomBounceDirection::Down:
+		return rnd == 0 ? MoveDirection::Down : MoveDirection::Right;
+	case RandomBounceDirection::UpLeft:
+		return rnd == 0 ? MoveDirection::Down : MoveDirection::Left;
+	case RandomBounceDirection::UpRight:
+		return rnd == 0 ? MoveDirection::Up : MoveDirection::Right;
+	}
+	dae::Logger::LogWarning( "EnumHelpers::GetRandomMoveDirection > invalid randomBounceDirection" );
+	return MoveDirection::Down;
+}

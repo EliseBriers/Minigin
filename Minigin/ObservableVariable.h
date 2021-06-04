@@ -16,6 +16,11 @@ namespace dae
 		void Set( const T& var );
 		const T& Get( ) const;
 		bool Equals( const T& var ) const;
+
+		ObservableVariable( const ObservableVariable& other ) = delete;
+		ObservableVariable( ObservableVariable&& other ) noexcept = delete;
+		ObservableVariable& operator=( const ObservableVariable& other ) = delete;
+		ObservableVariable& operator=( ObservableVariable&& other ) noexcept = delete;
 	private:
 		void Notify( );
 

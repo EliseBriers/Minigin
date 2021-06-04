@@ -82,25 +82,13 @@ void DiskComponent::UpdateMovement( const dae::UpdateInfo& updateInfo )
 	const float dt{ updateInfo.GetDeltaTime( ) };
 
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
-	const glm::vec2 toTarget{ m_EndPos - pos };
-	const float distance{ length( toTarget ) };
-	const glm::vec2 nToTarget{ toTarget / distance };
 
-	const glm::vec2 movement{ nToTarget * m_MovementSpeed * dt };
-
-	if( length( movement ) < distance )
+	if( m_pTransform->MoveTo( m_EndPos, m_MovementSpeed * dt ) )
 	{
-		const glm::vec2 newPos{ pos + movement };
-		m_pTransform->SetPosition( newPos.x, newPos.y, 0.f );
-		m_pPlayer->SetPosition( newPos );
-	}
-	else
-	{
-		m_pTransform->SetPosition( m_EndPos.x, m_EndPos.y, 0.f );
-		m_pPlayer->SetPosition( m_EndPos );
 		m_State.Set( DiskState::Arrived );
 		StartEndTimer( );
 	}
+	m_pPlayer->SetPosition( pos );
 }
 
 size_t DiskComponent::GetSpriteIndex( ) const

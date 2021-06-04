@@ -19,6 +19,7 @@ public:
 	void SetDirection( SpriteDirection direction );
 	void SetState( SpriteState state );
 	void NextRotation( );
+	HopperType GetHopperType( ) const;
 	
 	// Rule of 5
 	~HopperSpriteComponent( ) override = default;

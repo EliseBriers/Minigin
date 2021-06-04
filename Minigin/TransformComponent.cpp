@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
 #include "JsonObjectWrapper.h"
+#include <glm/detail/func_geometric.inl>
 
 dae::TransformComponent::TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
@@ -29,4 +30,23 @@ void dae::TransformComponent::SetPosition( float x, float y, float z )
 void dae::TransformComponent::SetScale( float scale )
 {
 	m_Scale = scale;
+}
+
+bool dae::TransformComponent::MoveTo( const glm::vec2& endPos, float amount )
+{
+	const glm::vec2 pos{ GetPosition( ) };
+	const glm::vec2 toTarget{ endPos - pos };
+	const float distance{ length( toTarget ) };
+	const glm::vec2 nToTarget{ toTarget / distance };
+
+	const glm::vec2 movement{ nToTarget * amount };
+
+	if( length( movement ) > distance )
+	{
+		SetPosition( endPos.x, endPos.y, 0.f );
+		return true;
+	}
+	const glm::vec2 newPos{ pos + movement };
+	SetPosition( newPos.x, newPos.y, 0.f );
+	return false;
 }

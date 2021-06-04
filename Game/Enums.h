@@ -72,3 +72,17 @@ enum class SpriteState : size_t
 	Jumping,
 	Dead
 };
+
+enum class RandomBounceDirection
+{
+	Down,
+	UpLeft,
+	UpRight
+};
+
+enum class RandomBouncerState
+{
+	Spawning,
+	Active,
+	Falling
+};

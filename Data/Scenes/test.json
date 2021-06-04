@@ -154,6 +154,8 @@
         }
       ]
     },
+	"slick.json",
+	"wrongway.json",
     "player_1.json",
     "fps_counter.json"
   ]

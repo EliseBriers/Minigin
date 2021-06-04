@@ -12,6 +12,13 @@ void TriggerManager::Update( )
 			m_OverlapDetectors[i].get( ).DetectOverlap( m_OverlapDetectors[j] );
 		}
 	}
+
+	
+	for( auto& detector : m_RemoveQueue )
+	{
+		RemoveOverlapDetector( detector.get( ) );
+	}
+	m_RemoveQueue.clear( );
 }
 
 void TriggerManager::AddOverlapDetector( SphereOverlapDetector& overlapDetector )
@@ -32,4 +39,9 @@ void TriggerManager::RemoveOverlapDetector( const SphereOverlapDetector& overlap
 		m_OverlapDetectors.erase( it );
 	else
 		dae::Logger::LogWarning( "TriggerManager::RemoveOverlapDetector > No overlapDetector of id " + std::to_string( overlapDetector.Id.GetValue( ) ) + " found" );
+}
+
+void TriggerManager::QueueUnRegisterOverlapDetector( SphereOverlapDetector& overlapDetector )
+{
+	m_RemoveQueue.emplace_back( overlapDetector );
 }

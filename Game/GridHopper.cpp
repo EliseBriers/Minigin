@@ -10,16 +10,18 @@ GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrappe
 	: IComponent{ gameObject, std::move( name ) }
 	, m_StompBehavior{ GetStompBehavior( jsonObject.GetString( "stomp_behavior" ) ) }
 	, m_Callback{ VoidTouchdown }
-	, m_JumpDirection{ normalize( jsonObject.GetVec2( "jump_direction" ) ) }
+	, m_UpDirection{ normalize( jsonObject.GetVec2( "up_direction" ) ) }
 	, m_Offset{ jsonObject.GetVec2( "offset" ) }
 	, m_pCubeGrid{ nullptr }
+	, m_pSprite{ nullptr }
 	, m_pTransform{ nullptr }
-	, m_CurrentIndex{ 0u }
+	, m_SpawnIndex{ jsonObject.GetUint( "spawn_index" ) }
+	, m_CurrentIndex{ static_cast<int>(m_SpawnIndex) }
 	, m_Speed{ jsonObject.GetOptionalFloat( "speed", 1.f ) }
 	, m_MovementPercentage{ 0.f }
 	, m_JumpHeight{ jsonObject.GetOptionalFloat( "jump_height", 15.f ) }
 	, m_InitializedBehavior{ false }
-	, m_State{ PlayerState::Idle }
+	, m_State{ HopperState::Idle }
 {
 }
 
@@ -43,18 +45,39 @@ void GridHopper::Init( const dae::InitInfo& initInfo )
 		dae::Logger::LogWarning( "GridHopper::Init > m_pTransform is nullptr" );
 		return;
 	}
+	m_pSprite = m_GameObject.get( ).GetComponent<HopperSpriteComponent>( );
+	if( !m_pSprite )
+	{
+		dae::Logger::LogWarning( "GridHopper::Init > m_pSprite is nullptr" );
+		return;
+	}
 
 	const glm::vec2 spawnPos{ m_pCubeGrid->GetCubePos( m_CurrentIndex, m_Offset ) };
 	m_pTransform->SetPosition( spawnPos.x, spawnPos.y, 0.f );
 
 	m_InitializedBehavior = true;
+
+	m_State.AddObserver( [this ]( HopperState state )
+	{
+		switch( state )
+		{
+		case HopperState::Hopping:
+			break;
+		case HopperState::Idle:
+			m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
+			break;
+		case HopperState::OutOfGrid:
+			break;
+		case HopperState::NoControl:
+			break;
+		}
+	} );
 }
 
 void GridHopper::OnHopComplete( )
 {
 	m_MovementPercentage = 0.f;
-	m_State = PlayerState::Idle;
-	m_Callback( m_CurrentIndex == -1 ? TouchdownType::Void : TouchdownType::Block );
+	m_State.Set( HopperState::Idle );
 
 	if( m_CurrentIndex == -1 )
 		return;
@@ -87,6 +110,8 @@ void GridHopper::OnHopComplete( )
 		else
 			m_pCubeGrid->SetCubeState( m_CurrentIndex, CubeGrid::CubeState::Done );
 		break;
+	case StompBehavior::Nothing:
+		break;
 	}
 }
 
@@ -94,7 +119,7 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 {
 	if( !m_InitializedBehavior )
 		return;
-	if( m_State != PlayerState::Hopping )
+	if( !m_State.Equals( HopperState::Hopping ) )
 		return;
 	const float dt{ updateInfo.GetDeltaTime( ) };
 	m_MovementPercentage += dt * m_Speed;
@@ -106,7 +131,7 @@ void GridHopper::Update( const dae::UpdateInfo& updateInfo )
 
 	const float scale{ m_pTransform->GetScale( ) };
 	const float height{ scale * m_JumpHeight * sinf( m_MovementPercentage * static_cast<float>(M_PI) ) };
-	const glm::vec2 jumpOffset{ height * m_JumpDirection };
+	const glm::vec2 jumpOffset{ height * m_UpDirection };
 	const glm::vec2 toTarget{ m_ToPos - m_FromPos };
 	const glm::vec2 newPos{ m_FromPos + toTarget * m_MovementPercentage + jumpOffset + m_Offset };
 	m_pTransform->SetPosition( newPos.x, newPos.y, 0.f );
@@ -125,14 +150,14 @@ void GridHopper::Hop( MoveDirection direction )
 	if( m_CurrentIndex == -1 || m_CurrentIndex >= cubeCount )
 	{
 		dae::Logger::LogWarning( "GridHopper::Hop > Invalid current index" );
-		m_State = PlayerState::OutOfGrid;
+		m_State.Set( HopperState::OutOfGrid );
 		return;
 	}
 	const CubeGrid::Cube& cube{ m_pCubeGrid->GetCube( static_cast<size_t>(m_CurrentIndex) ) };
 	const int desiredIndex{ GetToIndex( cube, direction ) };
 	if( desiredIndex == -1 )
 	{
-		m_State = PlayerState::Hopping;
+		m_State.Set( HopperState::Hopping );
 		m_FromPos = m_pCubeGrid->GetCubePos( m_CurrentIndex, m_Offset );
 		m_ToPos = m_pCubeGrid->CalculateImaginaryBlockPos( m_CurrentIndex, direction, m_Offset );
 		// dae::Logger::LogInfo( "GridHopper::Hop > Out of grid" );
@@ -145,17 +170,17 @@ void GridHopper::Hop( MoveDirection direction )
 	m_ToPos = m_pCubeGrid->GetCubePos( desiredIndex, m_Offset );
 	m_CurrentIndex = desiredIndex;
 
-	m_State = PlayerState::Hopping;
+	m_State.Set( HopperState::Hopping );
 }
 
 bool GridHopper::CanHop( ) const
 {
-	return m_State == PlayerState::Idle;
+	return m_State.Equals( HopperState::Idle );
 }
 
 bool GridHopper::IsHopping( ) const
 {
-	return m_State == PlayerState::Hopping;
+	return m_State.Equals( HopperState::Hopping );
 }
 
 void GridHopper::Teleport( size_t index )
@@ -169,12 +194,37 @@ void GridHopper::Teleport( size_t index )
 	m_CurrentIndex = static_cast<int>(index);
 	const glm::vec2 pos{ m_pCubeGrid->GetCubePos( index, m_Offset ) };
 	m_pTransform->SetPosition( pos.x, pos.y, 0.f );
-	m_State = PlayerState::Idle;
+	m_State.Set( HopperState::Idle );
 }
 
 void GridHopper::SetTouchdownCallback( const touchdown_callback_t& onTouchdown )
 {
 	m_Callback = onTouchdown;
+}
+
+const glm::vec2& GridHopper::GetUpDirection( ) const
+{
+	return m_UpDirection;
+}
+
+int GridHopper::GetCurrentIndex( ) const
+{
+	return m_CurrentIndex;
+}
+
+CubeGrid* GridHopper::GetCubeGrid( ) const
+{
+	return m_pCubeGrid;
+}
+
+const glm::vec2& GridHopper::GetOffset( ) const
+{
+	return m_Offset;
+}
+
+void GridHopper::SetState( HopperState state )
+{
+	m_State.Set( state );
 }
 
 void GridHopper::HopToIndex( size_t index )
@@ -185,7 +235,7 @@ void GridHopper::HopToIndex( size_t index )
 	m_ToPos = m_pCubeGrid->GetCubePos( index, m_Offset );
 	m_CurrentIndex = static_cast<int>(index);
 
-	m_State = PlayerState::Hopping;
+	m_State.Set( HopperState::Hopping );
 }
 
 int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction )
@@ -222,6 +272,8 @@ GridHopper::StompBehavior GridHopper::GetStompBehavior( const std::string& str )
 		return StompBehavior::UndoAll;
 	if( str == "toggle" )
 		return StompBehavior::Toggle;
+	if( str == "nothing" )
+		return StompBehavior::Nothing;
 
 	dae::Logger::LogWarning( "GridHopper::GetStompBehavior > invalid string provided" );
 	return StompBehavior::Complete;
