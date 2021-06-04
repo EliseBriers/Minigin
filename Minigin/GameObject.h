@@ -27,6 +27,8 @@ namespace dae
 		void Init( InitInfo& initInfo );
 		void Deactivate( );
 		void Activate( );
+		void Pause( );
+		void UnPause( );
 
 		template <typename T>
 		T* GetComponent( ) const;
@@ -38,6 +40,7 @@ namespace dae
 		GameObject( ) = default;
 
 		bool IsActive( ) const;
+		bool IsPaused( ) const;
 
 		~GameObject( );
 		GameObject( const GameObject& other ) = delete;
@@ -48,6 +51,7 @@ namespace dae
 		std::vector<std::unique_ptr<IComponent>> m_pComponents;
 		const std::string m_Name;
 		bool m_IsActive;
+		bool m_IsPaused;
 	};
 
 	template <typename T>

@@ -64,9 +64,27 @@ void dae::GameObject::Deactivate( )
 void dae::GameObject::Activate( )
 {
 	m_IsActive = true;
-	for (const std::unique_ptr<IComponent>& pComponent : m_pComponents)
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
 	{
-		pComponent->Activate();
+		pComponent->Activate( );
+	}
+}
+
+void dae::GameObject::Pause( )
+{
+	m_IsPaused = true;
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	{
+		pComponent->Pause( );
+	}
+}
+
+void dae::GameObject::UnPause( )
+{
+	m_IsPaused = false;
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	{
+		pComponent->UnPause( );
 	}
 }
 
@@ -78,6 +96,11 @@ const std::string& dae::GameObject::GetName( ) const
 bool dae::GameObject::IsActive( ) const
 {
 	return m_IsActive;
+}
+
+bool dae::GameObject::IsPaused( ) const
+{
+	return m_IsPaused;
 }
 
 dae::GameObject::~GameObject( ) = default;

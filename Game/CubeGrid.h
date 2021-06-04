@@ -49,7 +49,7 @@ public:
 	void SetCubeState( size_t idx, CubeState cubeState );
 	CubeState GetCubeState( size_t idx ) const;
 	void DoAnimationSwap( );
-	void EndAnimation( );
+	void OnLevelEnd( ) const;
 	int GetIndexAfterMove( size_t index, MoveDirection direction ) const;
 
 	// Rule of 5

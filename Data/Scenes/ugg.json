@@ -4,7 +4,8 @@
     {
       "class": "RandomBouncerComponent",
       "desc": {
-	    "spawn_time": 10
+	    "spawn_time": 10,
+		"respawn_time": 3
 	  }
     },
     {

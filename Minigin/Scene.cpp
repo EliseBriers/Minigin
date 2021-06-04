@@ -45,7 +45,7 @@ void dae::Scene::FixedUpdate( const UpdateInfo& updateInfo )
 
 	for( auto& object : m_Objects )
 	{
-		if( object->IsActive( ) )
+		if( object->IsActive( ) && !object->IsPaused( ) )
 			object->FixedUpdate( updateInfo );
 	}
 }
@@ -58,7 +58,7 @@ void dae::Scene::Update( const UpdateInfo& updateInfo )
 
 	for( auto& object : m_Objects )
 	{
-		if( object->IsActive( ) )
+		if( object->IsActive( ) && !object->IsPaused( ) )
 			object->Update( updateInfo );
 	}
 }

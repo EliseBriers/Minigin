@@ -49,6 +49,7 @@ public:
 	CubeGrid* GetCubeGrid( ) const;
 	const glm::vec2& GetOffset( ) const;
 	void SetState( HopperState state );
+	void ResetToSpawnIndex( );
 
 	// Rule of 5
 	~GridHopper( ) override = default;
@@ -73,6 +74,7 @@ private:
 	float m_JumpHeight;
 	bool m_InitializedBehavior;
 	dae::ObservableVariable<HopperState> m_State;
+	QbertSceneBehavior* m_pSceneBehavior;
 
 	static void VoidTouchdown( TouchdownType );
 	static StompBehavior GetStompBehavior( const std::string& str );

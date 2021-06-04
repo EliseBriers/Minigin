@@ -5,6 +5,7 @@
 #include "ObservableVariable.h"
 
 class QbertPlayer;
+class QbertSceneBehavior;
 class HopperSpriteComponent;
 class GridHopper;
 class SphereOverlapDetector;
@@ -36,14 +37,16 @@ private:
 	dae::TransformComponent* m_pTransform;
 	const float m_FallSpeed;
 	const float m_SpawnDistance;
+	const float m_RespawnTime;
 	glm::vec2 m_SpawnPos;
 	bool m_IsLethal;
+	QbertSceneBehavior* m_pSceneBehavior;
 
 	void GetComponentPointers( );
 
 	void UpdateFall( const dae::UpdateInfo& updateInfo ) const;
 	void UpdateSpawn( const dae::UpdateInfo& updateInfo );
 
-	void OnDeath( );
-	void KillPlayer( QbertPlayer* pPlayer );
+	void OnDeath( bool killedByPlayer ) const;
+	static void KillPlayer( QbertPlayer* pPlayer );
 };

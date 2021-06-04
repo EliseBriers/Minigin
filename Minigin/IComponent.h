@@ -19,6 +19,8 @@ namespace dae
 		virtual void Init( const InitInfo& );
 		virtual void Deactivate( );
 		virtual void Activate( );
+		virtual void Pause( );
+		virtual void UnPause( );
 
 		GameObject& GetGameObject( ) const;
 

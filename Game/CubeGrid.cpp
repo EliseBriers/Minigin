@@ -107,7 +107,7 @@ void CubeGrid::Init( const InitInfo& initInfo )
 
 	m_pAnimationTimer->SetCallback( [this]( )
 	{
-		EndAnimation( );
+		OnLevelEnd( );
 	} );
 
 	m_pSceneBehavior = initInfo.Scene_GetSceneBehaviorAs<QbertSceneBehavior>( );
@@ -149,7 +149,7 @@ void CubeGrid::DoAnimationSwap( )
 		m_EndAnimationState = CubeState::Done;
 }
 
-void CubeGrid::EndAnimation( )
+void CubeGrid::OnLevelEnd( ) const
 {
 	m_pSceneBehavior->EndLevel( );
 }
@@ -226,6 +226,7 @@ void CubeGrid::CheckGameComplete( )
 	m_GameCompleted = true;
 	m_pAnimationFlipTimer->Start( );
 	m_pAnimationTimer->Start( );
+	m_pSceneBehavior->GameCompleted( );
 }
 
 glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direction, const glm::vec2& offset ) const

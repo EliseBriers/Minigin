@@ -19,6 +19,7 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 	, m_InputRight{ false }
 	, m_InputUp{ false }
 	, m_InputDown{ false }
+	, m_pSceneBehavior{ nullptr }
 {
 }
 
@@ -103,6 +104,15 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 			dae::Logger::LogWarning( "QbertPlayer::m_State callback > Invalid playerState" );
 		}
 	} );
+
+	m_pSceneBehavior = initInfo.Scene_GetSceneBehaviorAs<QbertSceneBehavior>( );
+	if( !m_pSceneBehavior )
+	{
+		dae::Logger::LogWarning( "QbertPlayer::Init > No QbertSceneBehavior found" );
+		return;
+	}
+
+	m_pSceneBehavior->RegisterPlayer( &GetGameObject( ) );
 }
 
 void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
@@ -130,6 +140,7 @@ void QbertPlayer::Respawn( )
 	m_State.Set( PlayerState::Idle );
 	m_pSprite->SetDirection( SpriteDirection::Down );
 	m_pSprite->SetState( SpriteState::Idle );
+	m_pSceneBehavior->OnPlayerRespawn( );
 }
 
 void QbertPlayer::OnDeath( )
@@ -137,6 +148,7 @@ void QbertPlayer::OnDeath( )
 	m_pRespawnTimer->Start( );
 	m_pSprite->SetState( SpriteState::Dead );
 	m_State.Set( PlayerState::Dead );
+	m_pSceneBehavior->OnPlayerDeath( );
 }
 
 void QbertPlayer::RegisterStateObserver( state_observer_t stateObserver )

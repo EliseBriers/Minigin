@@ -45,6 +45,7 @@ private:
 	bool m_InputUp;
 	bool m_InputDown;
 	dae::TransformComponent* m_pTransform;
+	QbertSceneBehavior* m_pSceneBehavior;
 
 	int GetInputCount( ) const;
 

@@ -32,6 +32,14 @@ void dae::IComponent::Activate( )
 {
 }
 
+void dae::IComponent::Pause( )
+{
+}
+
+void dae::IComponent::UnPause( )
+{
+}
+
 dae::GameObject& dae::IComponent::GetGameObject( ) const
 {
 	return m_GameObject.get( );

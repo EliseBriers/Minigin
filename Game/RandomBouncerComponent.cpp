@@ -7,12 +7,14 @@
 #include "QbertPlayer.h"
 #include "EnumHelpers.h"
 #include <UpdateInfo.h>
+#include "QbertSceneBehavior.h"
+#include <InitInfo.h>
 
 RandomBouncerComponent::RandomBouncerComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
 	, m_RandomBounceDirection{ RandomBounceDirection::Down }
 	, m_State{ RandomBouncerState::Spawning }
-	, m_DownDirection{ }
+	, m_DownDirection{ 0.f, 1.f }
 	, m_pSprite{ nullptr }
 	, m_pGridHopper{ nullptr }
 	, m_pCollider{ nullptr }
@@ -21,15 +23,23 @@ RandomBouncerComponent::RandomBouncerComponent( dae::GameObject& gameObject, con
 	, m_pTransform{ nullptr }
 	, m_FallSpeed{ 350.f }
 	, m_SpawnDistance{ m_FallSpeed * jsonObject.GetFloat( "spawn_time" ) }
-	, m_SpawnPos{ }
+	, m_RespawnTime{ jsonObject.GetFloat( "respawn_time" ) }
+	, m_SpawnPos{ 0.f, 0.f }
 	, m_IsLethal{ }
+	, m_pSceneBehavior{ nullptr }
 {
 }
 
-void RandomBouncerComponent::Init( const dae::InitInfo& )
+void RandomBouncerComponent::Init( const dae::InitInfo& initInfo )
 {
 	GetComponentPointers( );
-
+	m_pSceneBehavior = initInfo.Scene_GetSceneBehaviorAs<QbertSceneBehavior>( );
+	if( !m_pSceneBehavior )
+	{
+		dae::Logger::LogWarning( "RandomBouncerComponent::Init > No QbertSceneBehavior found" );
+		return;
+	}
+	m_pSceneBehavior->RegisterEnemy( &GetGameObject( ) );
 	switch( m_pSprite->GetHopperType( ) )
 	{
 	case HopperType::Ugg: ;
@@ -62,7 +72,7 @@ void RandomBouncerComponent::Init( const dae::InitInfo& )
 					if( m_IsLethal )
 						KillPlayer( pPlayer );
 					else
-						OnDeath( );
+						OnDeath( true );
 				}
 			}
 		}
@@ -70,7 +80,8 @@ void RandomBouncerComponent::Init( const dae::InitInfo& )
 
 	m_pNextActionTimer->SetCallback( [this]( )
 	{
-		m_pGridHopper->Hop( EnumHelpers::GetRandomMoveDirection( m_RandomBounceDirection ) );
+		if( m_State.Equals( RandomBouncerState::Active ) )
+			m_pGridHopper->Hop( EnumHelpers::GetRandomMoveDirection( m_RandomBounceDirection ) );
 	} );
 
 	m_pGridHopper->SetTouchdownCallback( [this]( GridHopper::TouchdownType touchDownType )
@@ -93,6 +104,7 @@ void RandomBouncerComponent::Init( const dae::InitInfo& )
 		{
 		case RandomBouncerState::Spawning:
 			m_pGridHopper->SetState( GridHopper::HopperState::NoControl );
+			m_pGridHopper->ResetToSpawnIndex( );
 			break;
 		case RandomBouncerState::Active:
 			m_pGridHopper->SetState( GridHopper::HopperState::Idle );
@@ -106,7 +118,7 @@ void RandomBouncerComponent::Init( const dae::InitInfo& )
 
 	m_pFallTimer->SetCallback( [this]( )
 	{
-		OnDeath( );
+		OnDeath( false );
 	} );
 }
 
@@ -197,13 +209,15 @@ void RandomBouncerComponent::UpdateSpawn( const dae::UpdateInfo& updateInfo )
 	}
 }
 
-void RandomBouncerComponent::OnDeath( )
+void RandomBouncerComponent::OnDeath( bool killedByPlayer ) const
 {
-	dae::Logger::LogInfo( "Bouncer died" );
 	GetGameObject( ).Deactivate( );
+	m_pSceneBehavior->RegisterKilledEnemy( &GetGameObject( ), killedByPlayer, m_RespawnTime );
+	if( killedByPlayer )
+		m_pSceneBehavior->AddPoints( 300u );
 }
 
-void RandomBouncerComponent::KillPlayer( QbertPlayer* )
+void RandomBouncerComponent::KillPlayer( QbertPlayer* pPlayer )
 {
-	dae::Logger::LogInfo( "Killed Player" );
+	pPlayer->OnDeath( );
 }
