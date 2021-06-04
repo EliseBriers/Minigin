@@ -6,6 +6,7 @@
 
 SphereOverlapDetector::SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_Offset{ jsonObject.GetVec2( "offset" ) }
 	, m_Callback{ VoidCallback }
 	, m_Circle{ }
 	, m_Radius{ jsonObject.GetFloat( "radius" ) }
@@ -77,8 +78,9 @@ void SphereOverlapDetector::SetCallback( const callback_t& callback )
 
 void SphereOverlapDetector::UpdateCircle( )
 {
-	m_Circle.Pos = m_pTransform->GetPosition( );
-	m_Circle.R = m_pTransform->GetScale( ) * m_Radius;
+	const float scale{ m_pTransform->GetScale( ) };
+	m_Circle.Pos = glm::vec2{ m_pTransform->GetPosition( ) } + m_Offset * scale;
+	m_Circle.R = m_pTransform->GetScale( ) * m_Radius * scale;
 }
 
 void SphereOverlapDetector::VoidCallback( dae::GameObject*, TriggerAction )

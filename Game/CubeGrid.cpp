@@ -70,15 +70,15 @@ void CubeGrid::Init( const InitInfo& initInfo )
 			// Logger::LogInfo( "y: " + std::to_string( y ) + " x: " + std::to_string( x ) + " i: " + std::to_string( idx ) );
 
 			// Calculate connections
-			const int connectionUp{ RowColToIdx( x, y - 1 ) };
-			const int connectionDown{ RowColToIdx( x, y + 1 ) };
-			const int connectionLeft{ RowColToIdx( x - 1, y - 1 ) };
-			const int connectionRight{ RowColToIdx( x + 1, y + 1 ) };
+			const int connectionUpRight{ RowColToIdx( x, y - 1 ) };
+			const int connectionDownLeft{ RowColToIdx( x, y + 1 ) };
+			const int connectionUpLeft{ RowColToIdx( x - 1, y - 1 ) };
+			const int connectionDownRight{ RowColToIdx( x + 1, y + 1 ) };
+			const int connectionLeft{ RowColToIdx( x - 1, y ) };
+			const int connectionRight{ RowColToIdx( x + 1, y ) };
 
-			// Calculate offset
 
-
-			Cube c{ CalculateOffset( x, y ), CubeState::Default, connectionUp, connectionDown, connectionRight, connectionLeft };
+			Cube c{ CalculateOffset( x, y ), CubeState::Default, connectionUpRight, connectionDownLeft, connectionDownRight, connectionUpLeft, connectionRight, connectionLeft };
 			m_Cubes.push_back( c );
 		}
 	}
@@ -154,6 +154,30 @@ void CubeGrid::EndAnimation( )
 	m_pSceneBehavior->EndLevel( );
 }
 
+int CubeGrid::GetIndexAfterMove( size_t index, MoveDirection direction ) const
+{
+	const Cube& cube{ m_Cubes[index] };
+	switch( direction )
+	{
+	case MoveDirection::UpLeft:
+		return cube.ConnectionUpLeft;
+	case MoveDirection::DownRight:
+		return cube.ConnectionDownRight;
+	case MoveDirection::UpRight:
+		return cube.ConnectionUpRight;
+	case MoveDirection::DownLeft:
+		return cube.ConnectionDownLeft;
+
+	case MoveDirection::Left:
+		return cube.ConnectionLeft;
+	case MoveDirection::Right:
+		return cube.ConnectionRight;
+	default:
+		Logger::LogWarning( "CubeGrid::GetIndexAfterMove > direction invalid" );
+		return -1;
+	}
+}
+
 size_t CubeGrid::GetSpriteIdx( CubeState state, LevelColor color )
 {
 	const size_t offset{ 0u };
@@ -210,16 +234,16 @@ glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direct
 
 	switch( direction )
 	{
-	case MoveDirection::Left:
+	case MoveDirection::UpLeft:
 		posOffset = { -0.5f, -0.5f };
 		break;
-	case MoveDirection::Right:
+	case MoveDirection::DownRight:
 		posOffset = { 0.5f, 0.5f };
 		break;
-	case MoveDirection::Up:
+	case MoveDirection::UpRight:
 		posOffset = { 0.5f, -0.5f };
 		break;
-	case MoveDirection::Down:
+	case MoveDirection::DownLeft:
 		posOffset = { - 0.5f, 0.5f };
 		break;
 	}

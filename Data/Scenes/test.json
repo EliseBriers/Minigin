@@ -133,7 +133,11 @@
         {
           "class": "SphereOverlapDetector",
           "desc": {
-            "radius": 5
+            "radius": 3,
+		    "offset":{
+		      "x": 0,
+		      "y": 0
+		    }
           }
         },
         {
@@ -156,6 +160,7 @@
     },
 	"slick.json",
 	"wrongway.json",
+	"ugg.json",
     "player_1.json",
     "fps_counter.json"
   ]

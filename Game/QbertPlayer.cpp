@@ -34,26 +34,22 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 
 	if( m_InputLeft )
 	{
-		m_pSprite->SetDirection( SpriteDirection::Left );
-		m_pGridHopper->Hop( MoveDirection::Left );
+		m_pGridHopper->Hop( MoveDirection::UpLeft );
 		m_State.Set( PlayerState::Jumping );
 	}
 	if( m_InputRight )
 	{
-		m_pSprite->SetDirection( SpriteDirection::Right );
-		m_pGridHopper->Hop( MoveDirection::Right );
+		m_pGridHopper->Hop( MoveDirection::DownRight );
 		m_State.Set( PlayerState::Jumping );
 	}
 	if( m_InputUp )
 	{
-		m_pSprite->SetDirection( SpriteDirection::Up );
-		m_pGridHopper->Hop( MoveDirection::Up );
+		m_pGridHopper->Hop( MoveDirection::UpRight );
 		m_State.Set( PlayerState::Jumping );
 	}
 	if( m_InputDown )
 	{
-		m_pSprite->SetDirection( SpriteDirection::Down );
-		m_pGridHopper->Hop( MoveDirection::Down );
+		m_pGridHopper->Hop( MoveDirection::DownLeft );
 		m_State.Set( PlayerState::Jumping );
 	}
 }

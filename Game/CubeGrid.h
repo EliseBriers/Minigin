@@ -27,8 +27,10 @@ public:
 		glm::vec2 Offset;
 		CubeState PlayerState;
 		// Connections, -1 = no connection
-		int ConnectionUp;
-		int ConnectionDown;
+		int ConnectionUpRight;
+		int ConnectionDownLeft;
+		int ConnectionDownRight;
+		int ConnectionUpLeft;
 		int ConnectionRight;
 		int ConnectionLeft;
 	};
@@ -41,13 +43,14 @@ public:
 
 	const Cube& GetCube( size_t idx ) const;
 	glm::vec2 GetCubePos( size_t idx, const glm::vec2& offset ) const;
-	glm::vec2 CalculateImaginaryBlockPos( size_t idx, MoveDirection direction, const glm::vec2& offset) const;
+	glm::vec2 CalculateImaginaryBlockPos( size_t idx, MoveDirection direction, const glm::vec2& offset ) const;
 	size_t GetCubeCount( ) const;
 
 	void SetCubeState( size_t idx, CubeState cubeState );
 	CubeState GetCubeState( size_t idx ) const;
 	void DoAnimationSwap( );
 	void EndAnimation( );
+	int GetIndexAfterMove( size_t index, MoveDirection direction ) const;
 
 	// Rule of 5
 	~CubeGrid( ) override = default;

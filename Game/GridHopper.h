@@ -74,7 +74,7 @@ private:
 	bool m_InitializedBehavior;
 	dae::ObservableVariable<HopperState> m_State;
 
-	static int GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction );
 	static void VoidTouchdown( TouchdownType );
 	static StompBehavior GetStompBehavior( const std::string& str );
+	void SetSpriteDirection( MoveDirection direction ) const;
 };

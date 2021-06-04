@@ -34,6 +34,7 @@ public:
 	SphereOverlapDetector& operator=( const SphereOverlapDetector& other ) = delete;
 	SphereOverlapDetector& operator=( SphereOverlapDetector&& other ) noexcept = delete;
 private:
+	const glm::vec2 m_Offset;
 	callback_t m_Callback;
 	MathHelpers::Circle m_Circle;
 	const float m_Radius;

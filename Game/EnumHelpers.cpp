@@ -61,12 +61,12 @@ MoveDirection EnumHelpers::GetRandomMoveDirection( RandomBounceDirection randomB
 	switch( randomBounceDirection )
 	{
 	case RandomBounceDirection::Down:
-		return rnd == 0 ? MoveDirection::Down : MoveDirection::Right;
+		return rnd == 0 ? MoveDirection::DownLeft : MoveDirection::DownRight;
 	case RandomBounceDirection::UpLeft:
-		return rnd == 0 ? MoveDirection::Down : MoveDirection::Left;
+		return rnd == 0 ? MoveDirection::Left : MoveDirection::UpLeft;
 	case RandomBounceDirection::UpRight:
-		return rnd == 0 ? MoveDirection::Up : MoveDirection::Right;
+		return rnd == 0 ? MoveDirection::UpRight : MoveDirection::Right;
 	}
 	dae::Logger::LogWarning( "EnumHelpers::GetRandomMoveDirection > invalid randomBounceDirection" );
-	return MoveDirection::Down;
+	return MoveDirection::DownLeft;
 }

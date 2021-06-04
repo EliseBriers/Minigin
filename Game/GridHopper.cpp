@@ -145,6 +145,7 @@ void GridHopper::Hop( MoveDirection direction )
 		return;
 	}
 
+	SetSpriteDirection( direction );
 
 	const int cubeCount{ static_cast<int>(m_pCubeGrid->GetCubeCount( )) };
 	if( m_CurrentIndex == -1 || m_CurrentIndex >= cubeCount )
@@ -153,8 +154,8 @@ void GridHopper::Hop( MoveDirection direction )
 		m_State.Set( HopperState::OutOfGrid );
 		return;
 	}
-	const CubeGrid::Cube& cube{ m_pCubeGrid->GetCube( static_cast<size_t>(m_CurrentIndex) ) };
-	const int desiredIndex{ GetToIndex( cube, direction ) };
+	// const CubeGrid::Cube& cube{ m_pCubeGrid->GetCube( static_cast<size_t>(m_CurrentIndex) ) };
+	const int desiredIndex{ m_pCubeGrid->GetIndexAfterMove( static_cast<size_t>(m_CurrentIndex), direction ) };
 	if( desiredIndex == -1 )
 	{
 		m_State.Set( HopperState::Hopping );
@@ -238,24 +239,6 @@ void GridHopper::HopToIndex( size_t index )
 	m_State.Set( HopperState::Hopping );
 }
 
-int GridHopper::GetToIndex( const CubeGrid::Cube& cube, MoveDirection direction )
-{
-	switch( direction )
-	{
-	case MoveDirection::Left:
-		return cube.ConnectionLeft;
-	case MoveDirection::Right:
-		return cube.ConnectionRight;
-	case MoveDirection::Up:
-		return cube.ConnectionUp;
-	case MoveDirection::Down:
-		return cube.ConnectionDown;
-	default:
-		dae::Logger::LogWarning( "GridHopper::GetToIndex > direction invalid" );
-		return -1;
-	}
-}
-
 void GridHopper::VoidTouchdown( TouchdownType )
 {
 }
@@ -277,4 +260,26 @@ GridHopper::StompBehavior GridHopper::GetStompBehavior( const std::string& str )
 
 	dae::Logger::LogWarning( "GridHopper::GetStompBehavior > invalid string provided" );
 	return StompBehavior::Complete;
+}
+
+void GridHopper::SetSpriteDirection( MoveDirection direction ) const
+{
+	switch( direction )
+	{
+	case MoveDirection::UpLeft:
+	case MoveDirection::Left:
+		m_pSprite->SetDirection( SpriteDirection::Left );
+		break;
+	case MoveDirection::DownRight:
+	case MoveDirection::Right:
+		m_pSprite->SetDirection( SpriteDirection::Right );
+		break;
+	case MoveDirection::UpRight:
+		m_pSprite->SetDirection( SpriteDirection::Up );
+		break;
+	case MoveDirection::DownLeft:
+		m_pSprite->SetDirection( SpriteDirection::Down );
+		break;
+	default: ;
+	}
 }

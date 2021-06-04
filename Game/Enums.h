@@ -2,10 +2,12 @@
 
 enum class MoveDirection
 {
+	UpLeft,
+	DownRight,
+	UpRight,
+	DownLeft,
 	Left,
-	Right,
-	Up,
-	Down
+	Right
 };
 
 enum class LevelColor : int

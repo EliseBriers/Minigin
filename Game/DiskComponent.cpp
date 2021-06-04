@@ -113,14 +113,14 @@ void DiskComponent::TeleportToSpawn( const dae::InitInfo& initInfo )
 
 	const CubeGrid::Cube& cube{ pCubeGrid->GetCube( m_SpawnLocation ) };
 
-	if( cube.ConnectionDown == -1 )
-		m_SpawnDirection = MoveDirection::Down;
-	else if( cube.ConnectionUp == -1 )
-		m_SpawnDirection = MoveDirection::Up;
-	else if( cube.ConnectionLeft == -1 )
-		m_SpawnDirection = MoveDirection::Left;
-	else if( cube.ConnectionRight == -1 )
-		m_SpawnDirection = MoveDirection::Right;
+	if( cube.ConnectionDownLeft == -1 )
+		m_SpawnDirection = MoveDirection::DownLeft;
+	else if( cube.ConnectionUpRight == -1 )
+		m_SpawnDirection = MoveDirection::UpRight;
+	else if( cube.ConnectionUpLeft == -1 )
+		m_SpawnDirection = MoveDirection::UpLeft;
+	else if( cube.ConnectionDownRight == -1 )
+		m_SpawnDirection = MoveDirection::DownRight;
 	else
 		dae::Logger::LogWarning( "DiskComponent::TeleportToSpawn > Couldn't find proper spawn location" );
 
