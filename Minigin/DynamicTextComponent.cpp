@@ -4,14 +4,11 @@
 #include "TransformComponent.h"
 #include "Renderer.h"
 #include "Texture2D.h"
-#include <SDL.h>
 #include "JsonObjectWrapper.h"
 
 dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
-	, m_pTextures{ }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
-	, m_Text{ }
 	, m_FontSize{ jsonObject.GetUint( "size" ) }
 	, m_Spacing{ }
 	, m_pTransform{ nullptr }
@@ -70,9 +67,9 @@ void dae::DynamicTextComponent::Init( const InitInfo& initInfo )
 {
 	m_pTransform = m_GameObject.get( ).GetComponent<TransformComponent>( );
 
-	for( char i{ }; i < m_CharCount; ++i )
+	for( char i{ }; i < static_cast<char>(m_CharCount); ++i )
 	{
-		std::string str{ m_Start + i };
+		std::string str{ char{ m_Start + i } };
 		m_pTextures.push_back( initInfo.Resource_GetTextTexture( str, m_FontFileName, m_FontSize ) );
 	}
 }

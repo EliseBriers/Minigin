@@ -26,7 +26,7 @@ public:
 	void OnDeath( );
 
 	void RegisterStateObserver( state_observer_t stateObserver );
-	void NextRotation( );
+	void NextRotation( ) const;
 	void SetPosition( const glm::vec2& newPos ) const;
 	
 	// Rule of 5

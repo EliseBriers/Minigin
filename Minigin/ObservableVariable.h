@@ -17,6 +17,8 @@ namespace dae
 		const T& Get( ) const;
 		bool Equals( const T& var ) const;
 
+		// Rule of 5
+		~ObservableVariable( ) = default;
 		ObservableVariable( const ObservableVariable& other ) = delete;
 		ObservableVariable( ObservableVariable&& other ) noexcept = delete;
 		ObservableVariable& operator=( const ObservableVariable& other ) = delete;

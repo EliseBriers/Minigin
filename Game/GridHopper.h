@@ -69,9 +69,9 @@ private:
 	dae::TransformComponent* m_pTransform;
 	const size_t m_SpawnIndex;
 	int m_CurrentIndex;
-	float m_Speed;
+	const float m_Speed;
 	float m_MovementPercentage;
-	float m_JumpHeight;
+	const float m_JumpHeight;
 	bool m_InitializedBehavior;
 	dae::ObservableVariable<HopperState> m_State;
 	QbertSceneBehavior* m_pSceneBehavior;

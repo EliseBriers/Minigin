@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <SDL.h>
 #include "ICommand.h"
-#include <map>
 
 namespace dae
 {

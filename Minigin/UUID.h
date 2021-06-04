@@ -11,6 +11,8 @@ namespace dae
 		bool operator!=( const UUID<T>& other ) const;
 		size_t GetValue( ) const;
 
+		// Rule of 5
+		~UUID( ) = default;
 		UUID( const UUID& other ) = delete;
 		UUID( UUID&& other ) noexcept = delete;
 		UUID& operator=( const UUID& other ) = delete;

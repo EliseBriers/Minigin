@@ -33,5 +33,5 @@ private:
 	dae::SpriteSheet m_SpriteSheet;
 	SpriteDirection m_Direction;
 	SpriteState m_State;
-	HopperType m_Type;
+	const HopperType m_Type;
 };

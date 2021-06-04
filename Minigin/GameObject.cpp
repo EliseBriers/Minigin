@@ -6,12 +6,14 @@
 dae::GameObject::GameObject( const std::string& name )
 	: m_Name{ name }
 	, m_IsActive{ true }
+	, m_IsPaused{ false }
 {
 }
 
 dae::GameObject::GameObject( std::string&& name )
 	: m_Name{ std::move( name ) }
 	, m_IsActive{ true }
+	, m_IsPaused{ false }
 {
 }
 

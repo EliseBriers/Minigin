@@ -1,7 +1,6 @@
 #pragma once
 #include <document.h>
 #include "Renderer.h"
-#include <iosfwd>
 #include <vector>
 #include <functional>
 

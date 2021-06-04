@@ -2,7 +2,6 @@
 #include "TimerComponent.h"
 #include "UpdateInfo.h"
 #include "JsonObjectWrapper.h"
-#include "Logger.h"
 
 dae::TimerComponent::TimerComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }

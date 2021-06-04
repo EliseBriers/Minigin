@@ -7,6 +7,7 @@
 dae::SpriteSheet::SpriteSheet( const JsonObjectWrapper& jsonObject )
 	: m_FileName{ jsonObject.GetString( "texture_file_name" ) }
 	, m_SpriteSources{ jsonObject.GetVector<Rect2D>( "rects", ObjectToRect ) }
+	, m_pTexture{ nullptr }
 {
 }
 
@@ -15,7 +16,7 @@ void dae::SpriteSheet::Init( const InitInfo& initInfo )
 	m_pTexture = &initInfo.Resource_GetTexture( m_FileName );
 }
 
-void dae::SpriteSheet::Draw( Renderer& renderer, const glm::vec2& pos, const glm::vec2& pivot, float scale, size_t spriteIdx )
+void dae::SpriteSheet::Draw( Renderer& renderer, const glm::vec2& pos, const glm::vec2& pivot, float scale, size_t spriteIdx ) const
 {
 	if( !m_pTexture )
 	{
@@ -31,7 +32,7 @@ void dae::SpriteSheet::Draw( Renderer& renderer, const glm::vec2& pos, const glm
 	renderer.RenderTexture( *m_pTexture, pos, pivot, scale, m_SpriteSources[spriteIdx] );
 }
 
-const dae::Rect2D dae::SpriteSheet::GetSpriteSource( size_t idx ) const
+const dae::Rect2D& dae::SpriteSheet::GetSpriteSource( size_t idx ) const
 {
 	return m_SpriteSources[idx];
 }

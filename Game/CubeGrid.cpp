@@ -207,9 +207,9 @@ int CubeGrid::RowColToIdx( int c, int r ) const
 
 glm::vec2 CubeGrid::CalculateOffset( int c, int r ) const
 {
-	const float y{ 0.75f * m_CubeSize.y * r };
+	const float y{ 0.75f * m_CubeSize.y * static_cast<float>(r) };
 	const float xOffset{ static_cast<float>(GetColumnCount( r )) * 0.5f - 0.5f };
-	const float x{ ( c - xOffset ) * m_CubeSize.x };
+	const float x{ ( static_cast<float>(c) - xOffset ) * m_CubeSize.x };
 	const glm::vec2 offset{ x, y };
 	return offset * 0.95f;
 }
@@ -247,6 +247,9 @@ glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direct
 	case MoveDirection::DownLeft:
 		posOffset = { - 0.5f, 0.5f };
 		break;
+	default:
+		Logger::LogWarning( "CubeGrid::CalculateImaginaryBlockPos > invalid direction" );
+		return { };
 	}
 	posOffset *= m_CubeSize;
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };

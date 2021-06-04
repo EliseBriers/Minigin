@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "InitInfo.h"
 #include "JsonObjectWrapper.h"
-#include "Texture2D.h"
 #include "Logger.h"
 
 dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )

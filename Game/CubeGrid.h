@@ -59,10 +59,11 @@ public:
 	CubeGrid& operator=( const CubeGrid& other ) = delete;
 	CubeGrid& operator=( CubeGrid&& other ) noexcept = delete;
 private:
-	LevelColor m_Color;
+	const LevelColor m_Color;
 	QbertSceneBehavior* m_pSceneBehavior;
 	dae::TimerComponent* m_pAnimationFlipTimer;
 	dae::TimerComponent* m_pAnimationTimer;
+	// Used for the animation at the end
 	CubeState m_EndAnimationState;
 	dae::SpriteSheet m_SpriteSheet;
 	dae::TransformComponent* m_pTransform;

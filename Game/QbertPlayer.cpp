@@ -19,6 +19,7 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 	, m_InputRight{ false }
 	, m_InputUp{ false }
 	, m_InputDown{ false }
+	, m_pTransform{ nullptr }
 	, m_pSceneBehavior{ nullptr }
 {
 }
@@ -156,7 +157,7 @@ void QbertPlayer::RegisterStateObserver( state_observer_t stateObserver )
 	m_State.AddObserver( std::move( stateObserver ) );
 }
 
-void QbertPlayer::NextRotation( )
+void QbertPlayer::NextRotation( ) const
 {
 	m_pSprite->NextRotation( );
 }

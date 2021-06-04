@@ -2,7 +2,6 @@
 #include "JsonObjectWrapper.h"
 #include "Logger.h"
 #include <istreamwrapper.h>
-#include <fstream>
 #include "ResourceManager.h"
 
 dae::JsonObjectWrapper::JsonObjectWrapper( const rapidjson::Value::ConstObject& obj, std::string name, ResourceManager& resourceManager )

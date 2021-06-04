@@ -159,9 +159,6 @@
     <ClInclude Include="ObservableVariable.h">
       <Filter>Header Files\Observers</Filter>
     </ClInclude>
-    <ClInclude Include="KillQbertCommand.h">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="ISoundSystem.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>

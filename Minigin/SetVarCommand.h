@@ -1,6 +1,5 @@
 #pragma once
 #include "ICommand.h"
-#include <type_traits>
 
 namespace dae
 {

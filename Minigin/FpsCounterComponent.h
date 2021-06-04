@@ -1,6 +1,5 @@
 #pragma once
 #include "IComponent.h"
-#include <document.h>
 
 namespace dae
 {

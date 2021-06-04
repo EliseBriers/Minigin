@@ -12,9 +12,9 @@ namespace dae
 		SpriteSheet( const JsonObjectWrapper& jsonObject );
 
 		void Init( const InitInfo& initInfo );
-		void Draw( Renderer& renderer, const glm::vec2& pos, const glm::vec2& pivot, float scale, size_t spriteIdx );
+		void Draw( Renderer& renderer, const glm::vec2& pos, const glm::vec2& pivot, float scale, size_t spriteIdx ) const;
 
-		const Rect2D GetSpriteSource( size_t idx ) const;
+		const Rect2D& GetSpriteSource( size_t idx ) const;
 	private:
 		std::string m_FileName;
 		std::vector<Rect2D> m_SpriteSources;

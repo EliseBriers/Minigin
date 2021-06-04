@@ -30,8 +30,8 @@ private:
 	glm::vec2 m_EndPos;
 	dae::ObservableVariable<DiskState> m_State;
 	LevelColor m_Color;
-	float m_MovementSpeed;
-	size_t m_SpawnLocation;
+	const float m_MovementSpeed;
+	const size_t m_SpawnIndex;
 	size_t m_CurrentRotation;
 	dae::SpriteSheet m_SpriteSheet;
 	dae::TransformComponent* m_pTransform;

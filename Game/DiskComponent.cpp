@@ -14,7 +14,7 @@ DiskComponent::DiskComponent( dae::GameObject& gameObject, const dae::JsonObject
 	, m_State{ DiskState::Idle }
 	, m_Color{ EnumHelpers::StringToLevelColor( jsonObject.GetString( "color" ) ) }
 	, m_MovementSpeed{ jsonObject.GetOptionalFloat( "speed", 5.f ) }
-	, m_SpawnLocation{ jsonObject.GetUint( "spawn_index" ) }
+	, m_SpawnIndex{ jsonObject.GetUint( "spawn_index" ) }
 	, m_CurrentRotation{ }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_pTransform{ nullptr }
@@ -111,7 +111,7 @@ void DiskComponent::TeleportToSpawn( const dae::InitInfo& initInfo )
 		return;
 	}
 
-	const CubeGrid::Cube& cube{ pCubeGrid->GetCube( m_SpawnLocation ) };
+	const CubeGrid::Cube& cube{ pCubeGrid->GetCube( m_SpawnIndex ) };
 
 	if( cube.ConnectionDownLeft == -1 )
 		m_SpawnDirection = MoveDirection::DownLeft;
@@ -124,7 +124,7 @@ void DiskComponent::TeleportToSpawn( const dae::InitInfo& initInfo )
 	else
 		dae::Logger::LogWarning( "DiskComponent::TeleportToSpawn > Couldn't find proper spawn location" );
 
-	const glm::vec2 spawnPos{ pCubeGrid->CalculateImaginaryBlockPos( m_SpawnLocation, m_SpawnDirection, m_Offset ) };
+	const glm::vec2 spawnPos{ pCubeGrid->CalculateImaginaryBlockPos( m_SpawnIndex, m_SpawnDirection, m_Offset ) };
 
 	m_pTransform->SetPosition( spawnPos.x, spawnPos.y, 0.f );
 	m_EndPos = pCubeGrid->CalculateImaginaryBlockPos( 0u, m_SpawnDirection, m_Offset );

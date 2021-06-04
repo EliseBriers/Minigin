@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "SceneFactory.h"
 #include <istreamwrapper.h>
-#include <fstream>
 #include "Scene.h"
 #include "ResourceManager.h"
 

@@ -7,7 +7,6 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "GameObject.h"
 #include "Scene.h"
 #include "ManagerMap.h"
 #include "InitInfo.h"
@@ -15,7 +14,6 @@
 
 // #pragma warning(push)
 #pragma warning (disable:4201)
-#include <glm/vec2.hpp>
 #include "TextureComponent.h"
 #include "StaticTextComponent.h"
 #include "DynamicTextComponent.h"
@@ -27,9 +25,6 @@
 #include "SDLSoundSystem.h"
 #include "ThreadWrapper.h"
 // #pragma warning(pop)
-#include <document.h>
-#include <istreamwrapper.h>
-#include <fstream>
 #include "Logger.h"
 #include "TimerComponent.h"
 

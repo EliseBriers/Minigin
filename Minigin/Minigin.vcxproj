@@ -241,7 +241,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="ISoundSystem.h" />
     <ClInclude Include="JsonObjectWrapper.h" />
-    <ClInclude Include="KillQbertCommand.h" />
     <ClInclude Include="DynamicTextComponent.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsCounterComponent.h" />

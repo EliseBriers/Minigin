@@ -1,5 +1,4 @@
 #pragma once
-#include "ManagerMap.h"
 #include "IComponent.h"
 #include <document.h>
 #include "functional"
