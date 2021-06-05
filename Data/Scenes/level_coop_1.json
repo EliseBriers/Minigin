@@ -1,77 +1,6 @@
 {
-  "name": "Demo2",
+  "name": "CoopLevel1",
   "objects": [
-    {
-      "name": "Background Image",
-      "components": [
-        {
-          "class": "dae::TextureComponent",
-          "desc": {
-            "texture_file_name": "background.jpg",
-            "pivot": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        },
-        {
-          "class": "dae::TransformComponent",
-          "desc": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ]
-    },
-    {
-      "name": "Logo",
-      "components": [
-        {
-          "class": "dae::TextureComponent",
-          "desc": {
-            "texture_file_name": "logo.png",
-            "pivot": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        },
-        {
-          "class": "dae::TransformComponent",
-          "desc": {
-            "x": 216,
-            "y": 180,
-            "z": 0
-          }
-        }
-      ]
-    },
-    {
-      "name": "Title",
-      "components": [
-        {
-          "class": "dae::StaticTextComponent",
-          "desc": {
-            "text": "Programming 4 Assignment",
-            "font_file_name": "Lingua.otf",
-            "size": 36,
-            "pivot": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        },
-        {
-          "class": "dae::TransformComponent",
-          "desc": {
-            "x": 80,
-            "y": 20,
-            "z": 0
-          }
-        }
-      ]
-    },
     {
       "name": "CubeGrid",
       "components": [
@@ -79,7 +8,7 @@
           "class": "CubeGrid",
           "desc": {
             "sprite_sheet": "sprite_sheet.json",
-			"color": "orange"
+			"color": "blue"
           }
         },
         {
@@ -118,7 +47,7 @@
             "spawn_index": 14,
             "sprite_sheet": "disk_sprite.json",
 			"speed": 70,
-			"color": "orange"
+			"color": "blue"
           }
         },
         {
@@ -158,7 +87,12 @@
         }
       ]
     },
-    "player_1.json",
+	"coily.json",
+	"slick.json",
+	"wrongway.json",
+	"ugg.json",
+    "player_1_coop.json",
+    "player_2_coop.json",
     "fps_counter.json"
   ]
 }

@@ -20,7 +20,9 @@
     },
     {
       "class": "QbertPlayer",
-      "desc": {}
+      "desc": {
+	    "is_main_player": true
+	  }
     },
     {
       "class": "dae::TransformComponent",

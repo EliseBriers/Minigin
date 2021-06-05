@@ -52,6 +52,8 @@ private:
 	dae::TransformComponent* m_pTransform;
 	QbertSceneBehavior* m_pSceneBehavior;
 
+	bool m_IsFirstPlayer;
+
 	// Last index and direction used so coily will jump off the edge
 	int m_LastIndex;
 	MoveDirection m_LastMoveDirection;

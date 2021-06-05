@@ -9,7 +9,7 @@
 #include "SphereOverlapDetector.h"
 #include "DiskComponent.h"
 
-QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper&, std::string name )
+QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
 	, m_State{ PlayerState::Idle }
 	, m_pGridHopper{ nullptr }
@@ -22,6 +22,7 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 	, m_InputDown{ false }
 	, m_pTransform{ nullptr }
 	, m_pSceneBehavior{ nullptr }
+	, m_IsFirstPlayer{ jsonObject.GetBool( "is_main_player" ) }
 	, m_LastIndex{ -1 }
 	, m_LastMoveDirection{ MoveDirection::DownLeft }
 {
@@ -155,6 +156,8 @@ void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
 void QbertPlayer::Respawn( )
 {
 	m_pGridHopper->Teleport( 0 );
+	m_pGridHopper->ResetToSpawnIndex( );
+	m_pGridHopper->Teleport( static_cast<size_t>(m_pGridHopper->GetCurrentIndex( )) );
 	m_State.Set( PlayerState::Idle );
 	m_pSprite->SetDirection( SpriteDirection::Down );
 	m_pSprite->SetState( SpriteState::Idle );
@@ -244,16 +247,21 @@ void QbertPlayer::InitCollider( )
 
 void QbertPlayer::InitInputs( const dae::InitInfo& initInfo )
 {
+	const SDL_Keycode left{ m_IsFirstPlayer ? SDLK_LEFT : SDLK_a };
+	const SDL_Keycode right{ m_IsFirstPlayer ? SDLK_RIGHT : SDLK_d };
+	const SDL_Keycode down{ m_IsFirstPlayer ? SDLK_DOWN : SDLK_s };
+	const SDL_Keycode up{ m_IsFirstPlayer ? SDLK_UP : SDLK_w };
+	
 	// Left
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_LEFT, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, SDLK_LEFT, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, false ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, left, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, true ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, left, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, false ) );
 	// Right
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_RIGHT, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, SDLK_RIGHT, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, false ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, right, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, true ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, right, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, false ) );
 	// Up
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_UP, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, SDLK_UP, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, false ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, up, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, true ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, up, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, false ) );
 	// Down
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_DOWN, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, SDLK_DOWN, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, false ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, down, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, true ) );
+	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, down, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, false ) );
 }

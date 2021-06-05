@@ -6,12 +6,12 @@
       "desc": {
         "speed": 2,
         "jump_height": 10,
-        "stomp_behavior": "advance",
-		"spawn_index": 0,
-		"up_direction": {
-		  "x": 0,
-		  "y": -1
-		},
+        "stomp_behavior": "complete",
+		"spawn_index": 27,
+        "up_direction": {
+          "x": 0,
+          "y": -1
+        },
 		"offset":{
           "x": 0.0,
           "y": -0.25
@@ -20,12 +20,14 @@
     },
     {
       "class": "QbertPlayer",
-      "desc": {}
+      "desc": {
+	    "is_main_player": false
+	  }
     },
     {
       "class": "dae::TransformComponent",
       "desc": {
-        "x": 320,
+        "x": 100,
         "y": 100,
         "z": 0,
         "scale": 1.8
@@ -35,7 +37,7 @@
       "class": "HopperSpriteComponent",
       "desc": {
         "sprite_sheet": "hopper_sprites.json",
-		"type": "qbert_1"
+        "type": "qbert_2"
       }
     },
     {
