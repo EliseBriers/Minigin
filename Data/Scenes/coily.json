@@ -4,6 +4,7 @@
     {
 	  "class": "CoilyComponent",
 	  "desc":{
+	    "is_player_controlled": false
 	  }
 	},
     {

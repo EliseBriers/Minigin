@@ -40,21 +40,25 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 	switch( move )
 	{
 	case MoveDirection::UpLeft:
+		m_LastIndex = m_pGridHopper->GetCurrentIndex();
 		m_pGridHopper->Hop( MoveDirection::UpLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpLeft;
 		break;
 	case MoveDirection::DownRight:
+		m_LastIndex = m_pGridHopper->GetCurrentIndex();
 		m_pGridHopper->Hop( MoveDirection::DownRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownRight;
 		break;
 	case MoveDirection::UpRight:
+		m_LastIndex = m_pGridHopper->GetCurrentIndex();
 		m_pGridHopper->Hop( MoveDirection::UpRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpRight;
 		break;
 	case MoveDirection::DownLeft:
+		m_LastIndex = m_pGridHopper->GetCurrentIndex();
 		m_pGridHopper->Hop( MoveDirection::DownLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownLeft;
@@ -147,7 +151,6 @@ void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
 	else
 	{
 		m_State.Set( PlayerState::Idle );
-		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
 		m_pForgetTimer->Start( );
 	}
 }

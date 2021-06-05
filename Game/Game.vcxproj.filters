@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Commands">
       <UniqueIdentifier>{28f3ef83-d983-41af-bc2b-3056d708f192}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DirectionControllers">
+      <UniqueIdentifier>{f0e0890c-6d31-453b-9181-1b47960f5bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DirectionControllers">
+      <UniqueIdentifier>{9a93b21b-bef8-4f0a-82de-935f25c83a29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -97,7 +103,10 @@
       <Filter>Source Files\SceneBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDirectionController.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DirectionControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyDirectionController.cpp">
+      <Filter>Source Files\DirectionControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,10 +168,13 @@
       <Filter>Header Files\SceneBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="IDirectionController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DirectionControllers</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDirectionController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DirectionControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyDirectionController.h">
+      <Filter>Header Files\DirectionControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

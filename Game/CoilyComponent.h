@@ -2,6 +2,8 @@
 #include <IComponent.h>
 #include "Enums.h"
 #include <ObservableVariable.h>
+#include "IDirectionController.h"
+#include "PlayerDirectionController.h"
 
 namespace dae
 {
@@ -13,6 +15,7 @@ class SphereOverlapDetector;
 class QbertSceneBehavior;
 class HopperSpriteComponent;
 class GridHopper;
+class CoilyDirectionController;
 
 class CoilyComponent final : public dae::IComponent
 {
@@ -34,6 +37,14 @@ public:
 	CoilyComponent& operator=( const CoilyComponent& other ) = delete;
 	CoilyComponent& operator=( CoilyComponent&& other ) noexcept = delete;
 private:
+
+	// Controller Stuff
+	std::unique_ptr<IDirectionController> m_pController;
+	CoilyDirectionController* m_pCoilyController;
+	PlayerDirectionController* m_pPlayerController;
+	bool m_IsPlayerControlled;
+
+	
 	dae::ObservableVariable<CoilyState> m_State;
 	glm::vec2 m_SpawnPos;
 
@@ -62,4 +73,5 @@ private:
 	void AddStateCallback( );
 	void AddColliderCallback( ) const;
 	void AddTouchdownCallback( );
+	void InitController( const dae::InitInfo& );
 };

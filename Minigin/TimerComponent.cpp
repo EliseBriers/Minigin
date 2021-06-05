@@ -56,6 +56,11 @@ void dae::TimerComponent::SetCallback( const timeout_callback_t& callback )
 	m_Callback = callback;
 }
 
+bool dae::TimerComponent::IsRunning( ) const
+{
+	return m_IsActive;
+}
+
 void dae::TimerComponent::VoidCallback( )
 {
 }

@@ -28,12 +28,13 @@ int main( int, char*[] )
 	engine.RegisterComponent<LevelSelectorComponent>( );
 
 	// ToDo: Complete SceneList
-	MenuSceneBehavior::scene_array_t sceneList{ "Demo", "CoopLevel1", "" };
+	MenuSceneBehavior::scene_array_t sceneList{ "Demo", "CoopLevel1", "VsLevel1" };
 
 
 	engine.AddSceneFromFile( "main_menu.json" )->SetBehavior( std::make_unique<MenuSceneBehavior>( sceneList ) );
 	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
 	engine.AddSceneFromFile( "level_coop_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
+	engine.AddSceneFromFile( "level_vs_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false ) );
 	engine.AddSceneFromFile( "test3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 

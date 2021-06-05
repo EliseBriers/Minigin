@@ -7,9 +7,14 @@
 #include "GridHopper.h"
 #include "EnumHelpers.h"
 #include "HopperSpriteComponent.h"
+#include "CoilyDirectionController.h"
 
-CoilyComponent::CoilyComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& /*jsonObject*/, std::string name )
+CoilyComponent::CoilyComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_pController{ nullptr }
+	, m_pCoilyController{ nullptr }
+	, m_pPlayerController{ nullptr }
+	, m_IsPlayerControlled{ jsonObject.GetBool( "is_player_controlled" ) }
 	, m_State{ CoilyState::SpawningEgg }
 	, m_SpawnPos{ }
 	, m_pPlayer{ nullptr }
@@ -37,6 +42,8 @@ void CoilyComponent::Update( const dae::UpdateInfo& updateInfo )
 	case CoilyState::Hatching:
 		break;
 	case CoilyState::FollowingPlayer:
+		if( !m_pActionTimer->IsRunning( ) )
+			m_pActionTimer->Start( );
 		break;
 	case CoilyState::Dead:
 		break;
@@ -52,6 +59,7 @@ void CoilyComponent::Init( const dae::InitInfo& initInfo )
 	AddStateCallback( );
 	AddTouchdownCallback( );
 	AddColliderCallback( );
+	InitController( initInfo );
 
 	m_pSceneBehavior->RegisterEnemy( &GetGameObject( ) );
 }
@@ -120,46 +128,30 @@ void CoilyComponent::TeleportToSpawn( )
 
 void CoilyComponent::DoFollow( )
 {
-	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
-	m_pPlayer = m_pSceneBehavior->GetClosestPlayer( pos );
-	
-	// If we're on the player's last index, mimic the player's movement instead of going towards the player
-	if( m_pGridHopper->GetCurrentIndex( ) == m_pPlayer->GetLastIndex( ) )
-	{
-		m_pGridHopper->Hop( m_pPlayer->GetLastMoveDirection( ) );
+	const MoveDirection direction{ m_pController->GetMoveDirection( ) };
+	if( direction == MoveDirection::None )
 		return;
-	}
 
-
-	const glm::vec2 toPlayer{ m_pPlayer->GetPosition( ) - pos };
-
-	if( toPlayer.x > 0.f )
+	if( m_pCoilyController && m_pCoilyController->GetSafeHop( ) )
 	{
-		// Move Right
-		if( toPlayer.y > 0 )
+		switch( direction )
 		{
-			// Move Down
+		case MoveDirection::DownRight:
 			m_pGridHopper->SafeHop( MoveDirection::DownRight, MoveDirection::UpRight );
-		}
-		else
-		{
-			// Move Up
+			break;
+		case MoveDirection::UpRight:
 			m_pGridHopper->SafeHop( MoveDirection::UpRight, MoveDirection::DownRight );
+			break;
+		case MoveDirection::DownLeft:
+			m_pGridHopper->SafeHop( MoveDirection::DownLeft, MoveDirection::UpLeft );
+			break;
+		case MoveDirection::UpLeft:
+			m_pGridHopper->SafeHop( MoveDirection::UpLeft, MoveDirection::DownLeft );
 		}
 	}
 	else
 	{
-		// Move Left
-		if( toPlayer.y > 0 )
-		{
-			// Move Down
-			m_pGridHopper->SafeHop( MoveDirection::DownLeft, MoveDirection::UpLeft );
-		}
-		else
-		{
-			// Move Up
-			m_pGridHopper->SafeHop( MoveDirection::UpLeft, MoveDirection::DownLeft );
-		}
+		m_pGridHopper->Hop( direction );
 	}
 }
 
@@ -303,4 +295,19 @@ void CoilyComponent::AddTouchdownCallback( )
 			m_State.Set( CoilyState::Dead );
 		}
 	} );
+}
+
+void CoilyComponent::InitController( const dae::InitInfo& initInfo )
+{
+	if( m_IsPlayerControlled )
+	{
+		m_pController = std::make_unique<PlayerDirectionController>( );
+		m_pPlayerController = static_cast<PlayerDirectionController*>(m_pController.get( ));
+		m_pPlayerController->InitControls( initInfo, false );
+	}
+	else
+	{
+		m_pController = std::make_unique<CoilyDirectionController>( m_pTransform, m_pSceneBehavior, m_pGridHopper );
+		m_pCoilyController = static_cast<CoilyDirectionController*>(m_pController.get( ));
+	}
 }

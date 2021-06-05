@@ -1,0 +1,97 @@
+{
+  "name": "VsLevel1",
+  "objects": [
+    {
+      "name": "CubeGrid",
+      "components": [
+        {
+          "class": "CubeGrid",
+          "desc": {
+            "sprite_sheet": "sprite_sheet.json",
+			"color": "blue"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 100,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "AnimationFlipTimer",
+          "desc": {
+            "duration": 0.1,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "AnimationTimer",
+          "desc": {
+            "duration": 4,
+            "loop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disk1",
+      "components": [
+        {
+          "class": "DiskComponent",
+          "desc": {
+            "spawn_index": 14,
+            "sprite_sheet": "disk_sprite.json",
+			"speed": 70,
+			"color": "blue"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "SphereOverlapDetector",
+          "desc": {
+            "radius": 3,
+		    "offset":{
+		      "x": 0,
+		      "y": 0
+		    }
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "RotationTimer",
+          "desc": {
+            "duration": 0.2,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "EndTimer",
+          "desc": {
+            "duration": 1,
+            "loop": false
+          }
+        }
+      ]
+    },
+	"coily_player.json",
+	"slick.json",
+	"wrongway.json",
+	"ugg.json",
+    "player_1.json",
+    "fps_counter.json"
+  ]
+}

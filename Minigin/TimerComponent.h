@@ -18,6 +18,7 @@ namespace dae
 		void SetMaxTime( float maxTime );
 
 		void SetCallback( const timeout_callback_t& callback );
+		bool IsRunning( ) const;
 
 		~TimerComponent( ) override = default;
 		TimerComponent( const TimerComponent& other ) = delete;
