@@ -208,6 +208,7 @@
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="MenuControlCommand.cpp" />
     <ClCompile Include="MenuSceneBehavior.cpp" />
+    <ClCompile Include="PlayerDirectionController.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="QbertPlayer.cpp" />
     <ClCompile Include="QbertSceneBehavior.cpp" />
@@ -225,10 +226,12 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="GridHopper.h" />
+    <ClInclude Include="IDirectionController.h" />
     <ClInclude Include="LevelSelectorComponent.h" />
     <ClInclude Include="MathHelpers.h" />
     <ClInclude Include="MenuControlCommand.h" />
     <ClInclude Include="MenuSceneBehavior.h" />
+    <ClInclude Include="PlayerDirectionController.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="QbertPlayer.h" />
     <ClInclude Include="QbertSceneBehavior.h" />

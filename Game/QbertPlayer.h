@@ -3,6 +3,7 @@
 #include "GridHopper.h"
 #include "ObservableVariable.h"
 #include "Enums.h"
+#include "PlayerDirectionController.h"
 
 namespace dae
 {
@@ -40,6 +41,7 @@ public:
 	QbertPlayer& operator=( const QbertPlayer& other ) = delete;
 	QbertPlayer& operator=( QbertPlayer&& other ) noexcept = delete;
 private:
+	PlayerDirectionController m_Controller;
 	dae::ObservableVariable<PlayerState> m_State;
 	GridHopper* m_pGridHopper;
 	HopperSpriteComponent* m_pSprite;
@@ -58,9 +60,7 @@ private:
 	int m_LastIndex;
 	MoveDirection m_LastMoveDirection;
 
-	int GetInputCount( ) const;
 
 	// Inits
 	void InitCollider( );
-	void InitInputs( const dae::InitInfo& initInfo );
 };

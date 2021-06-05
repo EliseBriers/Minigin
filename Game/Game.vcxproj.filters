@@ -96,6 +96,9 @@
     <ClCompile Include="MenuSceneBehavior.cpp">
       <Filter>Source Files\SceneBehaviors</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDirectionController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridHopper.h">
@@ -154,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="MenuSceneBehavior.h">
       <Filter>Header Files\SceneBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="IDirectionController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDirectionController.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

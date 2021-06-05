@@ -11,6 +11,7 @@
 
 QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_Controller{ }
 	, m_State{ PlayerState::Idle }
 	, m_pGridHopper{ nullptr }
 	, m_pSprite{ nullptr }
@@ -34,33 +35,31 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 		return;
 
 
-	if( GetInputCount( ) != 1 )
-		return;
+	const MoveDirection move{ m_Controller.GetMoveDirection( ) };
 
-
-	if( m_InputLeft )
+	switch( move )
 	{
+	case MoveDirection::UpLeft:
 		m_pGridHopper->Hop( MoveDirection::UpLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpLeft;
-	}
-	if( m_InputRight )
-	{
+		break;
+	case MoveDirection::DownRight:
 		m_pGridHopper->Hop( MoveDirection::DownRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownRight;
-	}
-	if( m_InputUp )
-	{
+		break;
+	case MoveDirection::UpRight:
 		m_pGridHopper->Hop( MoveDirection::UpRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpRight;
-	}
-	if( m_InputDown )
-	{
+		break;
+	case MoveDirection::DownLeft:
 		m_pGridHopper->Hop( MoveDirection::DownLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownLeft;
+		break;
+	default: ;
 	}
 }
 
@@ -99,7 +98,7 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 		m_LastIndex = -1;
 	} );
 
-	InitInputs( initInfo );
+	m_Controller.InitControls( initInfo, m_IsFirstPlayer );
 	InitCollider( );
 
 	m_State.AddObserver( [this]( PlayerState playerState )
@@ -202,18 +201,6 @@ MoveDirection QbertPlayer::GetLastMoveDirection( ) const
 	return m_LastMoveDirection;
 }
 
-int QbertPlayer::GetInputCount( ) const
-{
-	int count{ };
-
-	if( m_InputLeft ) ++count;
-	if( m_InputRight ) ++count;
-	if( m_InputUp ) ++count;
-	if( m_InputDown ) ++count;
-
-	return count;
-}
-
 void QbertPlayer::InitCollider( )
 {
 	SphereOverlapDetector* pCollider = m_GameObject.get( ).GetComponent<SphereOverlapDetector>( );
@@ -243,25 +230,4 @@ void QbertPlayer::InitCollider( )
 			}
 		}
 	} );
-}
-
-void QbertPlayer::InitInputs( const dae::InitInfo& initInfo )
-{
-	const SDL_Keycode left{ m_IsFirstPlayer ? SDLK_LEFT : SDLK_a };
-	const SDL_Keycode right{ m_IsFirstPlayer ? SDLK_RIGHT : SDLK_d };
-	const SDL_Keycode down{ m_IsFirstPlayer ? SDLK_DOWN : SDLK_s };
-	const SDL_Keycode up{ m_IsFirstPlayer ? SDLK_UP : SDLK_w };
-	
-	// Left
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, left, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, left, std::make_unique<dae::SetVarCommand<bool>>( m_InputLeft, false ) );
-	// Right
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, right, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, right, std::make_unique<dae::SetVarCommand<bool>>( m_InputRight, false ) );
-	// Up
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, up, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, up, std::make_unique<dae::SetVarCommand<bool>>( m_InputUp, false ) );
-	// Down
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, down, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, true ) );
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Released, down, std::make_unique<dae::SetVarCommand<bool>>( m_InputDown, false ) );
 }
