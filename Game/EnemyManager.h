@@ -4,6 +4,7 @@ class EnemyManager final
 {
 	struct RespawnEntry
 	{
+		RespawnEntry( dae::GameObject* pObject, float time );
 		dae::GameObject* pGameObject{ nullptr };
 		float Elapsed{ 0.f };
 

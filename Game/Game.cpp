@@ -1,5 +1,4 @@
 #include "GamePCH.h"
-#define SDL_MAIN_HANDLED
 #include <Minigin.h>
 #include "CubeGrid.h"
 #include "GridHopper.h"
@@ -10,6 +9,7 @@
 #include "SphereOverlapDetector.h"
 #include "DiskComponent.h"
 #include "RandomBouncerComponent.h"
+#include "CoilyComponent.h"
 
 int main( int, char*[] )
 {
@@ -22,6 +22,7 @@ int main( int, char*[] )
 	engine.RegisterComponent<SphereOverlapDetector>( );
 	engine.RegisterComponent<DiskComponent>( );
 	engine.RegisterComponent<RandomBouncerComponent>( );
+	engine.RegisterComponent<CoilyComponent>( );
 
 	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
 	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false) );

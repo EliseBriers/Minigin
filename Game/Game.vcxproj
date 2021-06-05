@@ -191,6 +191,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CoilyComponent.cpp" />
     <ClCompile Include="CubeGrid.cpp" />
     <ClCompile Include="DiskComponent.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="TriggerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CoilyComponent.h" />
     <ClInclude Include="CubeGrid.h" />
     <ClInclude Include="DiskComponent.h" />
     <ClInclude Include="EnemyManager.h" />

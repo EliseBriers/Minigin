@@ -62,3 +62,8 @@ HopperType HopperSpriteComponent::GetHopperType( ) const
 {
 	return m_Type;
 }
+
+void HopperSpriteComponent::SetType( HopperType type )
+{
+	m_Type = type;
+}

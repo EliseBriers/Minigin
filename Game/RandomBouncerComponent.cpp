@@ -62,12 +62,13 @@ void RandomBouncerComponent::Init( const dae::InitInfo& initInfo )
 
 	m_pCollider->SetCallback( [this]( dae::GameObject* pOther, TriggerAction triggerAction )
 	{
-		QbertPlayer* pPlayer{ pOther->GetComponent<QbertPlayer>( ) };
-		if( pPlayer )
+		if( triggerAction == TriggerAction::Enter )
 		{
-			if( m_State.Equals( RandomBouncerState::Active ) )
+			dae::Logger::LogInfo( GetGameObject( ).GetName( ) + " Hit by Object " + pOther->GetName( ) );
+			QbertPlayer* pPlayer{ pOther->GetComponent<QbertPlayer>( ) };
+			if( pPlayer )
 			{
-				if( triggerAction == TriggerAction::Enter )
+				if( m_State.Equals( RandomBouncerState::Active ) || m_State.Equals( RandomBouncerState::Spawning ) )
 				{
 					if( m_IsLethal )
 						KillPlayer( pPlayer );

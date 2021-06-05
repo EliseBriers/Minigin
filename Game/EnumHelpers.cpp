@@ -41,6 +41,8 @@ HopperType EnumHelpers::StringToHopperType( const std::string& str )
 		return HopperType::Slick;
 	if( str == "sam" )
 		return HopperType::Sam;
+	if( str == "egg" )
+		return HopperType::Egg;
 	dae::Logger::LogWarning( "EnumHelpers::StringToHopperType > invalid string \"" + str + '"' );
 	return HopperType::Qbert1;
 }

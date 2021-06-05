@@ -247,6 +247,12 @@ glm::vec2 CubeGrid::CalculateImaginaryBlockPos( size_t idx, MoveDirection direct
 	case MoveDirection::DownLeft:
 		posOffset = { - 0.5f, 0.5f };
 		break;
+	case MoveDirection::Left:
+		posOffset = { -1.f, 0.f };
+		break;
+	case MoveDirection::Right:
+		posOffset = { 1.f, 0.f };
+		break;
 	default:
 		Logger::LogWarning( "CubeGrid::CalculateImaginaryBlockPos > invalid direction" );
 		return { };

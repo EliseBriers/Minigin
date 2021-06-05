@@ -23,6 +23,7 @@ public:
 	
 	// Rule of 5
 	~HopperSpriteComponent( ) override = default;
+	void SetType( HopperType type );
 	HopperSpriteComponent( const HopperSpriteComponent& other ) = delete;
 	HopperSpriteComponent( HopperSpriteComponent&& other ) noexcept = delete;
 	HopperSpriteComponent& operator=( const HopperSpriteComponent& other ) = delete;
@@ -33,5 +34,5 @@ private:
 	dae::SpriteSheet m_SpriteSheet;
 	SpriteDirection m_Direction;
 	SpriteState m_State;
-	const HopperType m_Type;
+	HopperType m_Type;
 };

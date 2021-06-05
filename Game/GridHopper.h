@@ -53,6 +53,7 @@ public:
 
 	// Rule of 5
 	~GridHopper( ) override = default;
+	int GetIndexAfterHop( MoveDirection direction ) const;
 	GridHopper( const GridHopper& other ) = delete;
 	GridHopper( GridHopper&& other ) noexcept = delete;
 	GridHopper& operator=( const GridHopper& other ) = delete;

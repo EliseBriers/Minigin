@@ -170,7 +170,7 @@ void GridHopper::Hop( MoveDirection direction )
 		return;
 	}
 	// const CubeGrid::Cube& cube{ m_pCubeGrid->GetCube( static_cast<size_t>(m_CurrentIndex) ) };
-	const int desiredIndex{ m_pCubeGrid->GetIndexAfterMove( static_cast<size_t>(m_CurrentIndex), direction ) };
+	const int desiredIndex{ GetIndexAfterHop( direction ) };
 	if( desiredIndex == -1 )
 	{
 		m_State.Set( HopperState::Hopping );
@@ -248,6 +248,11 @@ void GridHopper::ResetToSpawnIndex( )
 	m_CurrentIndex = static_cast<int>(m_SpawnIndex);
 }
 
+int GridHopper::GetIndexAfterHop( MoveDirection direction ) const
+{
+	return m_pCubeGrid->GetIndexAfterMove( static_cast<size_t>(m_CurrentIndex), direction );
+}
+
 void GridHopper::HopToIndex( size_t index )
 {
 	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
@@ -287,7 +292,6 @@ void GridHopper::SetSpriteDirection( MoveDirection direction ) const
 	switch( direction )
 	{
 	case MoveDirection::UpLeft:
-	case MoveDirection::Left:
 		m_pSprite->SetDirection( SpriteDirection::Left );
 		break;
 	case MoveDirection::DownRight:
@@ -297,6 +301,7 @@ void GridHopper::SetSpriteDirection( MoveDirection direction ) const
 	case MoveDirection::UpRight:
 		m_pSprite->SetDirection( SpriteDirection::Up );
 		break;
+	case MoveDirection::Left:
 	case MoveDirection::DownLeft:
 		m_pSprite->SetDirection( SpriteDirection::Down );
 		break;

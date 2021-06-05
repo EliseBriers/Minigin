@@ -1,5 +1,5 @@
 #pragma once
-
+#define SDL_MAIN_HANDLED
 
 #include <iostream> // std::cout
 #include <sstream> // stringstream
@@ -33,3 +33,5 @@
 #include <TransformComponent.h>
 #include <Logger.h>
 #include <JsonObjectWrapper.h>
+#include <UpdateInfo.h>
+#include <InitInfo.h>

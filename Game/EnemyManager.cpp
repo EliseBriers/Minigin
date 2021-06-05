@@ -1,6 +1,12 @@
 #include "GamePCH.h"
 #include "EnemyManager.h"
 
+EnemyManager::RespawnEntry::RespawnEntry( dae::GameObject* pObject, float time )
+	: pGameObject{ pObject }
+	, Elapsed{ time }
+{
+}
+
 EnemyManager::RespawnEntry::~RespawnEntry( )
 {
 	pGameObject->Activate( );
@@ -48,7 +54,7 @@ void EnemyManager::Update( float dt )
 
 void EnemyManager::RegisterKilledEnemy( dae::GameObject* pGameObject, float respawnTime )
 {
-	m_RespawnEntries.push_back( { pGameObject, respawnTime } );
+	m_RespawnEntries.emplace_back( pGameObject, respawnTime );
 }
 
 void EnemyManager::RegisterEnemy( dae::GameObject* pGameObject )

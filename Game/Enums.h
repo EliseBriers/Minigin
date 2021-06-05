@@ -56,6 +56,7 @@ enum class HopperType
 	Wrongway,
 	Slick,
 	Sam,
+	Egg,
 	HopperType_Size
 };
 
@@ -87,4 +88,14 @@ enum class RandomBouncerState
 	Spawning,
 	Active,
 	Falling
+};
+
+enum class CoilyState
+{
+	SpawningEgg,
+	Egg,
+	Hatching,
+	FollowingPlayer,
+	Falling,
+	Dead
 };

@@ -22,6 +22,8 @@ public:
 	void Init( const dae::InitInfo& ) override;
 	void Deactivate( ) override;
 	void Activate( ) override;
+	void Pause( ) override;
+	void UnPause( ) override;
 
 	void SetCallback( const callback_t& callback );
 
@@ -39,6 +41,7 @@ private:
 	MathHelpers::Circle m_Circle;
 	const float m_Radius;
 	dae::TransformComponent* m_pTransform;
+	bool m_Active;
 
 	std::vector<OverlapData> m_Overlaps;
 	QbertSceneBehavior* m_pSceneBehavior;

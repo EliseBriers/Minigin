@@ -63,12 +63,36 @@ void SphereOverlapDetector::Init( const dae::InitInfo& initInfo )
 
 void SphereOverlapDetector::Deactivate( )
 {
+	if( !m_Active )
+		return;
 	m_pSceneBehavior->QueueUnRegisterOverlapDetector( *this );
+	m_Active = false;
 }
 
 void SphereOverlapDetector::Activate( )
 {
+	if( m_Active )
+		return;
 	m_pSceneBehavior->RegisterOverlapDetector( *this );
+	UpdateCircle( );
+	m_Active = true;
+}
+
+void SphereOverlapDetector::Pause( )
+{
+	if( !m_Active )
+		return;
+	m_pSceneBehavior->QueueUnRegisterOverlapDetector( *this );
+	m_Active = false;
+}
+
+void SphereOverlapDetector::UnPause( )
+{
+	if( m_Active )
+		return;
+	m_pSceneBehavior->RegisterOverlapDetector( *this );
+	UpdateCircle( );
+	m_Active = true;
 }
 
 void SphereOverlapDetector::SetCallback( const callback_t& callback )
