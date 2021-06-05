@@ -7,10 +7,10 @@ QbertSceneBehavior::QbertSceneBehavior( const std::string& nextLevel, bool isLas
 	: m_NextLevel{ nextLevel }
 	, m_IsLastLevel{ isLastLevel }
 {
-	m_Score.AddObserver( []( size_t score )
-	{
-		dae::Logger::LogInfo( "Score: " + std::to_string( score ) );
-	} );
+	// m_Score.AddObserver( []( size_t score )
+	// {
+	// 	dae::Logger::LogInfo( "Score: " + std::to_string( score ) );
+	// } );
 }
 
 void QbertSceneBehavior::Update( const dae::UpdateInfo& updateInfo )

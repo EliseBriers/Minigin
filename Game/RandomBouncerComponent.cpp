@@ -64,7 +64,7 @@ void RandomBouncerComponent::Init( const dae::InitInfo& initInfo )
 	{
 		if( triggerAction == TriggerAction::Enter )
 		{
-			dae::Logger::LogInfo( GetGameObject( ).GetName( ) + " Hit by Object " + pOther->GetName( ) );
+			// dae::Logger::LogInfo( GetGameObject( ).GetName( ) + " Hit by Object " + pOther->GetName( ) );
 			QbertPlayer* pPlayer{ pOther->GetComponent<QbertPlayer>( ) };
 			if( pPlayer )
 			{

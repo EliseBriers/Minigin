@@ -92,7 +92,6 @@ void CoilyComponent::NextAction( )
 void CoilyComponent::Activate( )
 {
 	m_State.Set( CoilyState::SpawningEgg );
-
 	TeleportToSpawn( );
 }
 
@@ -114,6 +113,8 @@ void CoilyComponent::UpdateSpawn( const dae::UpdateInfo& updateInfo )
 
 void CoilyComponent::TeleportToSpawn( )
 {
+	m_pGridHopper->SetState( GridHopper::HopperState::NoControl );
+
 	m_pGridHopper->ResetToSpawnIndex( );
 	const glm::vec2 cubePos{ m_pGridHopper->GetCubeGrid( )->GetCubePos( 0, m_pGridHopper->GetOffset( ) ) };
 	const glm::vec2 spawnPos{ cubePos + glm::vec2{ 0.f, -m_SpawnDistance } };
@@ -214,12 +215,13 @@ void CoilyComponent::AddStateCallback( )
 		{
 		case CoilyState::SpawningEgg:
 			m_pSprite->SetType( HopperType::Egg );
-			TeleportToSpawn();
+			TeleportToSpawn( );
 			dae::Logger::LogInfo( "Coily reached state: \"SpawningEgg\"" );
 			break;
 		case CoilyState::Egg:
 			m_pSprite->SetType( HopperType::Egg );
 			dae::Logger::LogInfo( "Coily reached state: \"Egg\"" );
+			m_pGridHopper->SetState( GridHopper::HopperState::Idle );
 			m_pActionTimer->Start( );
 			break;
 		case CoilyState::Hatching:
