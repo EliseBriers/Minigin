@@ -189,6 +189,14 @@ void GridHopper::Hop( MoveDirection direction )
 	m_State.Set( HopperState::Hopping );
 }
 
+void GridHopper::SafeHop( MoveDirection desired, MoveDirection secondOption )
+{
+	if( m_pCubeGrid->GetIndexAfterMove( m_CurrentIndex, desired ) != -1 )
+		Hop( desired );
+	else
+		Hop( secondOption );
+}
+
 bool GridHopper::CanHop( ) const
 {
 	return m_State.Equals( HopperState::Idle );

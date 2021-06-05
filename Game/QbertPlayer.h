@@ -28,6 +28,10 @@ public:
 	void RegisterStateObserver( state_observer_t stateObserver );
 	void NextRotation( ) const;
 	void SetPosition( const glm::vec2& newPos ) const;
+	glm::vec2 GetPosition( ) const;
+
+	int GetLastIndex( ) const;
+	MoveDirection GetLastMoveDirection( ) const;
 	
 	// Rule of 5
 	~QbertPlayer( ) override = default;
@@ -40,12 +44,17 @@ private:
 	GridHopper* m_pGridHopper;
 	HopperSpriteComponent* m_pSprite;
 	dae::TimerComponent* m_pRespawnTimer;
+	dae::TimerComponent* m_pForgetTimer;
 	bool m_InputLeft;
 	bool m_InputRight;
 	bool m_InputUp;
 	bool m_InputDown;
 	dae::TransformComponent* m_pTransform;
 	QbertSceneBehavior* m_pSceneBehavior;
+
+	// Last index and direction used so coily will jump off the edge
+	int m_LastIndex;
+	MoveDirection m_LastMoveDirection;
 
 	int GetInputCount( ) const;
 

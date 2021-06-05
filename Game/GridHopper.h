@@ -39,6 +39,7 @@ public:
 	void OnHopComplete( );
 	void Update( const dae::UpdateInfo& ) override;
 	void Hop( MoveDirection direction );
+	void SafeHop( MoveDirection desired, MoveDirection secondOption );
 	void HopToIndex( size_t index );
 	bool CanHop( ) const;
 	bool IsHopping( ) const;

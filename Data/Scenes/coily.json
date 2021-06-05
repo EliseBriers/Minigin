@@ -51,14 +51,6 @@
     },
     {
       "class": "dae::TimerComponent",
-      "name": "fall_timer",
-      "desc": {
-        "duration": 2,
-        "loop": false
-      }
-    },
-    {
-      "class": "dae::TimerComponent",
       "name": "next_action_timer",
       "desc": {
         "duration": 0.8,

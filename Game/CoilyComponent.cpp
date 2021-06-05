@@ -18,7 +18,6 @@ CoilyComponent::CoilyComponent( dae::GameObject& gameObject, const dae::JsonObje
 	, m_pSprite{ nullptr }
 	, m_pHatchTimer{ nullptr }
 	, m_pActionTimer{ nullptr }
-	, m_pFallTimer{ nullptr }
 	, m_pCollider{ nullptr }
 	, m_pSceneBehavior{ nullptr }
 	, m_FallSpeed{ 350.f }
@@ -38,8 +37,6 @@ void CoilyComponent::Update( const dae::UpdateInfo& updateInfo )
 	case CoilyState::Hatching:
 		break;
 	case CoilyState::FollowingPlayer:
-		break;
-	case CoilyState::Falling:
 		break;
 	case CoilyState::Dead:
 		break;
@@ -69,7 +66,7 @@ void CoilyComponent::NextAction( )
 	switch( m_State.Get( ) )
 	{
 	case CoilyState::FollowingPlayer:
-		dae::Logger::LogInfo( "Following player" );
+		DoFollow( );
 		break;
 	case CoilyState::Egg:
 		{
@@ -97,7 +94,6 @@ void CoilyComponent::Activate( )
 
 void CoilyComponent::Pause( )
 {
-	m_pFallTimer->Stop( );
 	m_pActionTimer->Stop( );
 	m_pHatchTimer->Stop( );
 }
@@ -122,6 +118,51 @@ void CoilyComponent::TeleportToSpawn( )
 	m_pTransform->SetPosition( spawnPos.x, spawnPos.y, 0.f );
 }
 
+void CoilyComponent::DoFollow( )
+{
+	const glm::vec2 pos{ m_pTransform->GetPosition( ) };
+	m_pPlayer = m_pSceneBehavior->GetClosestPlayer( pos );
+	
+	// If we're on the player's last index, mimic the player's movement instead of going towards the player
+	if( m_pGridHopper->GetCurrentIndex( ) == m_pPlayer->GetLastIndex( ) )
+	{
+		m_pGridHopper->Hop( m_pPlayer->GetLastMoveDirection( ) );
+		return;
+	}
+
+
+	const glm::vec2 toPlayer{ m_pPlayer->GetPosition( ) - pos };
+
+	if( toPlayer.x > 0.f )
+	{
+		// Move Right
+		if( toPlayer.y > 0 )
+		{
+			// Move Down
+			m_pGridHopper->SafeHop( MoveDirection::DownRight, MoveDirection::UpRight );
+		}
+		else
+		{
+			// Move Up
+			m_pGridHopper->SafeHop( MoveDirection::UpRight, MoveDirection::DownRight );
+		}
+	}
+	else
+	{
+		// Move Left
+		if( toPlayer.y > 0 )
+		{
+			// Move Down
+			m_pGridHopper->SafeHop( MoveDirection::DownLeft, MoveDirection::UpLeft );
+		}
+		else
+		{
+			// Move Up
+			m_pGridHopper->SafeHop( MoveDirection::UpLeft, MoveDirection::DownLeft );
+		}
+	}
+}
+
 void CoilyComponent::LoadComponentPointers( )
 {
 	m_pTransform = GetGameObject( ).GetComponent<dae::TransformComponent>( );
@@ -144,17 +185,11 @@ void CoilyComponent::LoadComponentPointers( )
 	}
 
 	m_pActionTimer = GetGameObject( ).GetComponentByName<dae::TimerComponent>( "next_action_timer" );
-	m_pFallTimer = GetGameObject( ).GetComponentByName<dae::TimerComponent>( "fall_timer" );
 	m_pHatchTimer = GetGameObject( ).GetComponentByName<dae::TimerComponent>( "egg_hatch_timer" );
 
 	if( !m_pActionTimer )
 	{
 		dae::Logger::LogWarning( "CoilyComponent::GetComponentPointers > m_pActionTimer is nullptr" );
-		return;
-	}
-	if( !m_pFallTimer )
-	{
-		dae::Logger::LogWarning( "CoilyComponent::GetComponentPointers > m_pFallTimer is nullptr" );
 		return;
 	}
 	if( !m_pHatchTimer )
@@ -188,14 +223,6 @@ void CoilyComponent::AddTimerCallbacks( )
 			NextAction( );
 		else
 			dae::Logger::LogWarning( "CoilyComponent.m_pActionTimer->Callback > Action callback while invalid state" );
-	} );
-
-	m_pFallTimer->SetCallback( [this]( )
-	{
-		if( m_State.Equals( CoilyState::Falling ) )
-			m_State.Set( CoilyState::Dead );
-		else
-			dae::Logger::LogWarning( "CoilyComponent.m_pFallTimer->Callback > Fall timer expired while coily is not falling" );
 	} );
 
 	m_pHatchTimer->SetCallback( [this]( )
@@ -235,12 +262,10 @@ void CoilyComponent::AddStateCallback( )
 			dae::Logger::LogInfo( "Coily reached state: \"FollowingPlayer\"" );
 			m_pActionTimer->Start( );
 			break;
-		case CoilyState::Falling:
-			dae::Logger::LogInfo( "Coily reached state: \"Falling\"" );
-			m_pFallTimer->Start( );
-			m_pActionTimer->Stop( );
-			break;
 		case CoilyState::Dead:
+			GetGameObject( ).Deactivate( );
+			m_pSceneBehavior->RegisterKilledEnemy( &GetGameObject( ), true, 10.f );
+			m_pSceneBehavior->AddPoints( 500u );
 			dae::Logger::LogInfo( "Coily reached state: \"Dead\"" );
 			break;
 		default:
@@ -275,7 +300,7 @@ void CoilyComponent::AddTouchdownCallback( )
 		}
 		else
 		{
-			m_State.Set( CoilyState::Falling );
+			m_State.Set( CoilyState::Dead );
 		}
 	} );
 }

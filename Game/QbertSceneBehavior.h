@@ -4,6 +4,7 @@
 #include "EnemyManager.h"
 #include "PlayerManager.h"
 #include "ObservableVariable.h"
+#include "CoilyComponent.h"
 
 class QbertSceneBehavior final : public dae::SceneBehavior
 {
@@ -11,9 +12,8 @@ public:
 
 	QbertSceneBehavior( const std::string& nextLevel, bool isLastLevel );
 
-	virtual void Update( const dae::UpdateInfo& ) override;
+	void Update( const dae::UpdateInfo& ) override;
 
-	
 	void RegisterOverlapDetector( SphereOverlapDetector& overlapDetector );
 	void UnRegisterOverlapDetector( const SphereOverlapDetector& sphereOverlapDetector );
 	void EndLevel( ) const;
@@ -21,10 +21,11 @@ public:
 	void RegisterKilledEnemy( dae::GameObject* pGameObject, bool killedByPlayer, float respawnTime );
 	void RegisterEnemy( dae::GameObject* pGameObject );
 	void GameCompleted( );
-	void RegisterPlayer( dae::GameObject* pGameObject );
+	void RegisterPlayer( QbertPlayer* pGameObject );
 	void OnPlayerDeath( );
 	void OnPlayerRespawn( );
 	void AddPoints( size_t amount );
+	QbertPlayer* GetClosestPlayer( const glm::vec2& pos );
 	
 	// Rule of 5
 	~QbertSceneBehavior( ) override = default;

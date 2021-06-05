@@ -15,12 +15,15 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 	, m_pGridHopper{ nullptr }
 	, m_pSprite{ nullptr }
 	, m_pRespawnTimer{ nullptr }
+	, m_pForgetTimer{ nullptr }
 	, m_InputLeft{ false }
 	, m_InputRight{ false }
 	, m_InputUp{ false }
 	, m_InputDown{ false }
 	, m_pTransform{ nullptr }
 	, m_pSceneBehavior{ nullptr }
+	, m_LastIndex{ -1 }
+	, m_LastMoveDirection{ MoveDirection::DownLeft }
 {
 }
 
@@ -38,21 +41,25 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 	{
 		m_pGridHopper->Hop( MoveDirection::UpLeft );
 		m_State.Set( PlayerState::Jumping );
+		m_LastMoveDirection = MoveDirection::UpLeft;
 	}
 	if( m_InputRight )
 	{
 		m_pGridHopper->Hop( MoveDirection::DownRight );
 		m_State.Set( PlayerState::Jumping );
+		m_LastMoveDirection = MoveDirection::DownRight;
 	}
 	if( m_InputUp )
 	{
 		m_pGridHopper->Hop( MoveDirection::UpRight );
 		m_State.Set( PlayerState::Jumping );
+		m_LastMoveDirection = MoveDirection::UpRight;
 	}
 	if( m_InputDown )
 	{
 		m_pGridHopper->Hop( MoveDirection::DownLeft );
 		m_State.Set( PlayerState::Jumping );
+		m_LastMoveDirection = MoveDirection::DownLeft;
 	}
 }
 
@@ -62,6 +69,7 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 	m_pSprite = m_GameObject.get( ).GetComponent<HopperSpriteComponent>( );
 	m_pTransform = m_GameObject.get( ).GetComponent<dae::TransformComponent>( );
 	m_pRespawnTimer = m_GameObject.get( ).GetComponentByName<dae::TimerComponent>( "respawn_timer" );
+	m_pForgetTimer = m_GameObject.get( ).GetComponentByName<dae::TimerComponent>( "forget_timer" );
 
 
 	if( !m_pGridHopper )
@@ -72,6 +80,8 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 		dae::Logger::LogWarning( "QbertPlayer::Init > m_pRespawnTimer is nullptr" );
 	if( !m_pTransform )
 		dae::Logger::LogWarning( "QbertPlayer::Init > m_pTransform is nullptr" );
+	if( !m_pForgetTimer )
+		dae::Logger::LogWarning( "QbertPlayer::Init > m_pForgetTimer is nullptr" );
 
 	m_pGridHopper->SetTouchdownCallback( [this]( GridHopper::TouchdownType touchdownType )
 	{
@@ -81,6 +91,11 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 	m_pRespawnTimer->SetCallback( [this]( )
 	{
 		Respawn( );
+	} );
+
+	m_pForgetTimer->SetCallback( [this]( )
+	{
+		m_LastIndex = -1;
 	} );
 
 	InitInputs( initInfo );
@@ -113,7 +128,7 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 		return;
 	}
 
-	m_pSceneBehavior->RegisterPlayer( &GetGameObject( ) );
+	m_pSceneBehavior->RegisterPlayer( this );
 }
 
 void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
@@ -132,6 +147,8 @@ void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
 	else
 	{
 		m_State.Set( PlayerState::Idle );
+		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
+		m_pForgetTimer->Start( );
 	}
 }
 
@@ -165,6 +182,21 @@ void QbertPlayer::NextRotation( ) const
 void QbertPlayer::SetPosition( const glm::vec2& newPos ) const
 {
 	m_pTransform->SetPosition( newPos.x, newPos.y, 0.f );
+}
+
+glm::vec2 QbertPlayer::GetPosition( ) const
+{
+	return m_pTransform->GetPosition( );
+}
+
+int QbertPlayer::GetLastIndex( ) const
+{
+	return m_LastIndex;
+}
+
+MoveDirection QbertPlayer::GetLastMoveDirection( ) const
+{
+	return m_LastMoveDirection;
 }
 
 int QbertPlayer::GetInputCount( ) const

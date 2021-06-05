@@ -1,10 +1,14 @@
 #pragma once
 
+class QbertPlayer;
+
 class PlayerManager
 {
 public:
-	void RegisterPlayer( dae::GameObject* pPlayer );
+	void RegisterPlayer( QbertPlayer* pPlayer );
+	QbertPlayer* GetClosestPlayer( const glm::vec2& pos );
+	void PauseAll( );
 private:
 	// ToDo: pause other player when other player dies
-	std::vector<dae::GameObject*> m_pPlayers;
+	std::vector<QbertPlayer*> m_pPlayers;
 };

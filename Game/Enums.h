@@ -96,6 +96,5 @@ enum class CoilyState
 	Egg,
 	Hatching,
 	FollowingPlayer,
-	Falling,
 	Dead
 };

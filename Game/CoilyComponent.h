@@ -44,7 +44,6 @@ private:
 
 	dae::TimerComponent* m_pHatchTimer;
 	dae::TimerComponent* m_pActionTimer;
-	dae::TimerComponent* m_pFallTimer;
 
 	SphereOverlapDetector* m_pCollider;
 
@@ -54,6 +53,7 @@ private:
 
 	void UpdateSpawn( const dae::UpdateInfo& updateInfo );
 	void TeleportToSpawn( );
+	void DoFollow( );
 	
 	// Init stuff, splitted in different methods
 	void LoadComponentPointers( );

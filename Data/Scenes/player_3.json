@@ -54,6 +54,14 @@
       "desc": {
         "loop": false
       }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "forget_timer",
+      "desc": {
+	    "duration": 1,
+        "loop": false
+      }
     }
   ]
 }

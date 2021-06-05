@@ -58,9 +58,10 @@ void QbertSceneBehavior::RegisterEnemy( dae::GameObject* pGameObject )
 void QbertSceneBehavior::GameCompleted( )
 {
 	m_EnemyManager.PauseAll( );
+	m_PlayerManager.PauseAll( );
 }
 
-void QbertSceneBehavior::RegisterPlayer( dae::GameObject* pGameObject )
+void QbertSceneBehavior::RegisterPlayer( QbertPlayer* pGameObject )
 {
 	m_PlayerManager.RegisterPlayer( pGameObject );
 }
@@ -80,4 +81,9 @@ void QbertSceneBehavior::OnPlayerRespawn( )
 void QbertSceneBehavior::AddPoints( size_t amount )
 {
 	m_Score.Set( m_Score.Get( ) + amount );
+}
+
+QbertPlayer* QbertSceneBehavior::GetClosestPlayer( const glm::vec2& pos )
+{
+	return m_PlayerManager.GetClosestPlayer( pos );
 }
