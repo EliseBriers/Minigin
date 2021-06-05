@@ -204,7 +204,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="GridHopper.cpp" />
+    <ClCompile Include="LevelSelectorComponent.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="MenuControlCommand.cpp" />
+    <ClCompile Include="MenuSceneBehavior.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="QbertPlayer.cpp" />
     <ClCompile Include="QbertSceneBehavior.cpp" />
@@ -222,7 +225,10 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="GridHopper.h" />
+    <ClInclude Include="LevelSelectorComponent.h" />
     <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="MenuControlCommand.h" />
+    <ClInclude Include="MenuSceneBehavior.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="QbertPlayer.h" />
     <ClInclude Include="QbertSceneBehavior.h" />

@@ -10,6 +10,8 @@
 #include "DiskComponent.h"
 #include "RandomBouncerComponent.h"
 #include "CoilyComponent.h"
+#include "LevelSelectorComponent.h"
+#include "MenuSceneBehavior.h"
 
 int main( int, char*[] )
 {
@@ -23,12 +25,18 @@ int main( int, char*[] )
 	engine.RegisterComponent<DiskComponent>( );
 	engine.RegisterComponent<RandomBouncerComponent>( );
 	engine.RegisterComponent<CoilyComponent>( );
+	engine.RegisterComponent<LevelSelectorComponent>( );
 
+	// ToDo: Complete SceneList
+	MenuSceneBehavior::scene_array_t sceneList{ "Demo", "", "" };
+
+
+	engine.AddSceneFromFile( "main_menu.json" )->SetBehavior( std::make_unique<MenuSceneBehavior>( sceneList ) );
 	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
-	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false) );
+	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false ) );
 	engine.AddSceneFromFile( "test3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 
-	engine.SetActiveScene( "Demo" );
+	engine.SetActiveScene( "MainMenu" );
 	engine.Run( );
 	return 0;
 }

@@ -92,14 +92,22 @@ void dae::Scene::Init( InitInfo& initInfo )
 
 dae::GameObject* dae::Scene::GetGameObject( const std::string& name ) const
 {
-	const auto it{
-		std::find_if( m_Objects.cbegin( ), m_Objects.cend( ), [&name]( const std::unique_ptr<GameObject>& ptr )
+	auto it{
+		std::find_if( m_Objects.begin( ), m_Objects.end( ), [&name]( const std::unique_ptr<GameObject>& ptr )
 		{
 			return ptr->GetName( ) == name;
 		} )
 	};
 
-	return it == m_Objects.cend( ) ? nullptr : it->get( );
+	if( it == m_Objects.end( ) )
+	{
+		it = std::find_if( m_UninitializedObjects.begin( ), m_UninitializedObjects.end( ), [&name]( const std::unique_ptr<GameObject>& ptr )
+		{
+			return ptr->GetName( ) == name;
+		} );
+		return it == m_UninitializedObjects.end( ) ? nullptr : it->get( );
+	}
+	return it->get( );
 }
 
 void dae::Scene::SetBehavior( std::unique_ptr<SceneBehavior> pBehavior )

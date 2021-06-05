@@ -1,0 +1,17 @@
+{
+  "texture_file_name": "qbert_sprites.png",
+  "rects": [
+    {
+      "x": 264,
+      "y": 118,
+      "w": 7,
+      "h": 7
+    },
+    {
+      "x": 273,
+      "y": 118,
+      "w": 7,
+      "h": 7
+    }
+  ]
+}

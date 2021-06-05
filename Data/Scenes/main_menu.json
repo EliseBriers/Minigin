@@ -1,0 +1,91 @@
+{
+  "name": "MainMenu",
+  "objects": [
+    {
+      "name": "SoloText",
+      "components": [
+        {
+          "class": "dae::StaticTextComponent",
+          "desc": {
+            "text": "Solo",
+            "font_file_name": "QBert.otf",
+            "size": 36,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 180,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "CoopText",
+      "components": [
+        {
+          "class": "dae::StaticTextComponent",
+          "desc": {
+            "text": "Coop",
+            "font_file_name": "QBert.otf",
+            "size": 36,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 240,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "VsText",
+      "components": [
+        {
+          "class": "dae::StaticTextComponent",
+          "desc": {
+            "text": "Vs",
+            "font_file_name": "QBert.otf",
+            "size": 36,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 300,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "MainMenu",
+      "components": [
+        {
+          "class": "LevelSelectorComponent",
+          "desc": {
+            "sprite_sheet": "menu_sprites.json"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -98,3 +98,10 @@ enum class CoilyState
 	FollowingPlayer,
 	Dead
 };
+
+enum class LevelType
+{
+	Solo,
+	Coop,
+	Vs
+};

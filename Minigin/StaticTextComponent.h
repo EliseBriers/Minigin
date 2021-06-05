@@ -11,9 +11,11 @@ namespace dae
 	class StaticTextComponent : public IComponent
 	{
 	public:
-		StaticTextComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);
+		StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name );
 		void Draw( Renderer& renderer ) override;
 		void Init( const InitInfo& initInfo ) override;
+		glm::vec2 GetPosition( ) const;
+		glm::vec2 GetSize( ) const;
 
 		~StaticTextComponent( ) override = default;
 		StaticTextComponent( const StaticTextComponent& other ) = delete;
