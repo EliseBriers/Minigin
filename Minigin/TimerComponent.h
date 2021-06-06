@@ -1,10 +1,10 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 #include <functional>
 
 namespace dae
 {
-	class TimerComponent : public IComponent
+	class TimerComponent : public BaseComponent
 	{
 		using timeout_callback_t = std::function<void( )>;
 	public:

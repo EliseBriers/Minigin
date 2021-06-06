@@ -1,7 +1,7 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
-#include "IComponent.h"
+#include "BaseComponent.h"
 
 dae::GameObject::GameObject( const std::string& name )
 	: m_Name{ name }
@@ -17,14 +17,14 @@ dae::GameObject::GameObject( std::string&& name )
 {
 }
 
-void dae::GameObject::AddComponent( std::unique_ptr<IComponent> pComponent )
+void dae::GameObject::AddComponent( std::unique_ptr<BaseComponent> pComponent )
 {
 	m_pComponents.emplace_back( std::move( pComponent ) );
 }
 
 void dae::GameObject::Draw( Renderer& renderer )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Draw( renderer );
 	}
@@ -32,7 +32,7 @@ void dae::GameObject::Draw( Renderer& renderer )
 
 void dae::GameObject::FixedUpdate( const UpdateInfo& updateInfo )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->FixedUpdate( updateInfo );
 	}
@@ -40,7 +40,7 @@ void dae::GameObject::FixedUpdate( const UpdateInfo& updateInfo )
 
 void dae::GameObject::PersistentFixedUpdate( const UpdateInfo& updateInfo )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->PersistentFixedUpdate( updateInfo );
 	}
@@ -48,7 +48,7 @@ void dae::GameObject::PersistentFixedUpdate( const UpdateInfo& updateInfo )
 
 void dae::GameObject::Update( const UpdateInfo& updateInfo )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Update( updateInfo );
 	}
@@ -56,7 +56,7 @@ void dae::GameObject::Update( const UpdateInfo& updateInfo )
 
 void dae::GameObject::PersistentUpdate( const UpdateInfo& updateInfo )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->PersistentUpdate( updateInfo );
 	}
@@ -64,7 +64,7 @@ void dae::GameObject::PersistentUpdate( const UpdateInfo& updateInfo )
 
 void dae::GameObject::Init( InitInfo& initInfo )
 {
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Init( initInfo );
 	}
@@ -73,7 +73,7 @@ void dae::GameObject::Init( InitInfo& initInfo )
 void dae::GameObject::Deactivate( )
 {
 	m_IsActive = false;
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Deactivate( );
 	}
@@ -82,7 +82,7 @@ void dae::GameObject::Deactivate( )
 void dae::GameObject::Activate( )
 {
 	m_IsActive = true;
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Activate( );
 	}
@@ -91,7 +91,7 @@ void dae::GameObject::Activate( )
 void dae::GameObject::Pause( )
 {
 	m_IsPaused = true;
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Pause( );
 	}
@@ -100,7 +100,7 @@ void dae::GameObject::Pause( )
 void dae::GameObject::UnPause( )
 {
 	m_IsPaused = false;
-	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 	{
 		pComponent->UnPause( );
 	}

@@ -10,7 +10,7 @@
 #include "DiskComponent.h"
 
 QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Controller{ }
 	, m_State{ PlayerState::Idle }
 	, m_pGridHopper{ nullptr }

@@ -10,7 +10,7 @@
 using namespace dae;
 
 CubeGrid::CubeGrid( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Color{ EnumHelpers::StringToLevelColor( jsonObject.GetString( "color" ) ) }
 	, m_pSceneBehavior{ nullptr }
 	, m_pAnimationFlipTimer{ nullptr }
@@ -222,7 +222,7 @@ void CubeGrid::CheckGameComplete( )
 			return;
 	}
 
-	Logger::LogInfo( "Game Completed" );
+	// Logger::LogInfo( "Game Completed" );
 	m_GameCompleted = true;
 	m_pAnimationFlipTimer->Start( );
 	m_pAnimationTimer->Start( );

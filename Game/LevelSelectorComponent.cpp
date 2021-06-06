@@ -4,7 +4,7 @@
 #include "SetVarCommand.h"
 
 LevelSelectorComponent::LevelSelectorComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_CurrentIndex{ 0u }
 	, m_Sprites{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_pSolo{ nullptr }

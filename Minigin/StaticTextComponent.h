@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 #include <string>
 #include <document.h>
 #include <SDL.h>
@@ -9,7 +9,7 @@ namespace dae
 	class JsonObjectWrapper;
 	class TransformComponent;
 
-	class StaticTextComponent final : public IComponent
+	class StaticTextComponent final : public BaseComponent
 	{
 	public:
 		StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name );

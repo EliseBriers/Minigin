@@ -1,11 +1,11 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "CubeGrid.h"
 #include "Enums.h"
 #include "HopperSpriteComponent.h"
 #include "ObservableVariable.h"
 
-class GridHopper final : public dae::IComponent
+class GridHopper final : public dae::BaseComponent
 {
 public:
 	enum class TouchdownType

@@ -4,7 +4,7 @@
 #include "JsonObjectWrapper.h"
 
 dae::TimerComponent::TimerComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Callback{ VoidCallback }
 	, m_ElapsedSec{ 0.f }
 	, m_MaxTime{ jsonObject.GetOptionalFloat( "duration", 1.f ) }

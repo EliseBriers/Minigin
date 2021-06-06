@@ -1,10 +1,10 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "MathHelpers.h"
 #include "Enums.h"
 #include "QbertSceneBehavior.h"
 
-class SphereOverlapDetector final : public dae::IComponent
+class SphereOverlapDetector final : public dae::BaseComponent
 {
 	struct OverlapData
 	{

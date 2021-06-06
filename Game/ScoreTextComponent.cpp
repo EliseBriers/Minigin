@@ -5,7 +5,7 @@
 #include "GameOverSceneBehavior.h"
 
 ScoreTextComponent::ScoreTextComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper&, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 {
 }
 

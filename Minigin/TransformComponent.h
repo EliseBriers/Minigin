@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 // #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm/vec3.hpp>
@@ -9,7 +9,7 @@ namespace dae
 {
 	class JsonObjectWrapper;
 
-	class TransformComponent : public IComponent
+	class TransformComponent : public BaseComponent
 	{
 	public:
 		TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name );

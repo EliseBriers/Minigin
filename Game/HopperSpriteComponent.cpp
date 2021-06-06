@@ -4,7 +4,7 @@
 #include "EnumHelpers.h"
 
 HopperSpriteComponent::HopperSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_pTransform{ nullptr }
 	, m_SpriteSheet{ jsonObject.GetObjectWrapper( "sprite_sheet" ) }
 	, m_Direction{ SpriteDirection::Down }

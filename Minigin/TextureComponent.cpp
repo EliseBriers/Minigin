@@ -6,7 +6,7 @@
 #include "Logger.h"
 
 dae::TextureComponent::TextureComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_FileName{ jsonObject.GetString( "texture_file_name" ) }
 	, m_pTexture{ nullptr }
 	, m_pTransformComponent{ nullptr }

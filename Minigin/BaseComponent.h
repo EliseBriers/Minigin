@@ -8,10 +8,10 @@ namespace dae
 	class UpdateInfo;
 	class Renderer;
 
-	class IComponent
+	class BaseComponent
 	{
 	public:
-		IComponent( GameObject& gameObject, std::string name );
+		BaseComponent( GameObject& gameObject, std::string name );
 
 		virtual void FixedUpdate( const UpdateInfo& );
 		virtual void PersistentFixedUpdate( const UpdateInfo& );
@@ -27,13 +27,13 @@ namespace dae
 		GameObject& GetGameObject( ) const;
 
 		const std::string& GetName( ) const;
-		const UUID<IComponent> Id;
+		const UUID<BaseComponent> Id;
 
-		virtual ~IComponent( ) = default;
-		IComponent( const IComponent& other ) = delete;
-		IComponent( IComponent&& other ) noexcept = delete;
-		IComponent& operator=( const IComponent& other ) = delete;
-		IComponent& operator=( IComponent&& other ) noexcept = delete;
+		virtual ~BaseComponent( ) = default;
+		BaseComponent( const BaseComponent& other ) = delete;
+		BaseComponent( BaseComponent&& other ) noexcept = delete;
+		BaseComponent& operator=( const BaseComponent& other ) = delete;
+		BaseComponent& operator=( BaseComponent&& other ) noexcept = delete;
 	protected:
 		std::reference_wrapper<GameObject> m_GameObject;
 		std::string m_Name;

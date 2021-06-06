@@ -1,12 +1,12 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "Enums.h"
 #include "SpriteSheet.h"
 #include "QbertPlayer.h"
 
 class SphereOverlapDetector;
 
-class DiskComponent final : public dae::IComponent
+class DiskComponent final : public dae::BaseComponent
 {
 	using state_observer_t = dae::ObservableVariable<DiskState>::observer_t;
 public:

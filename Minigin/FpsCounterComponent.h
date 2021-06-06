@@ -1,12 +1,12 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 
 namespace dae
 {
 	class JsonObjectWrapper;
 	class DynamicTextComponent;
 
-	class FpsCounterComponent final : public IComponent
+	class FpsCounterComponent final : public BaseComponent
 	{
 	public:
 		FpsCounterComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);

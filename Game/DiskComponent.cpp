@@ -10,7 +10,7 @@
 #include "EnumHelpers.h"
 
 DiskComponent::DiskComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_State{ DiskState::Idle }
 	, m_Color{ EnumHelpers::StringToLevelColor( jsonObject.GetString( "color" ) ) }
 	, m_MovementSpeed{ jsonObject.GetOptionalFloat( "speed", 5.f ) }

@@ -1,7 +1,7 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 
-class ScoreTextComponent final : public dae::IComponent
+class ScoreTextComponent final : public dae::BaseComponent
 {
 public:
 	ScoreTextComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );

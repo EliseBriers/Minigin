@@ -10,7 +10,7 @@
 #include "CoilyDirectionController.h"
 
 CoilyComponent::CoilyComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_FallSound{ 0u }
 	, m_JumpSound{ 0u }
 	, m_PlayJump{ false }
@@ -257,23 +257,23 @@ void CoilyComponent::AddStateCallback( )
 		case CoilyState::SpawningEgg:
 			m_pSprite->SetType( HopperType::Egg );
 			TeleportToSpawn( );
-			dae::Logger::LogInfo( "Coily reached state: \"SpawningEgg\"" );
+			//dae::Logger::LogInfo( "Coily reached state: \"SpawningEgg\"" );
 			break;
 		case CoilyState::Egg:
 			m_pSprite->SetType( HopperType::Egg );
-			dae::Logger::LogInfo( "Coily reached state: \"Egg\"" );
+			//dae::Logger::LogInfo( "Coily reached state: \"Egg\"" );
 			m_pGridHopper->SetState( GridHopper::HopperState::Idle );
 			m_pActionTimer->Start( );
 			break;
 		case CoilyState::Hatching:
 			m_pSprite->SetType( HopperType::Egg );
-			dae::Logger::LogInfo( "Coily reached state: \"Hatching\"" );
+			//dae::Logger::LogInfo( "Coily reached state: \"Hatching\"" );
 			m_pHatchTimer->Start( );
 			m_pActionTimer->Stop( );
 			break;
 		case CoilyState::FollowingPlayer:
 			m_pSprite->SetType( HopperType::Coily );
-			dae::Logger::LogInfo( "Coily reached state: \"FollowingPlayer\"" );
+			//dae::Logger::LogInfo( "Coily reached state: \"FollowingPlayer\"" );
 			m_pGridHopper->SetState( GridHopper::HopperState::Idle );
 			m_pActionTimer->Start( );
 			break;
@@ -283,7 +283,7 @@ void CoilyComponent::AddStateCallback( )
 			m_pActionTimer->Stop( );
 			m_pSceneBehavior->RegisterKilledEnemy( &GetGameObject( ), true, 10.f );
 			m_pSceneBehavior->AddPoints( 500u );
-			dae::Logger::LogInfo( "Coily reached state: \"Dead\"" );
+			//dae::Logger::LogInfo( "Coily reached state: \"Dead\"" );
 			break;
 		default:
 			dae::Logger::LogWarning( "CoilyComponent.m_State.Callback > Invalid state" );

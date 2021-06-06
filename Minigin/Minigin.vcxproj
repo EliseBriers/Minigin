@@ -246,7 +246,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClInclude Include="FpsCounterComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ICommand.h" />
-    <ClInclude Include="IComponent.h" />
+    <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="ImGuiDemoComponent.h" />
     <ClInclude Include="InitInfo.h" />
     <ClInclude Include="InputManager.h" />
@@ -378,7 +378,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_Mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClCompile Include="FpsCounterComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
-    <ClCompile Include="IComponent.cpp" />
+    <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ImGuiDemoComponent.cpp" />
     <ClCompile Include="InitInfo.cpp" />
     <ClCompile Include="InputManager.cpp" />

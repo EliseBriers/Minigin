@@ -8,7 +8,7 @@
 #include "Texture2D.h"
 
 dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Color{ jsonObject.GetSDLColor( "color" ) }
 	, m_Text{ jsonObject.GetString( "text" ) }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }

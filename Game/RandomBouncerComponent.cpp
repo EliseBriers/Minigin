@@ -11,7 +11,7 @@
 #include <InitInfo.h>
 
 RandomBouncerComponent::RandomBouncerComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_JumpSound{ 0u }
 	, m_PlayJump{ false }
 	, m_RandomBounceDirection{ RandomBounceDirection::Down }

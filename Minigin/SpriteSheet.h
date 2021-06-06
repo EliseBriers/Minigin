@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 #include "Renderer.h"
 
 namespace dae

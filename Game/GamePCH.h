@@ -28,7 +28,7 @@
 // #include "MathHelpers.h"
 
 // Engine stuff
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include <GameObject.h>
 #include <TransformComponent.h>
 #include <Logger.h>

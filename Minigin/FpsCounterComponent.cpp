@@ -4,7 +4,7 @@
 #include "UpdateInfo.h"
 
 dae::FpsCounterComponent::FpsCounterComponent( GameObject& gameObject, const JsonObjectWrapper&, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_pTextComponent{ }
 {
 }

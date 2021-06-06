@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 #include "Texture2D.h"
 #include "TransformComponent.h"
 
@@ -7,7 +7,7 @@ namespace dae
 {
 	class JsonObjectWrapper;
 
-	class TextureComponent : public IComponent
+	class TextureComponent : public BaseComponent
 	{
 	public:
 		TextureComponent(GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name);

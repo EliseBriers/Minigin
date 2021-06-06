@@ -18,6 +18,8 @@
 
 int main( int, char*[] )
 {
+	srand( static_cast<unsigned>(time( nullptr )) );
+
 	dae::Minigin engine{ };
 
 	engine.RegisterComponent<CubeGrid>( );
@@ -49,7 +51,7 @@ int main( int, char*[] )
 	engine.AddSceneFromFile( "Vs/level_vs_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "VsLevel2", globalScore ) );
 	engine.AddSceneFromFile( "Vs/level_vs_2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "VsLevel3", globalScore ) );
 	engine.AddSceneFromFile( "Vs/level_vs_3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", globalScore ) );
-	
+
 
 	engine.AddSceneFromFile( "Global/game_over.json" )->SetBehavior( std::make_unique<GameOverSceneBehavior>( globalScore ) );
 

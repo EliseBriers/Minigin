@@ -93,7 +93,7 @@
     <ClInclude Include="DynamicTextComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="IComponent.h">
+    <ClInclude Include="BaseComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextureComponent.h">
@@ -209,7 +209,7 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IComponent.cpp">
+    <ClCompile Include="BaseComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="StaticTextComponent.cpp">

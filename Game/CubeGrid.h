@@ -1,5 +1,5 @@
 #pragma once
-#include "IComponent.h"
+#include "BaseComponent.h"
 #include "SpriteSheet.h"
 #include "Enums.h"
 
@@ -11,7 +11,7 @@ namespace dae
 
 class QbertSceneBehavior;
 
-class CubeGrid final : public dae::IComponent
+class CubeGrid final : public dae::BaseComponent
 {
 public:
 	enum class CubeState : int

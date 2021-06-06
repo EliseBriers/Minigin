@@ -7,7 +7,7 @@
 #include "JsonObjectWrapper.h"
 
 dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_FontSize{ jsonObject.GetUint( "size" ) }
 	, m_Spacing{ }

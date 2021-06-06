@@ -1,5 +1,5 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "Enums.h"
 #include "TimerComponent.h"
 #include "ObservableVariable.h"
@@ -10,7 +10,7 @@ class HopperSpriteComponent;
 class GridHopper;
 class SphereOverlapDetector;
 
-class RandomBouncerComponent final : public dae::IComponent
+class RandomBouncerComponent final : public dae::BaseComponent
 {
 public:
 	RandomBouncerComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );

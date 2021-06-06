@@ -1,5 +1,5 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "SpriteSheet.h"
 #include "Enums.h"
 
@@ -8,7 +8,7 @@ namespace dae
 	class TransformComponent;
 }
 
-class HopperSpriteComponent final : public dae::IComponent
+class HopperSpriteComponent final : public dae::BaseComponent
 {
 public:
 	HopperSpriteComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );

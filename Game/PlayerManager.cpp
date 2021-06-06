@@ -6,7 +6,7 @@
 void PlayerManager::RegisterPlayer( QbertPlayer* pPlayer )
 {
 	m_pPlayers.emplace_back( pPlayer );
-	dae::Logger::LogInfo( "PlayerManager::RegisterPlayer > Player registered" );
+	// dae::Logger::LogInfo( "PlayerManager::RegisterPlayer > Player registered" );
 }
 
 QbertPlayer* PlayerManager::GetClosestPlayer( const glm::vec2& pos )

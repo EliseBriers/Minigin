@@ -62,13 +62,13 @@ void QbertSceneBehavior::QueueUnRegisterOverlapDetector( SphereOverlapDetector& 
 	m_TriggerManager.QueueUnRegisterOverlapDetector( sphereOverlapDetector );
 }
 
-void QbertSceneBehavior::RegisterKilledEnemy( dae::GameObject* pGameObject, bool killedByPlayer, float respawnTime )
+void QbertSceneBehavior::RegisterKilledEnemy( dae::GameObject* pGameObject, bool /*killedByPlayer*/, float respawnTime )
 {
 	m_EnemyManager.RegisterKilledEnemy( pGameObject, respawnTime );
-	if( killedByPlayer )
-		dae::Logger::LogInfo( "Enemy killed by player" );
-	else
-		dae::Logger::LogInfo( "Enemy killed environment" );
+	// if( killedByPlayer )
+	// 	dae::Logger::LogInfo( "Enemy killed by player" );
+	// else
+	// 	dae::Logger::LogInfo( "Enemy killed environment" );
 }
 
 void QbertSceneBehavior::RegisterEnemy( dae::GameObject* pGameObject )

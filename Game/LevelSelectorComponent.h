@@ -1,10 +1,10 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "StaticTextComponent.h"
 #include "SpriteSheet.h"
 #include "MenuSceneBehavior.h"
 
-class LevelSelectorComponent : public dae::IComponent
+class LevelSelectorComponent : public dae::BaseComponent
 {
 public:
 	LevelSelectorComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper&, std::string name );

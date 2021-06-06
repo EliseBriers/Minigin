@@ -4,7 +4,7 @@
 #include <glm/detail/func_geometric.inl>
 
 dae::TransformComponent::TransformComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Position{ jsonObject.GetFloat( "x" ), jsonObject.GetFloat( "y" ), jsonObject.GetFloat( "z" ) }
 	, m_Scale{ jsonObject.GetOptionalFloat( "scale", 1.f ) }
 {

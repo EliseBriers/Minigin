@@ -1,5 +1,5 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "Enums.h"
 #include <ObservableVariable.h>
 #include "IDirectionController.h"
@@ -17,7 +17,7 @@ class HopperSpriteComponent;
 class GridHopper;
 class CoilyDirectionController;
 
-class CoilyComponent final : public dae::IComponent
+class CoilyComponent final : public dae::BaseComponent
 {
 	using state_observer_t = dae::ObservableVariable<CoilyState>::observer_t;
 public:

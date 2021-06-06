@@ -8,7 +8,7 @@
 #include "QbertSceneBehavior.h"
 
 GridHopper::GridHopper( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_StompBehavior{ GetStompBehavior( jsonObject.GetString( "stomp_behavior" ) ) }
 	, m_Callback{ VoidTouchdown }
 	, m_UpDirection{ normalize( jsonObject.GetVec2( "up_direction" ) ) }

@@ -1,5 +1,5 @@
 #pragma once
-#include <IComponent.h>
+#include <BaseComponent.h>
 #include "GridHopper.h"
 #include "ObservableVariable.h"
 #include "Enums.h"
@@ -13,7 +13,7 @@ namespace dae
 
 class HopperSpriteComponent;
 
-class QbertPlayer final : public dae::IComponent
+class QbertPlayer final : public dae::BaseComponent
 {
 	using state_observer_t = dae::ObservableVariable<PlayerState>::observer_t;
 public:

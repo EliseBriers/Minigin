@@ -8,7 +8,7 @@ namespace dae
 {
 	class UpdateInfo;
 	class InitInfo;
-	class IComponent;
+	class BaseComponent;
 
 	class ResourceManager;
 	class Renderer;
@@ -19,7 +19,7 @@ namespace dae
 	public:
 		GameObject( const std::string& name );
 		GameObject( std::string&& name );
-		void AddComponent( std::unique_ptr<IComponent> pComponent );
+		void AddComponent( std::unique_ptr<BaseComponent> pComponent );
 
 		void Draw( Renderer& renderer );
 		void FixedUpdate( const UpdateInfo& updateInfo );
@@ -50,7 +50,7 @@ namespace dae
 		GameObject& operator=( const GameObject& other ) = delete;
 		GameObject& operator=( GameObject&& other ) = delete;
 	private:
-		std::vector<std::unique_ptr<IComponent>> m_pComponents;
+		std::vector<std::unique_ptr<BaseComponent>> m_pComponents;
 		const std::string m_Name;
 		bool m_IsActive;
 		bool m_IsPaused;
@@ -59,7 +59,7 @@ namespace dae
 	template <typename T>
 	T* GameObject::GetComponent( ) const
 	{
-		for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+		for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 		{
 			T* pReturnVal{ dynamic_cast<T*>(pComponent.get( )) };
 			if( pReturnVal )
@@ -71,7 +71,7 @@ namespace dae
 	template <typename T>
 	T* GameObject::GetComponentByName( const std::string& name ) const
 	{
-		for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+		for( const std::unique_ptr<BaseComponent>& pComponent : m_pComponents )
 		{
 			T* pReturnVal{ dynamic_cast<T*>(pComponent.get( )) };
 			if( pReturnVal && pReturnVal->GetName( ) == name )

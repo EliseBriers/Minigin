@@ -1,11 +1,10 @@
 #include "GamePCH.h"
 #include "SphereOverlapDetector.h"
-#include <SDL.h>
 #include <InitInfo.h>
 #include "QbertSceneBehavior.h"
 
 SphereOverlapDetector::SphereOverlapDetector( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
-	: IComponent{ gameObject, std::move( name ) }
+	: BaseComponent{ gameObject, std::move( name ) }
 	, m_Offset{ jsonObject.GetVec2( "offset" ) }
 	, m_Callback{ VoidCallback }
 	, m_Circle{ }
