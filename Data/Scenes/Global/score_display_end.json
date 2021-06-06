@@ -1,0 +1,31 @@
+{
+  "name": "ScoreDisplay",
+  "components": [
+    {
+      "class": "dae::DynamicTextComponent",
+      "desc": {
+        "start_char": " ",
+        "char_count": 91,
+        "font_file_name": "QBert.otf",
+        "size": 20,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "color": "Global/text_color_orange.json"
+      }
+    },
+    {
+      "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 260,
+            "z": 0
+          }
+    },
+    {
+      "class": "ScoreTextComponent",
+      "desc": {}
+    }
+  ]
+}

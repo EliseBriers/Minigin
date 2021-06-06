@@ -191,6 +191,8 @@ void GridHopper::Hop( MoveDirection direction )
 
 void GridHopper::SafeHop( MoveDirection desired, MoveDirection secondOption )
 {
+	if( m_CurrentIndex == -1 )
+		return;
 	if( m_pCubeGrid->GetIndexAfterMove( m_CurrentIndex, desired ) != -1 )
 		Hop( desired );
 	else

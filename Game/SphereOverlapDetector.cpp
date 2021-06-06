@@ -35,11 +35,11 @@ void SphereOverlapDetector::Update( const dae::UpdateInfo& )
 	UpdateCircle( );
 }
 
-void SphereOverlapDetector::Draw( dae::Renderer& renderer )
+void SphereOverlapDetector::Draw( dae::Renderer& /*renderer*/ )
 {
-	const SDL_Color red{ 255, 0, 0, 255 };
-	const SDL_Color green{ 0, 255, 0, 255 };
-	renderer.RenderCircle( m_Circle.Pos, m_Circle.R, m_Overlaps.empty( ) ? red : green );
+	// const SDL_Color red{ 255, 0, 0, 255 };
+	// const SDL_Color green{ 0, 255, 0, 255 };
+	// renderer.RenderCircle( m_Circle.Pos, m_Circle.R, m_Overlaps.empty( ) ? red : green );
 }
 
 void SphereOverlapDetector::Init( const dae::InitInfo& initInfo )

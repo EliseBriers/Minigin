@@ -12,7 +12,7 @@
           "x": 0,
           "y": 0.5
         },
-        "color": "text_color_orange.json"
+        "color": "Global/text_color_orange.json"
       }
     },
     {

@@ -1,0 +1,70 @@
+{
+  "name": "Coily",
+  "components": [
+    {
+	  "class": "CoilyComponent",
+	  "desc":{
+	    "is_player_controlled": true
+	  }
+	},
+    {
+      "class": "GridHopper",
+      "desc": {
+        "speed": 2,
+        "jump_height": 10,
+        "stomp_behavior": "nothing",
+        "spawn_index": 0,
+        "up_direction": {
+          "x": 0,
+          "y": -1
+        },
+        "offset": {
+          "x": 0,
+          "y": -0.25
+        }
+      }
+    },
+    {
+      "class": "dae::TransformComponent",
+      "desc": {
+        "x": 100,
+        "y": 100,
+        "z": 0,
+        "scale": 1.8
+      }
+    },
+    {
+      "class": "HopperSpriteComponent",
+      "desc": {
+        "sprite_sheet": "Spritesheets/hopper_sprites.json",
+        "type": "egg"
+      }
+    },
+    {
+      "class": "SphereOverlapDetector",
+      "desc": {
+        "radius": 1.8,
+		"offset":{
+		  "x": 0,
+		  "y": 0
+		}
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "next_action_timer",
+      "desc": {
+        "duration": 0.2,
+        "loop": false
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "egg_hatch_timer",
+      "desc": {
+        "duration": 2,
+        "loop": false
+      }
+    }
+  ]
+}

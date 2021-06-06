@@ -198,6 +198,7 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnumHelpers.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOverSceneBehavior.cpp" />
     <ClCompile Include="GamePCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -227,6 +228,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnumHelpers.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="GameOverSceneBehavior.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="GridHopper.h" />
     <ClInclude Include="IDirectionController.h" />

@@ -111,6 +111,9 @@
     <ClCompile Include="ScoreTextComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverSceneBehavior.cpp">
+      <Filter>Source Files\SceneBehaviors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridHopper.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="ScoreTextComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverSceneBehavior.h">
+      <Filter>Header Files\SceneBehaviors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

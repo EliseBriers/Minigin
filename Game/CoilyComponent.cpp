@@ -46,7 +46,7 @@ void CoilyComponent::Update( const dae::UpdateInfo& updateInfo )
 	case CoilyState::Hatching:
 		break;
 	case CoilyState::FollowingPlayer:
-		if( !m_pActionTimer->IsRunning( ) )
+		if( m_pGridHopper->CanHop( ) && !m_pActionTimer->IsRunning( ) )
 			m_pActionTimer->Start( );
 		break;
 	case CoilyState::Dead:
@@ -274,6 +274,7 @@ void CoilyComponent::AddStateCallback( )
 		case CoilyState::FollowingPlayer:
 			m_pSprite->SetType( HopperType::Coily );
 			dae::Logger::LogInfo( "Coily reached state: \"FollowingPlayer\"" );
+			m_pGridHopper->SetState( GridHopper::HopperState::Idle );
 			m_pActionTimer->Start( );
 			break;
 		case CoilyState::Dead:

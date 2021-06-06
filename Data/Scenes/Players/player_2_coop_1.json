@@ -6,8 +6,8 @@
       "desc": {
         "speed": 2,
         "jump_height": 10,
-        "stomp_behavior": "complete",
-		"spawn_index": 0,
+        "stomp_behavior": "advance",
+		"spawn_index": 21,
         "up_direction": {
           "x": 0,
           "y": -1
@@ -36,7 +36,7 @@
     {
       "class": "HopperSpriteComponent",
       "desc": {
-        "sprite_sheet": "hopper_sprites.json",
+        "sprite_sheet": "Spritesheets/hopper_sprites.json",
         "type": "qbert_1"
       }
     },

@@ -1,0 +1,69 @@
+{
+  "name": "Player1",
+  "components": [
+    {
+      "class": "GridHopper",
+      "desc": {
+        "speed": 2,
+        "jump_height": 10,
+        "stomp_behavior": "toggle",
+		"spawn_index": 27,
+        "up_direction": {
+          "x": 0,
+          "y": -1
+        },
+		"offset":{
+          "x": 0.0,
+          "y": -0.25
+        }
+      }
+    },
+    {
+      "class": "QbertPlayer",
+      "desc": {
+	    "is_main_player": false
+	  }
+    },
+    {
+      "class": "dae::TransformComponent",
+      "desc": {
+        "x": 100,
+        "y": 100,
+        "z": 0,
+        "scale": 1.8
+      }
+    },
+    {
+      "class": "HopperSpriteComponent",
+      "desc": {
+        "sprite_sheet": "Spritesheets/hopper_sprites.json",
+        "type": "qbert_2"
+      }
+    },
+    {
+      "class": "SphereOverlapDetector",
+      "desc": {
+	    "radius": 3,
+		"offset":{
+		  "x": 0,
+		  "y": 0
+		}
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "respawn_timer",
+      "desc": {
+        "loop": false
+      }
+    },
+    {
+      "class": "dae::TimerComponent",
+      "name": "forget_timer",
+      "desc": {
+	    "duration": 2,
+        "loop": false
+      }
+    }
+  ]
+}

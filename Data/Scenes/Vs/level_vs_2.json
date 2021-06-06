@@ -1,5 +1,5 @@
 {
-  "name": "Demo",
+  "name": "VsLevel2",
   "objects": [
     {
       "name": "CubeGrid",
@@ -7,8 +7,8 @@
         {
           "class": "CubeGrid",
           "desc": {
-            "sprite_sheet": "sprite_sheet.json",
-			"color": "blue"
+            "sprite_sheet": "Spritesheets/sprite_sheet.json",
+			"color": "gray"
           }
         },
         {
@@ -44,10 +44,10 @@
         {
           "class": "DiskComponent",
           "desc": {
-            "spawn_index": 14,
-            "sprite_sheet": "disk_sprite.json",
+            "spawn_index": 15,
+            "sprite_sheet": "Spritesheets/disk_sprite.json",
 			"speed": 70,
-			"color": "blue"
+			"color": "gray"
           }
         },
         {
@@ -87,12 +87,62 @@
         }
       ]
     },
-	"coily.json",
-	"slick.json",
-	"wrongway.json",
-	"ugg.json",
-    "player_1.json",
-    "fps_counter.json",
-	"score_display.json"
+    {
+      "name": "Disk1",
+      "components": [
+        {
+          "class": "DiskComponent",
+          "desc": {
+            "spawn_index": 9,
+            "sprite_sheet": "Spritesheets/disk_sprite.json",
+			"speed": 70,
+			"color": "gray"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "SphereOverlapDetector",
+          "desc": {
+            "radius": 3,
+		    "offset":{
+		      "x": 0,
+		      "y": 0
+		    }
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "RotationTimer",
+          "desc": {
+            "duration": 0.2,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "EndTimer",
+          "desc": {
+            "duration": 1,
+            "loop": false
+          }
+        }
+      ]
+    },
+	"Enemies/slick.json",
+	"Enemies/sam.json",
+	"Enemies/coily_player.json",
+	"Enemies/wrongway.json",
+	"Enemies/ugg.json",
+    "Players/player_2_solo.json",
+    "Global/fps_counter.json",
+	"Global/score_display.json"
   ]
 }

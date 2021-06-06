@@ -1,28 +1,28 @@
 {
-  "name": "Coily",
+  "name": "Player1",
   "components": [
-    {
-	  "class": "CoilyComponent",
-	  "desc":{
-	    "is_player_controlled": true
-	  }
-	},
     {
       "class": "GridHopper",
       "desc": {
         "speed": 2,
         "jump_height": 10,
-        "stomp_behavior": "nothing",
-        "spawn_index": 0,
+        "stomp_behavior": "complete",
+		"spawn_index": 27,
         "up_direction": {
           "x": 0,
           "y": -1
         },
-        "offset": {
-          "x": 0,
+		"offset":{
+          "x": 0.0,
           "y": -0.25
         }
       }
+    },
+    {
+      "class": "QbertPlayer",
+      "desc": {
+	    "is_main_player": false
+	  }
     },
     {
       "class": "dae::TransformComponent",
@@ -36,14 +36,14 @@
     {
       "class": "HopperSpriteComponent",
       "desc": {
-        "sprite_sheet": "hopper_sprites.json",
-        "type": "egg"
+        "sprite_sheet": "Spritesheets/hopper_sprites.json",
+        "type": "qbert_2"
       }
     },
     {
       "class": "SphereOverlapDetector",
       "desc": {
-        "radius": 1.8,
+	    "radius": 3,
 		"offset":{
 		  "x": 0,
 		  "y": 0
@@ -52,17 +52,16 @@
     },
     {
       "class": "dae::TimerComponent",
-      "name": "next_action_timer",
+      "name": "respawn_timer",
       "desc": {
-        "duration": 0.8,
         "loop": false
       }
     },
     {
       "class": "dae::TimerComponent",
-      "name": "egg_hatch_timer",
+      "name": "forget_timer",
       "desc": {
-        "duration": 3,
+	    "duration": 2,
         "loop": false
       }
     }

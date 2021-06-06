@@ -93,6 +93,12 @@ void QbertSceneBehavior::RegisterPlayer( QbertPlayer* pGameObject )
 void QbertSceneBehavior::OnPlayerDeath( )
 {
 	m_EnemyManager.PauseAll( );
+
+	const size_t penalty{ 600 };
+	if( penalty > m_Score.Get( ) )
+		m_Score.Set( 0u );
+	else
+		m_Score.Set( m_Score.Get( ) - penalty );
 }
 
 void QbertSceneBehavior::OnPlayerRespawn( )

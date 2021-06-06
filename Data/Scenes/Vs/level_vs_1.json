@@ -1,0 +1,146 @@
+{
+  "name": "VsLevel1",
+  "objects": [
+    {
+      "name": "CubeGrid",
+      "components": [
+        {
+          "class": "CubeGrid",
+          "desc": {
+            "sprite_sheet": "Spritesheets/sprite_sheet.json",
+			"color": "green"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 100,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "AnimationFlipTimer",
+          "desc": {
+            "duration": 0.1,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "AnimationTimer",
+          "desc": {
+            "duration": 4,
+            "loop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disk1",
+      "components": [
+        {
+          "class": "DiskComponent",
+          "desc": {
+            "spawn_index": 14,
+            "sprite_sheet": "Spritesheets/disk_sprite.json",
+			"speed": 70,
+			"color": "green"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "SphereOverlapDetector",
+          "desc": {
+            "radius": 3,
+		    "offset":{
+		      "x": 0,
+		      "y": 0
+		    }
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "RotationTimer",
+          "desc": {
+            "duration": 0.2,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "EndTimer",
+          "desc": {
+            "duration": 1,
+            "loop": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disk1",
+      "components": [
+        {
+          "class": "DiskComponent",
+          "desc": {
+            "spawn_index": 3,
+            "sprite_sheet": "Spritesheets/disk_sprite.json",
+			"speed": 70,
+			"color": "green"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "scale": 1.8
+          }
+        },
+        {
+          "class": "SphereOverlapDetector",
+          "desc": {
+            "radius": 3,
+		    "offset":{
+		      "x": 0,
+		      "y": 0
+		    }
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "RotationTimer",
+          "desc": {
+            "duration": 0.2,
+            "loop": true
+          }
+        },
+        {
+          "class": "dae::TimerComponent",
+          "name": "EndTimer",
+          "desc": {
+            "duration": 1,
+            "loop": false
+          }
+        }
+      ]
+    },
+	"Enemies/coily_player.json",
+	"Enemies/wrongway.json",
+	"Enemies/ugg.json",
+    "Players/player_1_solo.json",
+    "Global/fps_counter.json",
+	"Global/score_display.json"
+  ]
+}

@@ -14,18 +14,19 @@
               "x": 0.5,
               "y": 0.5
             },
-			"color": "text_color_orange.json"
+			"color": "Global/text_color_orange.json"
           }
         },
         {
           "class": "dae::TransformComponent",
           "desc": {
             "x": 320,
-            "y": 120,
+            "y": 180,
             "z": 0
           }
         }
       ]
-    }
+    },
+	"Global/score_display_end.json"
   ]
 }

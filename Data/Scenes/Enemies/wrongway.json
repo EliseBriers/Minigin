@@ -37,7 +37,7 @@
     {
       "class": "HopperSpriteComponent",
       "desc": {
-        "sprite_sheet": "hopper_sprites.json",
+        "sprite_sheet": "Spritesheets/hopper_sprites.json",
         "type": "wrongway"
       }
     },
