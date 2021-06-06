@@ -39,6 +39,7 @@ dae::Minigin::Minigin( )
 	, m_GameActive{ true }
 	, m_pSoundSystem{ nullptr }
 {
+	m_pSoundSystem = std::make_unique<SDLSoundSystem>(m_ResourceManager);
 	RegisterComponents( );
 }
 
@@ -64,7 +65,6 @@ void dae::Minigin::Initialize( )
 
 	m_Renderer.Init( m_Window, true );
 
-	m_pSoundSystem = std::make_unique<SDLSoundSystem>( );
 	m_pSoundSystem->Init( );
 
 	// Quit when SDL_QUIT happens
@@ -94,6 +94,7 @@ dae::ResourceManager::DataPaths dae::Minigin::GetDataPaths( )
 	paths.TextureDataPath = "../Data/Textures/";
 	paths.FontDataPath = "../Data/Fonts/";
 	paths.SceneDataPath = "../Data/Scenes/";
+	paths.SoundDataPath = "../Data/Sounds/";
 	return paths;
 }
 

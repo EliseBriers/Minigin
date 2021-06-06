@@ -19,12 +19,13 @@ class QbertPlayer final : public dae::IComponent
 public:
 	QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 
-	void Update( const dae::UpdateInfo& ) override;
-	void Init( const dae::InitInfo& initInfo ) override;
+	virtual void Update( const dae::UpdateInfo& ) override;
+	virtual void Init( const dae::InitInfo& initInfo ) override;
+	virtual void PersistentUpdate( const dae::UpdateInfo& ) override;
 
 	void OnTouchDown( GridHopper::TouchdownType touchdownType );
 	void Respawn( );
-	void OnDeath( );
+	void OnDeath( bool byFall );
 
 	void RegisterStateObserver( state_observer_t stateObserver );
 	void NextRotation( ) const;
@@ -53,6 +54,12 @@ private:
 	bool m_InputDown;
 	dae::TransformComponent* m_pTransform;
 	QbertSceneBehavior* m_pSceneBehavior;
+
+	size_t m_JumpSound;
+	size_t m_FallSound;
+	size_t m_HitSound;
+	bool m_PlayFallSound;
+	bool m_PlayHitSound;
 
 	bool m_IsFirstPlayer;
 

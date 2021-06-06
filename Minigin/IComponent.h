@@ -14,7 +14,9 @@ namespace dae
 		IComponent( GameObject& gameObject, std::string name );
 
 		virtual void FixedUpdate( const UpdateInfo& );
+		virtual void PersistentFixedUpdate( const UpdateInfo& );
 		virtual void Update( const UpdateInfo& );
+		virtual void PersistentUpdate( const UpdateInfo& );
 		virtual void Draw( Renderer& );
 		virtual void Init( const InitInfo& );
 		virtual void Deactivate( );

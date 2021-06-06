@@ -38,11 +38,27 @@ void dae::GameObject::FixedUpdate( const UpdateInfo& updateInfo )
 	}
 }
 
+void dae::GameObject::PersistentFixedUpdate( const UpdateInfo& updateInfo )
+{
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	{
+		pComponent->PersistentFixedUpdate( updateInfo );
+	}
+}
+
 void dae::GameObject::Update( const UpdateInfo& updateInfo )
 {
 	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
 	{
 		pComponent->Update( updateInfo );
+	}
+}
+
+void dae::GameObject::PersistentUpdate( const UpdateInfo& updateInfo )
+{
+	for( const std::unique_ptr<IComponent>& pComponent : m_pComponents )
+	{
+		pComponent->PersistentUpdate( updateInfo );
 	}
 }
 

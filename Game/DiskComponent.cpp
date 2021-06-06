@@ -21,11 +21,19 @@ DiskComponent::DiskComponent( dae::GameObject& gameObject, const dae::JsonObject
 	, m_SpawnDirection{ }
 	, m_pPlayer{ nullptr }
 	, m_Offset{ 0.f, -0.25f }
+	, m_DiskSound{ 0u }
+	, m_PlaySound{ false }
 {
 }
 
 void DiskComponent::Update( const dae::UpdateInfo& updateInfo )
 {
+	if( m_PlaySound )
+	{
+		m_PlaySound = false;
+		updateInfo.PushSound( m_DiskSound, 1.f );
+	}
+
 	if( m_State.Equals( DiskState::Moving ) )
 		UpdateMovement( updateInfo );
 }
@@ -43,6 +51,8 @@ void DiskComponent::Draw( dae::Renderer& renderer )
 
 void DiskComponent::Init( const dae::InitInfo& initInfo )
 {
+	m_DiskSound = initInfo.GetSound( "Disk.wav" );
+
 	m_SpriteSheet.Init( initInfo );
 
 	InitTransform( );
@@ -68,7 +78,9 @@ void DiskComponent::RegisterPlayer( QbertPlayer* pPlayer )
 	{
 		if( m_State.Equals( DiskState::Idle ) )
 			if( playerState == PlayerState::Moving )
+			{
 				StartMove( );
+			}
 	} );
 }
 
@@ -175,4 +187,5 @@ void DiskComponent::InitTransform( )
 void DiskComponent::StartMove( )
 {
 	m_State.Set( DiskState::Moving );
+	m_PlaySound = true;
 }

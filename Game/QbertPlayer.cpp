@@ -23,13 +23,18 @@ QbertPlayer::QbertPlayer( dae::GameObject& gameObject, const dae::JsonObjectWrap
 	, m_InputDown{ false }
 	, m_pTransform{ nullptr }
 	, m_pSceneBehavior{ nullptr }
+	, m_JumpSound{ 0u }
+	, m_FallSound{ 0u }
+	, m_HitSound{ 0u }
+	, m_PlayFallSound{ false }
+	, m_PlayHitSound{ false }
 	, m_IsFirstPlayer{ jsonObject.GetBool( "is_main_player" ) }
 	, m_LastIndex{ -1 }
 	, m_LastMoveDirection{ MoveDirection::DownLeft }
 {
 }
 
-void QbertPlayer::Update( const dae::UpdateInfo& )
+void QbertPlayer::Update( const dae::UpdateInfo& updateInfo )
 {
 	if( !m_State.Equals( PlayerState::Idle ) )
 		return;
@@ -40,28 +45,32 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 	switch( move )
 	{
 	case MoveDirection::UpLeft:
-		m_LastIndex = m_pGridHopper->GetCurrentIndex();
+		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
 		m_pGridHopper->Hop( MoveDirection::UpLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpLeft;
+		updateInfo.PushSound( m_JumpSound, 1.f );
 		break;
 	case MoveDirection::DownRight:
-		m_LastIndex = m_pGridHopper->GetCurrentIndex();
+		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
 		m_pGridHopper->Hop( MoveDirection::DownRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownRight;
+		updateInfo.PushSound( m_JumpSound, 1.f );
 		break;
 	case MoveDirection::UpRight:
-		m_LastIndex = m_pGridHopper->GetCurrentIndex();
+		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
 		m_pGridHopper->Hop( MoveDirection::UpRight );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::UpRight;
+		updateInfo.PushSound( m_JumpSound, 1.f );
 		break;
 	case MoveDirection::DownLeft:
-		m_LastIndex = m_pGridHopper->GetCurrentIndex();
+		m_LastIndex = m_pGridHopper->GetCurrentIndex( );
 		m_pGridHopper->Hop( MoveDirection::DownLeft );
 		m_State.Set( PlayerState::Jumping );
 		m_LastMoveDirection = MoveDirection::DownLeft;
+		updateInfo.PushSound( m_JumpSound, 1.f );
 		break;
 	default: ;
 	}
@@ -69,6 +78,10 @@ void QbertPlayer::Update( const dae::UpdateInfo& )
 
 void QbertPlayer::Init( const dae::InitInfo& initInfo )
 {
+	m_JumpSound = initInfo.GetSound( "QBertJump.wav" );
+	m_FallSound = initInfo.GetSound( "QBertFall.wav" );
+	m_HitSound = initInfo.GetSound( "QBertHit.wav" );
+
 	m_pGridHopper = m_GameObject.get( ).GetComponent<GridHopper>( );
 	m_pSprite = m_GameObject.get( ).GetComponent<HopperSpriteComponent>( );
 	m_pTransform = m_GameObject.get( ).GetComponent<dae::TransformComponent>( );
@@ -135,6 +148,20 @@ void QbertPlayer::Init( const dae::InitInfo& initInfo )
 	m_pSceneBehavior->RegisterPlayer( this );
 }
 
+void QbertPlayer::PersistentUpdate( const dae::UpdateInfo& updateInfo )
+{
+	if( m_PlayFallSound )
+	{
+		m_PlayFallSound = false;
+		updateInfo.PushSound( m_FallSound, 1.f );
+	}
+	if( m_PlayHitSound )
+	{
+		m_PlayHitSound = false;
+		updateInfo.PushSound( m_HitSound, 1.f );
+	}
+}
+
 void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
 {
 	if( m_State.Equals( PlayerState::AwaitingMove ) )
@@ -146,7 +173,8 @@ void QbertPlayer::OnTouchDown( GridHopper::TouchdownType touchdownType )
 		return;
 	if( touchdownType == GridHopper::TouchdownType::Void )
 	{
-		OnDeath( );
+		OnDeath( true );
+		m_PlayFallSound = true;
 	}
 	else
 	{
@@ -166,8 +194,13 @@ void QbertPlayer::Respawn( )
 	m_pSceneBehavior->OnPlayerRespawn( );
 }
 
-void QbertPlayer::OnDeath( )
+void QbertPlayer::OnDeath( bool byFall )
 {
+	if( byFall )
+		m_PlayFallSound = true;
+	else
+		m_PlayHitSound = true;
+
 	m_pRespawnTimer->Start( );
 	m_pSprite->SetState( SpriteState::Dead );
 	m_State.Set( PlayerState::Dead );

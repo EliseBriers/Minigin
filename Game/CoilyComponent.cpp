@@ -11,6 +11,10 @@
 
 CoilyComponent::CoilyComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_FallSound{ 0u }
+	, m_JumpSound{ 0u }
+	, m_PlayJump{ false }
+	, m_PlayFall{ false }
 	, m_pController{ nullptr }
 	, m_pCoilyController{ nullptr }
 	, m_pPlayerController{ nullptr }
@@ -51,8 +55,25 @@ void CoilyComponent::Update( const dae::UpdateInfo& updateInfo )
 	}
 }
 
+void CoilyComponent::PersistentUpdate( const dae::UpdateInfo& updateInfo )
+{
+	if( m_PlayFall )
+	{
+		m_PlayFall = false;
+		updateInfo.PushSound( m_FallSound, 1.f );
+	}
+	if( m_PlayJump )
+	{
+		m_PlayJump = false;
+		updateInfo.PushSound( m_JumpSound, 1.f );
+	}
+}
+
 void CoilyComponent::Init( const dae::InitInfo& initInfo )
 {
+	m_FallSound = initInfo.GetSound( "CoilyFall.wav" );
+	m_JumpSound = initInfo.GetSound( "CoilyJump.wav" );
+
 	LoadComponentPointers( );
 	LoadSceneBahavior( initInfo );
 	AddTimerCallbacks( );
@@ -132,6 +153,7 @@ void CoilyComponent::DoFollow( )
 	if( direction == MoveDirection::None )
 		return;
 
+	m_PlayJump = true;
 	if( m_pCoilyController && m_pCoilyController->GetSafeHop( ) )
 	{
 		switch( direction )
@@ -255,6 +277,7 @@ void CoilyComponent::AddStateCallback( )
 			m_pActionTimer->Start( );
 			break;
 		case CoilyState::Dead:
+			m_PlayFall = true;
 			GetGameObject( ).Deactivate( );
 			m_pActionTimer->Stop( );
 			m_pSceneBehavior->RegisterKilledEnemy( &GetGameObject( ), true, 10.f );
@@ -276,7 +299,7 @@ void CoilyComponent::AddColliderCallback( ) const
 			QbertPlayer* pPlayer{ pOther->GetComponent<QbertPlayer>( ) };
 			if( pPlayer )
 			{
-				pPlayer->OnDeath( );
+				pPlayer->OnDeath( false );
 			}
 		}
 	} );

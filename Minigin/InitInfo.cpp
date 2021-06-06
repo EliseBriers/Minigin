@@ -39,7 +39,7 @@ void dae::InitInfo::Input_AddSDLEventCommand( Uint32 event, std::unique_ptr<ICom
 	m_InputManager.AddSDLEventCommand( event, std::move( command ) );
 }
 
-uint16_t dae::InitInfo::GetSound( const std::string& fileName ) const
+size_t dae::InitInfo::GetSound( const std::string& fileName ) const
 {
 	return m_SoundSystem.GetSound( fileName );
 }

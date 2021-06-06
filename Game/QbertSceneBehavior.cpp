@@ -6,6 +6,8 @@
 QbertSceneBehavior::QbertSceneBehavior( const std::string& nextLevel, bool isLastLevel )
 	: m_NextLevel{ nextLevel }
 	, m_IsLastLevel{ isLastLevel }
+	, m_LevelStartSound{ 0u }
+	, m_HasPlayedStartSound{ false }
 {
 	// m_Score.AddObserver( []( size_t score )
 	// {
@@ -15,9 +17,26 @@ QbertSceneBehavior::QbertSceneBehavior( const std::string& nextLevel, bool isLas
 
 void QbertSceneBehavior::Update( const dae::UpdateInfo& updateInfo )
 {
+	if( m_PlayLevelEnd )
+	{
+		m_PlayLevelEnd = false;
+		updateInfo.PushSound( m_EndLevelSound, 1.f );
+	}
+
 	const float dt{ updateInfo.GetDeltaTime( ) };
 	m_TriggerManager.Update( );
 	m_EnemyManager.Update( dt );
+	if( !m_HasPlayedStartSound )
+	{
+		m_HasPlayedStartSound = true;
+		updateInfo.PushSound( m_LevelStartSound, 1.f );
+	}
+}
+
+void QbertSceneBehavior::Init( dae::InitInfo& initInfo )
+{
+	m_LevelStartSound = initInfo.GetSound( "LevelIntro.wav" );
+	m_EndLevelSound = initInfo.GetSound( "LevelCompleted.wav" );
 }
 
 void QbertSceneBehavior::RegisterOverlapDetector( SphereOverlapDetector& overlapDetector )
@@ -59,6 +78,7 @@ void QbertSceneBehavior::GameCompleted( )
 {
 	m_EnemyManager.PauseAll( );
 	m_PlayerManager.PauseAll( );
+	m_PlayLevelEnd = true;
 }
 
 void QbertSceneBehavior::RegisterPlayer( QbertPlayer* pGameObject )

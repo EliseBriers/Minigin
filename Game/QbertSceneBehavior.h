@@ -14,6 +14,7 @@ public:
 	QbertSceneBehavior( const std::string& nextLevel, bool isLastLevel );
 
 	void Update( const dae::UpdateInfo& ) override;
+	virtual void Init( dae::InitInfo& ) override;
 
 	void RegisterOverlapDetector( SphereOverlapDetector& overlapDetector );
 	void UnRegisterOverlapDetector( const SphereOverlapDetector& sphereOverlapDetector );
@@ -43,5 +44,11 @@ private:
 	PlayerManager m_PlayerManager;
 	bool m_IsLastLevel;
 
+	size_t m_LevelStartSound;
+	bool m_HasPlayedStartSound;
+
+	size_t m_EndLevelSound;
+	bool m_PlayLevelEnd;
+	
 	dae::ObservableVariable<size_t> m_Score;
 };

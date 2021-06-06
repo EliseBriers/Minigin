@@ -9,7 +9,7 @@ namespace dae
 	public:
 		UpdateInfo( float dt, ISoundSystem& soundSystem );
 
-		void PushSound( uint16_t soundId, float volume ) const;
+		void PushSound( size_t soundId, float volume ) const;
 		float GetDeltaTime( ) const;
 	private:
 		float m_DeltaTime;

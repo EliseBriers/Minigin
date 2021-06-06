@@ -12,7 +12,15 @@ void dae::IComponent::FixedUpdate( const UpdateInfo& )
 {
 }
 
+void dae::IComponent::PersistentFixedUpdate( const UpdateInfo& )
+{
+}
+
 void dae::IComponent::Update( const UpdateInfo& )
+{
+}
+
+void dae::IComponent::PersistentUpdate( const UpdateInfo& )
 {
 }
 

@@ -24,7 +24,7 @@ namespace dae
 		void Input_AddKeyboardCommand( ButtonState buttonState, SDL_Keycode button, std::unique_ptr<ICommand> command ) const;
 		void Input_AddSDLEventCommand( Uint32 event, std::unique_ptr<ICommand> command ) const;
 
-		uint16_t GetSound( const std::string& fileName ) const;
+		size_t GetSound( const std::string& fileName ) const;
 
 		template <typename T>
 		T* Scene_GetSceneBehaviorAs( ) const;

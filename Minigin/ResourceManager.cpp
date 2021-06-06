@@ -9,6 +9,7 @@
 #include "Font.h"
 #include <istreamwrapper.h>
 #include <fstream>
+#include <SDL_mixer.h>
 
 dae::ResourceManager::ResourceManager( DataPaths dataPaths )
 	: m_DataPaths{ std::move( dataPaths ) }
@@ -16,6 +17,7 @@ dae::ResourceManager::ResourceManager( DataPaths dataPaths )
 	, m_Fonts{ FontAllocator }
 	, m_TextTextures{ TextAllocator }
 	, m_JsonDocuments{ JsonDocumentAllocator }
+	, m_SDLSounds{ SoundAllocator }
 {
 }
 
@@ -73,6 +75,11 @@ rapidjson::Value::ConstObject dae::ResourceManager::GetJsonConstObject( const st
 	return doc.GetObjectA( );
 }
 
+const dae::SDLSoundSystem::SDLSound& dae::ResourceManager::GetSDLSound( const std::string& fileName )
+{
+	return m_SDLSounds.GetElement( fileName, m_DataPaths.SoundDataPath + fileName );
+}
+
 std::unique_ptr<dae::Texture2D> dae::ResourceManager::TextureAllocator( const std::string& file, Renderer& renderer )
 {
 	auto texture = IMG_LoadTexture( renderer.GetSDLRenderer( ), file.c_str( ) );
@@ -112,4 +119,12 @@ std::unique_ptr<rapidjson::Document> dae::ResourceManager::JsonDocumentAllocator
 	doc->ParseStream( streamWrapper );
 	assert( doc->IsObject() );
 	return doc;
+}
+
+std::unique_ptr<dae::SDLSoundSystem::SDLSound> dae::ResourceManager::SoundAllocator( const std::string& fileName )
+{
+	const char* pFileName{ fileName.c_str( ) };
+	Mix_Chunk* pSound{ Mix_LoadWAV( pFileName ) };
+
+	return std::make_unique<SDLSoundSystem::SDLSound>( pSound );
 }

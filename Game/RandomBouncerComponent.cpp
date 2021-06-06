@@ -12,6 +12,8 @@
 
 RandomBouncerComponent::RandomBouncerComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_JumpSound{ 0u }
+	, m_PlayJump{ false }
 	, m_RandomBounceDirection{ RandomBounceDirection::Down }
 	, m_State{ RandomBouncerState::Spawning }
 	, m_DownDirection{ 0.f, 1.f }
@@ -45,15 +47,18 @@ void RandomBouncerComponent::Init( const dae::InitInfo& initInfo )
 	case HopperType::Ugg: ;
 		m_RandomBounceDirection = RandomBounceDirection::UpLeft;
 		m_IsLethal = true;
+		m_JumpSound = initInfo.GetSound( "UggWrongWayJump.wav" );
 		break;
 	case HopperType::Wrongway:
 		m_RandomBounceDirection = RandomBounceDirection::UpRight;
 		m_IsLethal = true;
+		m_JumpSound = initInfo.GetSound( "UggWrongWayJump.wav" );
 		break;
 	case HopperType::Slick:
 	case HopperType::Sam:
 		m_IsLethal = false;
 		m_RandomBounceDirection = RandomBounceDirection::Down;
+		m_JumpSound = initInfo.GetSound( "SamSlickJump.wav" );
 		break;
 
 	default:
@@ -82,7 +87,10 @@ void RandomBouncerComponent::Init( const dae::InitInfo& initInfo )
 	m_pNextActionTimer->SetCallback( [this]( )
 	{
 		if( m_State.Equals( RandomBouncerState::Active ) )
+		{
 			m_pGridHopper->Hop( EnumHelpers::GetRandomMoveDirection( m_RandomBounceDirection ) );
+			m_PlayJump = true;
+		}
 	} );
 
 	m_pGridHopper->SetTouchdownCallback( [this]( GridHopper::TouchdownType touchDownType )
@@ -146,6 +154,15 @@ void RandomBouncerComponent::Update( const dae::UpdateInfo& updateInfo )
 		break;
 	case RandomBouncerState::Falling:
 		UpdateFall( updateInfo );
+	}
+}
+
+void RandomBouncerComponent::PersistentUpdate( const dae::UpdateInfo& updateInfo )
+{
+	if( m_PlayJump )
+	{
+		m_PlayJump = false;
+		updateInfo.PushSound( m_JumpSound, 1.f );
 	}
 }
 
@@ -220,5 +237,5 @@ void RandomBouncerComponent::OnDeath( bool killedByPlayer ) const
 
 void RandomBouncerComponent::KillPlayer( QbertPlayer* pPlayer )
 {
-	pPlayer->OnDeath( );
+	pPlayer->OnDeath( false );
 }

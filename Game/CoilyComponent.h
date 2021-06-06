@@ -23,10 +23,11 @@ class CoilyComponent final : public dae::IComponent
 public:
 	CoilyComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 
-	void Update( const dae::UpdateInfo& ) override;
-	void Init( const dae::InitInfo& initInfo ) override;
-	void Activate( ) override;
-	void Pause( ) override;
+	virtual void Update( const dae::UpdateInfo& ) override;
+	virtual void PersistentUpdate( const dae::UpdateInfo& ) override;
+	virtual void Init( const dae::InitInfo& initInfo ) override;
+	virtual void Activate( ) override;
+	virtual void Pause( ) override;
 	void AddStateObserver( state_observer_t stateObserver );
 	void NextAction( );
 
@@ -37,7 +38,13 @@ public:
 	CoilyComponent& operator=( const CoilyComponent& other ) = delete;
 	CoilyComponent& operator=( CoilyComponent&& other ) noexcept = delete;
 private:
+	// Sound stuff
+	size_t m_FallSound;
+	size_t m_JumpSound;
+	bool m_PlayJump;
+	bool m_PlayFall;
 
+	
 	// Controller Stuff
 	std::unique_ptr<IDirectionController> m_pController;
 	CoilyDirectionController* m_pCoilyController;

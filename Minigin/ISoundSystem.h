@@ -9,9 +9,9 @@ namespace dae
 	public:
 		ISoundSystem( ) = default;
 
-		virtual void PushSound( uint16_t soundId, float volume ) = 0;
+		virtual void PushSound( size_t soundId, float volume ) = 0;
 		virtual void ProcessSounds( ) = 0;
-		virtual uint16_t GetSound( const std::string& fileName ) = 0;
+		virtual size_t GetSound( const std::string& fileName ) = 0;
 		virtual void Init( ) = 0;
 	
 		// Rule of 5

@@ -18,6 +18,7 @@ public:
 	void Init( const dae::InitInfo& ) override;
 	void Activate( ) override;
 	void Update( const dae::UpdateInfo& updateInfo ) override;
+	void PersistentUpdate( const dae::UpdateInfo& updateInfo ) override;
 
 	~RandomBouncerComponent( ) override = default;
 	RandomBouncerComponent( const RandomBouncerComponent& other ) = delete;
@@ -25,6 +26,11 @@ public:
 	RandomBouncerComponent& operator=( const RandomBouncerComponent& other ) = delete;
 	RandomBouncerComponent& operator=( RandomBouncerComponent&& other ) noexcept = delete;
 private:
+	// Sound stuff
+	size_t m_JumpSound;
+	bool m_PlayJump;
+
+	
 	RandomBounceDirection m_RandomBounceDirection;
 	dae::ObservableVariable<RandomBouncerState> m_State;
 	glm::vec2 m_DownDirection;

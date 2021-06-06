@@ -23,7 +23,9 @@ namespace dae
 
 		void Draw( Renderer& renderer );
 		void FixedUpdate( const UpdateInfo& updateInfo );
+		void PersistentFixedUpdate( const UpdateInfo& updateInfo );
 		void Update( const UpdateInfo& updateInfo );
+		void PersistentUpdate( const UpdateInfo& updateInfo );
 		void Init( InitInfo& initInfo );
 		void Deactivate( );
 		void Activate( );

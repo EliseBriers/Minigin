@@ -2,39 +2,51 @@
 #include "ISoundSystem.h"
 #include "ManagerMap.h"
 #include <mutex>
+#include "UUID.h"
 
 struct Mix_Chunk;
 
 namespace dae
 {
+	class ResourceManager;
+
 	class SDLSoundSystem final : public ISoundSystem
 	{
-	private:
+	public:
 		struct SDLSound
 		{
-			SDLSound( );
-			SDLSound( uint16_t id, const std::string& fileName, Mix_Chunk* pChunk );
+			SDLSound( Mix_Chunk* p );
 
-			uint16_t Id;
-			std::string Name;
-			Mix_Chunk* pSound;
+			Mix_Chunk* pChunk;
+			const UUID<SDLSound> Id;
 		};
+
+	private:
+		// struct SDLSound
+		// {
+		// 	SDLSound( );
+		// 	SDLSound( uint16_t id, const std::string& fileName, Mix_Chunk* pChunk );
+		// 
+		// 	uint16_t Id;
+		// 	std::string Name;
+		// 	Mix_Chunk* pSound;
+		// };
 
 		struct SoundEvent
 		{
 			SoundEvent( );
-			SoundEvent( uint16_t id, float volume );;
+			SoundEvent( size_t id, float volume );;
 
-			uint16_t Id;
+			size_t Id;
 			float Volume;
 		};
 
 	public:
-		SDLSoundSystem( );
+		SDLSoundSystem( ResourceManager& resourceManager );
 
-		void PushSound( uint16_t soundId, float volume ) override;
+		void PushSound( size_t soundId, float volume ) override;
 		void ProcessSounds( ) override;
-		uint16_t GetSound( const std::string& fileName ) override;
+		size_t GetSound( const std::string& fileName ) override;
 		void Init( ) override;
 
 		// Rule of 5
@@ -45,9 +57,12 @@ namespace dae
 		SDLSoundSystem& operator=( SDLSoundSystem&& other ) noexcept = delete;
 
 	private:
-		Mix_Chunk* GetChunk( uint16_t id );
-		std::vector<SDLSound> m_Sounds;
+		Mix_Chunk* GetChunk( size_t id );
+		const SDLSound* FindSoundWithId( size_t id );
 		std::vector<SoundEvent> m_ActiveSounds;
+		std::vector<std::reference_wrapper<const SDLSound>> m_Sounds;
+
+		ResourceManager& m_ResourceManager;
 
 		std::mutex m_Mutex;
 	};

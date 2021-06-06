@@ -40,6 +40,9 @@ private:
 	static constexpr size_t m_RotationCount{ 4 };
 	const glm::vec2 m_Offset;
 
+	size_t m_DiskSound;
+	bool m_PlaySound;
+
 	void UpdateMovement( const dae::UpdateInfo& );
 	size_t GetSpriteIndex( ) const;
 	void TeleportToSpawn( const dae::InitInfo& initInfo );

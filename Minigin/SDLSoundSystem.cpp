@@ -1,16 +1,23 @@
 #include "MiniginPCH.h"
 #include "SDLSoundSystem.h"
 #include <SDL_mixer.h>
+#include "ResourceManager.h"
+#include "Logger.h"
 
-dae::SDLSoundSystem::SDLSound::SDLSound( )
-	: SDLSound{ 0, "", nullptr }
-{
-}
+// dae::SDLSoundSystem::SDLSound::SDLSound( )
+// 	: SDLSound{ 0, "", nullptr }
+// {
+// }
+// 
+// dae::SDLSoundSystem::SDLSound::SDLSound( uint16_t id, const std::string& fileName, Mix_Chunk* pChunk )
+// 	: Id{ id }
+// 	, Name{ fileName }
+// 	, pSound{ pChunk }
+// {
+// }
 
-dae::SDLSoundSystem::SDLSound::SDLSound( uint16_t id, const std::string& fileName, Mix_Chunk* pChunk )
-	: Id{ id }
-	, Name{ fileName }
-	, pSound{ pChunk }
+dae::SDLSoundSystem::SDLSound::SDLSound( Mix_Chunk* p )
+	: pChunk{ p }
 {
 }
 
@@ -19,15 +26,18 @@ dae::SDLSoundSystem::SoundEvent::SoundEvent( )
 {
 }
 
-dae::SDLSoundSystem::SoundEvent::SoundEvent( uint16_t id, float volume )
+dae::SDLSoundSystem::SoundEvent::SoundEvent( size_t id, float volume )
 	: Id{ id }
 	, Volume{ volume }
 {
 }
 
-dae::SDLSoundSystem::SDLSoundSystem( ) = default;
+dae::SDLSoundSystem::SDLSoundSystem( ResourceManager& resourceManager )
+	: m_ResourceManager{ resourceManager }
+{
+}
 
-void dae::SDLSoundSystem::PushSound( uint16_t soundId, float volume )
+void dae::SDLSoundSystem::PushSound( size_t soundId, float volume )
 {
 	std::lock_guard<std::mutex> lock{ m_Mutex };
 
@@ -52,33 +62,25 @@ void dae::SDLSoundSystem::ProcessSounds( )
 	if( Mix_Playing( -1 ) == 4 )
 		return;
 
-	SoundEvent & lastSound{ m_ActiveSounds[m_ActiveSounds.size( ) - 1] };
+	SoundEvent& lastSound{ m_ActiveSounds[m_ActiveSounds.size( ) - 1] };
 	Mix_Chunk* const pChunk{ GetChunk( lastSound.Id ) };
+	if( !pChunk )
+	{
+		Logger::LogWarning( "dae::SDLSoundSystem::ProcessSounds > pChunk is nullptr" );
+		return;
+	}
 	Mix_VolumeChunk( pChunk, static_cast<int>(lastSound.Volume) );
 	Mix_PlayChannel( -1, pChunk, 0 );
 	m_ActiveSounds.pop_back( );
 }
 
-uint16_t dae::SDLSoundSystem::GetSound( const std::string& fileName )
+size_t dae::SDLSoundSystem::GetSound( const std::string& fileName )
 {
 	std::lock_guard<std::mutex> lock{ m_Mutex };
-	const auto it{
-		std::find_if( m_Sounds.begin( ), m_Sounds.end( ), [&fileName]( const SDLSound& s )
-		{
-			return s.Name == fileName;
-		} )
-	};
 
-	if( it != m_Sounds.end( ) )
-		return it->Id;
-
-	const char* pFileName{ fileName.c_str( ) };
-	Mix_Chunk* pSound{ Mix_LoadWAV( pFileName ) };
-
-
-	uint16_t newId{ static_cast<uint16_t>(m_Sounds.size( )) };
-	m_Sounds.emplace_back( newId, fileName, pSound );
-	return newId;
+	const SDLSound& sound{ m_ResourceManager.GetSDLSound( fileName ) };
+	m_Sounds.emplace_back( sound );
+	return sound.Id.GetValue( );
 }
 
 void dae::SDLSoundSystem::Init( )
@@ -98,7 +100,17 @@ void dae::SDLSoundSystem::Init( )
 		std::cout << "error";
 }
 
-Mix_Chunk* dae::SDLSoundSystem::GetChunk( uint16_t id )
+Mix_Chunk* dae::SDLSoundSystem::GetChunk( size_t id )
 {
-	return m_Sounds[id].pSound;
+	return FindSoundWithId( id )->pChunk;
+}
+
+const dae::SDLSoundSystem::SDLSound* dae::SDLSoundSystem::FindSoundWithId( size_t id )
+{
+	for( std::reference_wrapper<const SDLSound> ref : m_Sounds )
+	{
+		if( ref.get( ).Id.GetValue( ) == id )
+			return &ref.get( );
+	}
+	return nullptr;
 }

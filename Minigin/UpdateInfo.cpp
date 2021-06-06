@@ -8,7 +8,7 @@ dae::UpdateInfo::UpdateInfo( float dt, ISoundSystem& soundSystem )
 {
 }
 
-void dae::UpdateInfo::PushSound( uint16_t soundId, float volume ) const
+void dae::UpdateInfo::PushSound( size_t soundId, float volume ) const
 {
 	m_SoundSystem.PushSound( soundId, volume );
 }
