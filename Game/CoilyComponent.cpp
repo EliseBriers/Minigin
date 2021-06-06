@@ -256,6 +256,7 @@ void CoilyComponent::AddStateCallback( )
 			break;
 		case CoilyState::Dead:
 			GetGameObject( ).Deactivate( );
+			m_pActionTimer->Stop( );
 			m_pSceneBehavior->RegisterKilledEnemy( &GetGameObject( ), true, 10.f );
 			m_pSceneBehavior->AddPoints( 500u );
 			dae::Logger::LogInfo( "Coily reached state: \"Dead\"" );

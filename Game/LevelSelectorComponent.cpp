@@ -34,16 +34,26 @@ void LevelSelectorComponent::Init( const dae::InitInfo& initInfo )
 		dae::Logger::LogWarning( "LevelSelectorComponent::Init > m_pSceneBehavior is nullptr" );
 		return;
 	}
+	const dae::ButtonState pressed{ dae::ButtonState::Pressed };
+	const MenuControlCommand::Action decrement{ MenuControlCommand::Action::Decrement };
+	const MenuControlCommand::Action increment{ MenuControlCommand::Action::Increment };
+	const dae::ControllerButton up{ dae::ControllerButton::ButtonUp };
+	const dae::ControllerButton down{ dae::ControllerButton::ButtonDown };
+	const dae::ControllerButton confirm{ dae::ControllerButton::ButtonA };
 
 	m_Sprites.Init( initInfo );
 	GetComponentPointers( initInfo );
+	
 	// Up
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_UP, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, MenuControlCommand::Action::Decrement ) );
+	initInfo.Input_AddKeyboardCommand( pressed, SDLK_UP, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, decrement ) );
+	initInfo.Input_AddControllerCommand( 0u, pressed, up, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, decrement ) );
 	// Down
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_DOWN, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, MenuControlCommand::Action::Increment ) );
+	initInfo.Input_AddKeyboardCommand( pressed, SDLK_DOWN, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, increment ) );
+	initInfo.Input_AddControllerCommand( 0u, pressed, down, std::make_unique<MenuControlCommand>( m_CurrentIndex, 3u, increment ) );
 
 	// Activate
-	initInfo.Input_AddKeyboardCommand( dae::ButtonState::Pressed, SDLK_SPACE, std::make_unique<dae::SetVarCommand<bool>>( m_Pressed, true ) );
+	initInfo.Input_AddKeyboardCommand( pressed, SDLK_SPACE, std::make_unique<dae::SetVarCommand<bool>>( m_Pressed, true ) );
+	initInfo.Input_AddControllerCommand( 0u, pressed, confirm, std::make_unique<dae::SetVarCommand<bool>>( m_Pressed, true ) );
 }
 
 void LevelSelectorComponent::Update( const dae::UpdateInfo& )

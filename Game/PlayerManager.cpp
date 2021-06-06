@@ -29,6 +29,6 @@ void PlayerManager::PauseAll( )
 {
 	for( QbertPlayer* pPlayer : m_pPlayers )
 	{
-		pPlayer->Pause( );
+		pPlayer->GetGameObject( ).Pause( );
 	}
 }
