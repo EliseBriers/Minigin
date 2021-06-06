@@ -20,6 +20,14 @@ int main( int, char*[] )
 {
 	srand( static_cast<unsigned>(time( nullptr )) );
 
+	std::cout << "Controls:\n";
+	std::cout << "  Player 1\n:";
+	std::cout << "    Move: Arrow keys or d-pad on controller\n:";
+	std::cout << "    Confirm (Main menu): Space\n:";
+	std::cout << "  Player 2\n:";
+	std::cout << "    Move: WASD keys or d-pad on controller\n:";
+	std::cout << "    Confirm (Main menu): None, only player 1 can do this\n:";
+
 	dae::Minigin engine{ };
 
 	engine.RegisterComponent<CubeGrid>( );
