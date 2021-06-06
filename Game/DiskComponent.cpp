@@ -59,6 +59,19 @@ void DiskComponent::Init( const dae::InitInfo& initInfo )
 
 	TeleportToSpawn( initInfo );
 	StartRotationTimer( );
+
+	m_pSceneBehavior = initInfo.Scene_GetSceneBehaviorAs<QbertSceneBehavior>( );
+	if( !m_pSceneBehavior )
+	{
+		dae::Logger::LogWarning( "DiskComponent::Init > m_pSceneBehavior is nullptr" );
+		return;
+	}
+	m_pSceneBehavior->AddDisk( );
+}
+
+void DiskComponent::Deactivate( )
+{
+	m_pSceneBehavior->RemoveDisk( );
 }
 
 void DiskComponent::NextRotation( )

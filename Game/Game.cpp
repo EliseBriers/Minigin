@@ -33,14 +33,15 @@ int main( int, char*[] )
 	// ToDo: Complete SceneList
 	MenuSceneBehavior::scene_array_t sceneList{ "Demo", "CoopLevel1", "VsLevel1" };
 
+	size_t globalScore{ };
 
 	engine.AddSceneFromFile( "main_menu.json" )->SetBehavior( std::make_unique<MenuSceneBehavior>( sceneList ) );
-	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", false ) );
+	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", globalScore ) );
 	engine.AddSceneFromFile( "game_over.json" );
-	engine.AddSceneFromFile( "level_coop_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
-	engine.AddSceneFromFile( "level_vs_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
-	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false ) );
-	engine.AddSceneFromFile( "test3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
+	engine.AddSceneFromFile( "level_coop_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", globalScore ) );
+	engine.AddSceneFromFile( "level_vs_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", globalScore ) );
+	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", globalScore ) );
+	engine.AddSceneFromFile( "test3.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", globalScore ) );
 
 	engine.SetActiveScene( "MainMenu" );
 	engine.Run( );

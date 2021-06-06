@@ -12,9 +12,10 @@ class DiskComponent final : public dae::IComponent
 public:
 	DiskComponent( dae::GameObject& gameObject, const dae::JsonObjectWrapper& jsonObject, std::string name );
 
-	void Update( const dae::UpdateInfo& ) override;
-	void Draw( dae::Renderer& ) override;
-	void Init( const dae::InitInfo& ) override;
+	virtual void Update( const dae::UpdateInfo& ) override;
+	virtual void Draw( dae::Renderer& ) override;
+	virtual void Init( const dae::InitInfo& ) override;
+	virtual void Deactivate( ) override;
 
 	void NextRotation( );
 	void RegisterPlayer( QbertPlayer* pPlayer );
@@ -39,6 +40,8 @@ private:
 	QbertPlayer* m_pPlayer;
 	static constexpr size_t m_RotationCount{ 4 };
 	const glm::vec2 m_Offset;
+
+	QbertSceneBehavior* m_pSceneBehavior;
 
 	size_t m_DiskSound;
 	bool m_PlaySound;

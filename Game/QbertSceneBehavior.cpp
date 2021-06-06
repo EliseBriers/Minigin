@@ -3,9 +3,9 @@
 #include <Scene.h>
 #include <UpdateInfo.h>
 
-QbertSceneBehavior::QbertSceneBehavior( const std::string& nextLevel, bool isLastLevel )
+QbertSceneBehavior::QbertSceneBehavior( const std::string& nextLevel, size_t& globalScore )
 	: m_NextLevel{ nextLevel }
-	, m_IsLastLevel{ isLastLevel }
+	, m_GlobalScore{ globalScore }
 	, m_LevelStartSound{ 0u }
 	, m_HasPlayedStartSound{ false }
 {
@@ -35,6 +35,8 @@ void QbertSceneBehavior::Update( const dae::UpdateInfo& updateInfo )
 
 void QbertSceneBehavior::Init( dae::InitInfo& initInfo )
 {
+	m_Score.Set( m_GlobalScore );
+
 	m_LevelStartSound = initInfo.GetSound( "LevelIntro.wav" );
 	m_EndLevelSound = initInfo.GetSound( "LevelCompleted.wav" );
 }
@@ -51,8 +53,8 @@ void QbertSceneBehavior::UnRegisterOverlapDetector( const SphereOverlapDetector&
 
 void QbertSceneBehavior::EndLevel( ) const
 {
-	if( !m_IsLastLevel )
-		GetScene( ).GetSceneManager( )->SetActiveScene( m_NextLevel );
+	m_GlobalScore = m_Score.Get( );
+	GetScene( ).GetSceneManager( )->SetActiveScene( m_NextLevel );
 }
 
 void QbertSceneBehavior::QueueUnRegisterOverlapDetector( SphereOverlapDetector& sphereOverlapDetector )
@@ -79,6 +81,8 @@ void QbertSceneBehavior::GameCompleted( )
 	m_EnemyManager.PauseAll( );
 	m_PlayerManager.PauseAll( );
 	m_PlayLevelEnd = true;
+	// dae::Logger::LogInfo( "Awarding points for " + std::to_string( m_DiskCount ) + " disks" );
+	m_Score.Set( m_Score.Get( ) + m_DiskCount * 50 );
 }
 
 void QbertSceneBehavior::RegisterPlayer( QbertPlayer* pGameObject )
@@ -116,4 +120,19 @@ void QbertSceneBehavior::AddScoreObserver( score_observer_t observer )
 size_t QbertSceneBehavior::GetScore( ) const
 {
 	return m_Score.Get( );
+}
+
+void QbertSceneBehavior::AddDisk( )
+{
+	++m_DiskCount;
+}
+
+void QbertSceneBehavior::RemoveDisk( )
+{
+	if( m_DiskCount == 0 )
+	{
+		dae::Logger::LogWarning( "QbertSceneBehavior::RemoveDisk > Removing disk while disk count is 0" );
+		return;
+	}
+	--m_DiskCount;
 }
