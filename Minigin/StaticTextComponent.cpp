@@ -9,6 +9,7 @@
 
 dae::StaticTextComponent::StaticTextComponent( GameObject& gameObject, const JsonObjectWrapper& jsonObject, std::string name )
 	: IComponent{ gameObject, std::move( name ) }
+	, m_Color{ jsonObject.GetSDLColor( "color" ) }
 	, m_Text{ jsonObject.GetString( "text" ) }
 	, m_FontFileName{ jsonObject.GetString( "font_file_name" ) }
 	, m_pTexture{ nullptr }
@@ -35,7 +36,7 @@ void dae::StaticTextComponent::Init( const InitInfo& initInfo )
 {
 	m_pTransformComponent = m_GameObject.get( ).GetComponent<TransformComponent>( );
 
-	m_pTexture = &initInfo.Resource_GetTextTexture( m_Text, m_FontFileName, m_Size, { 255, 255, 255, 255 } );
+	m_pTexture = &initInfo.Resource_GetTextTexture( m_Text, m_FontFileName, m_Size, m_Color );
 }
 
 glm::vec2 dae::StaticTextComponent::GetPosition( ) const

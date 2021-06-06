@@ -1,0 +1,31 @@
+{
+  "name": "GameOver",
+  "objects": [
+    {
+      "name": "SoloText",
+      "components": [
+        {
+          "class": "dae::StaticTextComponent",
+          "desc": {
+            "text": "Game Over",
+            "font_file_name": "QBert.otf",
+            "size": 42,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+			"color": "text_color_orange.json"
+          }
+        },
+        {
+          "class": "dae::TransformComponent",
+          "desc": {
+            "x": 320,
+            "y": 120,
+            "z": 0
+          }
+        }
+      ]
+    }
+  ]
+}

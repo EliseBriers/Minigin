@@ -1,4 +1,5 @@
 #include "GamePCH.h"
+#include <vld.h>
 #include <Minigin.h>
 #include "CubeGrid.h"
 #include "GridHopper.h"
@@ -34,7 +35,8 @@ int main( int, char*[] )
 
 
 	engine.AddSceneFromFile( "main_menu.json" )->SetBehavior( std::make_unique<MenuSceneBehavior>( sceneList ) );
-	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo2", false ) );
+	engine.AddSceneFromFile( "test.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "GameOver", false ) );
+	engine.AddSceneFromFile( "game_over.json" );
 	engine.AddSceneFromFile( "level_coop_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 	engine.AddSceneFromFile( "level_vs_1.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "", true ) );
 	engine.AddSceneFromFile( "test2.json" )->SetBehavior( std::make_unique<QbertSceneBehavior>( "Demo3", false ) );
@@ -42,5 +44,6 @@ int main( int, char*[] )
 
 	engine.SetActiveScene( "MainMenu" );
 	engine.Run( );
+
 	return 0;
 }

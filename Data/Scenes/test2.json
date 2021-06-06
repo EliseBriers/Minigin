@@ -48,31 +48,6 @@
       ]
     },
     {
-      "name": "Title",
-      "components": [
-        {
-          "class": "dae::StaticTextComponent",
-          "desc": {
-            "text": "Programming 4 Assignment",
-            "font_file_name": "Lingua.otf",
-            "size": 36,
-            "pivot": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        },
-        {
-          "class": "dae::TransformComponent",
-          "desc": {
-            "x": 80,
-            "y": 20,
-            "z": 0
-          }
-        }
-      ]
-    },
-    {
       "name": "CubeGrid",
       "components": [
         {

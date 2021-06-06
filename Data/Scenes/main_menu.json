@@ -13,7 +13,8 @@
             "pivot": {
               "x": 0.5,
               "y": 0.5
-            }
+            },
+			"color": "text_color_white.json"
           }
         },
         {
@@ -38,7 +39,8 @@
             "pivot": {
               "x": 0.5,
               "y": 0.5
-            }
+            },
+			"color": "text_color_white.json"
           }
         },
         {
@@ -63,7 +65,8 @@
             "pivot": {
               "x": 0.5,
               "y": 0.5
-            }
+            },
+			"color": "text_color_white.json"
           }
         },
         {
