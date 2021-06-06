@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include <vector>
 #include <functional>
+#include <SDL.h>
 
 namespace dae
 {
@@ -26,6 +27,7 @@ namespace dae
 		template <typename T>
 		std::vector<T> GetVector( const std::string& idx, std::function<T( const JsonObjectWrapper& )> func ) const;
 		bool GetBool( const std::string& idx ) const;
+		SDL_Color GetSDLColor( const std::string& idx ) const;
 	private:
 		void WarnKeyNotFound( const std::string& currentFunction, const std::string& idx ) const;
 		void ErrorKeyNotFound( const std::string& currentFunction, const std::string& idx ) const;

@@ -12,6 +12,7 @@
 #include "CoilyComponent.h"
 #include "LevelSelectorComponent.h"
 #include "MenuSceneBehavior.h"
+#include "ScoreTextComponent.h"
 
 int main( int, char*[] )
 {
@@ -26,6 +27,7 @@ int main( int, char*[] )
 	engine.RegisterComponent<RandomBouncerComponent>( );
 	engine.RegisterComponent<CoilyComponent>( );
 	engine.RegisterComponent<LevelSelectorComponent>( );
+	engine.RegisterComponent<ScoreTextComponent>( );
 
 	// ToDo: Complete SceneList
 	MenuSceneBehavior::scene_array_t sceneList{ "Demo", "CoopLevel1", "VsLevel1" };

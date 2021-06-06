@@ -44,18 +44,20 @@ const dae::Texture2D& dae::ResourceManager::GetTexture( const std::string& file,
 	return m_Textures.GetElement( file, m_DataPaths.TextureDataPath + file, renderer );
 }
 
-dae::Font& dae::ResourceManager::LoadFont( const std::string& file, unsigned int size )
+dae::Font& dae::ResourceManager::LoadFont( const std::string& file, uint32_t size )
 {
 	return m_Fonts.GetElement( file + ":_:" + std::to_string( size ), m_DataPaths.FontDataPath + file, size );
 }
 
-const dae::Texture2D& dae::ResourceManager::LoadText( const std::string& text, const std::string& fileName, uint32_t size, Renderer& renderer )
+const dae::Texture2D& dae::ResourceManager::LoadText( const std::string& text, const std::string& fileName, uint32_t size, const SDL_Color& color, Renderer& renderer )
 {
 	const Font& font{ LoadFont( fileName, size ) };
 
-	const std::string elementName{ fileName + ":_:" + text + std::to_string( size ) };
+	const std::string colorStr{ std::to_string( color.r ) + '_' + std::to_string( color.g ) + '_' + std::to_string( color.b ) + '_' + std::to_string( color.a ) };
 
-	return m_TextTextures.GetElement( elementName, text, renderer, font );
+	const std::string elementName{ fileName + ":_:" + colorStr + ":_:" + std::to_string( size ) + ":_:" + text };
+
+	return m_TextTextures.GetElement( elementName, text, renderer, font, color );
 }
 
 const rapidjson::Document& dae::ResourceManager::GetJsonDocument( const std::string& fileName )
@@ -86,9 +88,9 @@ std::unique_ptr<dae::Font> dae::ResourceManager::FontAllocator( const std::strin
 	return std::make_unique<Font>( file, size );
 }
 
-std::unique_ptr<dae::Texture2D> dae::ResourceManager::TextAllocator( const std::string& text, Renderer& renderer, const Font& font )
+std::unique_ptr<dae::Texture2D> dae::ResourceManager::TextAllocator( const std::string& text, Renderer& renderer, const Font& font, const SDL_Color& color )
 {
-	const SDL_Color color = { 255, 255, 255 }; // only white text is supported now
+	// const SDL_Color color = { 255, 255, 255 }; // only white text is supported now
 	const auto surf = TTF_RenderText_Blended( font.GetFont( ), text.c_str( ), color );
 	if( !surf )
 		throw std::runtime_error{ std::string{ "Render text failed: " } + SDL_GetError( ) };

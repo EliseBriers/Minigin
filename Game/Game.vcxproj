@@ -215,6 +215,7 @@
     <ClCompile Include="QbertSceneBehavior.cpp" />
     <ClCompile Include="HopperSpriteComponent.cpp" />
     <ClCompile Include="RandomBouncerComponent.cpp" />
+    <ClCompile Include="ScoreTextComponent.cpp" />
     <ClCompile Include="SphereOverlapDetector.cpp" />
     <ClCompile Include="TriggerManager.cpp" />
   </ItemGroup>
@@ -239,6 +240,7 @@
     <ClInclude Include="QbertSceneBehavior.h" />
     <ClInclude Include="HopperSpriteComponent.h" />
     <ClInclude Include="RandomBouncerComponent.h" />
+    <ClInclude Include="ScoreTextComponent.h" />
     <ClInclude Include="SphereOverlapDetector.h" />
     <ClInclude Include="TriggerManager.h" />
   </ItemGroup>

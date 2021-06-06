@@ -211,6 +211,18 @@ bool dae::JsonObjectWrapper::GetBool( const std::string& idx ) const
 	return m_Object[idx.c_str( )].GetBool( );
 }
 
+SDL_Color dae::JsonObjectWrapper::GetSDLColor( const std::string& idx ) const
+{
+	const JsonObjectWrapper wrapper{ GetObjectWrapper( idx ) };
+
+	const Uint8 r{ static_cast<Uint8>(wrapper.GetUint( "r" )) };
+	const Uint8 g{ static_cast<Uint8>(wrapper.GetUint( "g" )) };
+	const Uint8 b{ static_cast<Uint8>(wrapper.GetUint( "b" )) };
+	const Uint8 a{ static_cast<Uint8>(wrapper.GetUint( "a" )) };
+
+	return { r, g, b, a };
+}
+
 void dae::JsonObjectWrapper::WarnKeyNotFound( const std::string& currentFunction, const std::string& idx ) const
 {
 	const std::string fullVarName{ GetFullVarName( idx ) };

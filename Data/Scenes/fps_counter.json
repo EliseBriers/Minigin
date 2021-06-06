@@ -4,21 +4,27 @@
         {
           "class": "dae::DynamicTextComponent",
           "desc": {
-            "start_char": " ",
-            "char_count": 91,
+            "start_char": "0",
+            "char_count": 10,
             "font_file_name": "Lingua.otf",
-            "size": 36,
+            "size": 12,
             "pivot": {
               "x": 0,
               "y": 0
-            }
+            },
+			"color": {
+			  "r": 255,
+			  "g": 255,
+			  "b": 255,
+			  "a": 255
+			}
           }
         },
         {
           "class": "dae::TransformComponent",
           "desc": {
-            "x": 20,
-            "y": 20,
+            "x": 10,
+            "y": 10,
             "z": 0
           }
         },

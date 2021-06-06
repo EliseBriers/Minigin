@@ -35,7 +35,7 @@ void dae::StaticTextComponent::Init( const InitInfo& initInfo )
 {
 	m_pTransformComponent = m_GameObject.get( ).GetComponent<TransformComponent>( );
 
-	m_pTexture = &initInfo.Resource_GetTextTexture( m_Text, m_FontFileName, m_Size );
+	m_pTexture = &initInfo.Resource_GetTextTexture( m_Text, m_FontFileName, m_Size, { 255, 255, 255, 255 } );
 }
 
 glm::vec2 dae::StaticTextComponent::GetPosition( ) const

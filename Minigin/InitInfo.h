@@ -18,7 +18,7 @@ namespace dae
 	public:
 		InitInfo( ResourceManager& resourceManager, Renderer& renderer, InputManager& inputManager, Scene& scene, ISoundSystem& soundSystem );
 		const Texture2D& Resource_GetTexture( const std::string& file ) const;
-		const Texture2D& Resource_GetTextTexture( const std::string& text, const std::string& fileName, uint32_t size ) const;
+		const Texture2D& Resource_GetTextTexture( const std::string& text, const std::string& fileName, uint32_t size, const SDL_Color& color ) const;
 
 		void Input_AddControllerCommand( uint8_t controllerId, ButtonState buttonState, ControllerButton button, std::unique_ptr<ICommand> command ) const;
 		void Input_AddKeyboardCommand( ButtonState buttonState, SDL_Keycode button, std::unique_ptr<ICommand> command ) const;

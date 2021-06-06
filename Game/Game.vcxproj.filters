@@ -108,6 +108,9 @@
     <ClCompile Include="CoilyDirectionController.cpp">
       <Filter>Source Files\DirectionControllers</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreTextComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridHopper.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="CoilyDirectionController.h">
       <Filter>Header Files\DirectionControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreTextComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

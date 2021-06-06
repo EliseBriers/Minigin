@@ -92,6 +92,7 @@
 	"wrongway.json",
 	"ugg.json",
     "player_1.json",
-    "fps_counter.json"
+    "fps_counter.json",
+	"score_display.json"
   ]
 }

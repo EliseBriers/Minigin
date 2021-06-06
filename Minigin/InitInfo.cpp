@@ -19,9 +19,9 @@ const dae::Texture2D& dae::InitInfo::Resource_GetTexture( const std::string& fil
 	return m_ResourceManager.GetTexture( file, m_Renderer );
 }
 
-const dae::Texture2D& dae::InitInfo::Resource_GetTextTexture( const std::string& text, const std::string& fileName, uint32_t size ) const
+const dae::Texture2D& dae::InitInfo::Resource_GetTextTexture( const std::string& text, const std::string& fileName, uint32_t size, const SDL_Color& color ) const
 {
-	return m_ResourceManager.LoadText( text, fileName, size, m_Renderer );
+	return m_ResourceManager.LoadText( text, fileName, size, color, m_Renderer );
 }
 
 void dae::InitInfo::Input_AddControllerCommand( uint8_t controllerId, ButtonState buttonState, ControllerButton button, std::unique_ptr<ICommand> command ) const

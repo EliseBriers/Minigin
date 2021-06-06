@@ -87,3 +87,13 @@ QbertPlayer* QbertSceneBehavior::GetClosestPlayer( const glm::vec2& pos )
 {
 	return m_PlayerManager.GetClosestPlayer( pos );
 }
+
+void QbertSceneBehavior::AddScoreObserver( score_observer_t observer )
+{
+	m_Score.AddObserver( std::move( observer ) );
+}
+
+size_t QbertSceneBehavior::GetScore( ) const
+{
+	return m_Score.Get( );
+}

@@ -2,6 +2,7 @@
 #include "IComponent.h"
 #include <vector>
 #include <document.h>
+#include <SDL.h>
 
 namespace dae
 {
@@ -34,6 +35,7 @@ namespace dae
 		uint8_t m_CharCount;
 		glm::vec2 m_Size;
 		glm::vec2 m_Pivot;
+		SDL_Color m_Color;
 
 		void UpdateSize( );
 		glm::vec2 GetDrawPos( ) const;

@@ -15,6 +15,7 @@ dae::DynamicTextComponent::DynamicTextComponent( GameObject& gameObject, const J
 	, m_Start{ jsonObject.GetString( "start_char" )[0] }
 	, m_CharCount{ static_cast<uint8_t>(jsonObject.GetUint( "char_count" )) }
 	, m_Pivot{ jsonObject.GetVec2( "pivot" ) }
+	, m_Color{ jsonObject.GetSDLColor( "color" ) }
 {
 }
 
@@ -70,7 +71,7 @@ void dae::DynamicTextComponent::Init( const InitInfo& initInfo )
 	for( char i{ }; i < static_cast<char>(m_CharCount); ++i )
 	{
 		std::string str{ char{ m_Start + i } };
-		m_pTextures.push_back( initInfo.Resource_GetTextTexture( str, m_FontFileName, m_FontSize ) );
+		m_pTextures.push_back( initInfo.Resource_GetTextTexture( str, m_FontFileName, m_FontSize, m_Color ) );
 	}
 }
 

@@ -9,6 +9,7 @@
 class QbertSceneBehavior final : public dae::SceneBehavior
 {
 public:
+	using score_observer_t = dae::ObservableVariable<size_t>::observer_t;
 
 	QbertSceneBehavior( const std::string& nextLevel, bool isLastLevel );
 
@@ -26,6 +27,8 @@ public:
 	void OnPlayerRespawn( );
 	void AddPoints( size_t amount );
 	QbertPlayer* GetClosestPlayer( const glm::vec2& pos );
+	void AddScoreObserver( score_observer_t observer );
+	size_t GetScore( ) const;
 	
 	// Rule of 5
 	~QbertSceneBehavior( ) override = default;
