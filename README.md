@@ -45,3 +45,6 @@ const UUID<SomeClass> Id;
 ```
 
 The UUID class will automatically create a new unique identifier in it's constructor.
+
+# Conclusion
+This project has been a great learning opportunity for me. It has tought me how to make a project in a clean, re-usable and performant way. I've learned about useful C++ patterns and how/when/why to use them.
